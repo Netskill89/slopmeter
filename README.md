@@ -69,6 +69,12 @@ folder in place after installing the launcher.
 Use the tray icon to show or hide the overlay and select a display. Open Settings
 with the gear button; **Test mode** previews the layout with a complete encounter.
 
+### Network capture
+
+SlopMeter uses [nuriland/a2kit](https://github.com/nuriland/a2kit) to decode AION 2
+network traffic, with [Wireshark’s dumpcap](https://www.wireshark.org/) providing
+packet capture.
+
 Under **Settings → Network capture**, choose Automatic, a specific network adapter,
 or All interfaces. Click **Apply and restart capture** to activate the selection,
 then relog your character. The selection is saved for future launches.
@@ -127,6 +133,18 @@ bash scripts/test.sh
 See [Contributing](CONTRIBUTING.md) for build dependencies and pull-request
 instructions, [Implementation notes](docs/technical.md) for architecture, and
 [Release instructions](docs/releases.md) for CI and packaging.
+
+## Acknowledgments
+
+| Project | Used for |
+| --- | --- |
+| [a2kit](https://github.com/nuriland/a2kit) | AION 2 packet decoding and combat events |
+| [Qt / Qt Quick](https://www.qt.io/) | QML interface and application windows |
+| [LayerShellQt](https://invent.kde.org/plasma/layer-shell-qt) and [Wayland](https://wayland.freedesktop.org/) | Wayland overlay integration |
+| [Wireshark](https://www.wireshark.org/) and [util-linux](https://github.com/util-linux/util-linux) | Packet capture and capture-helper privilege handling |
+| [Aion2Flow](https://github.com/cloris-chan/Aion2Flow) | Protocol references, game data, and skill assets |
+
+Dependency licenses and additional credits are listed in [Third-party notices](THIRD_PARTY.md).
 
 ## License
 
