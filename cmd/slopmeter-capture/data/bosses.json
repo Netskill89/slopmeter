@@ -1,0 +1,5872 @@
+[
+  {
+    "code": 2090027,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090175,
+    "name": "Fediv Wraith",
+    "divisor": 1
+  },
+  {
+    "code": 2090222,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090223,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090224,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090225,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090226,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090227,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090228,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090229,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090230,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090231,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2090232,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090233,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090234,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090235,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090236,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090237,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090238,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090239,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090240,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090241,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2090269,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090270,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090271,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090397,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090401,
+    "name": "Elyos Core",
+    "divisor": 1
+  },
+  {
+    "code": 2090402,
+    "name": "Asmodian Core",
+    "divisor": 1
+  },
+  {
+    "code": 2090428,
+    "name": "Transcendent Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2090433,
+    "name": "Fediv Wraith",
+    "divisor": 1
+  },
+  {
+    "code": 2090435,
+    "name": "Fediv Wraith",
+    "divisor": 1
+  },
+  {
+    "code": 2090553,
+    "name": "Stagger Test_Persistent",
+    "divisor": 1
+  },
+  {
+    "code": 2090554,
+    "name": "Stagger Test_Temporary_StaggerGuard",
+    "divisor": 1
+  },
+  {
+    "code": 2090555,
+    "name": "Stagger Test_Temporary_StaggerAttack",
+    "divisor": 1
+  },
+  {
+    "code": 2090623,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090680,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2090681,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2090682,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2090691,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090692,
+    "name": "Monster (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2090718,
+    "name": "Nathara",
+    "divisor": 1
+  },
+  {
+    "code": 2090719,
+    "name": "Eternal Ludra",
+    "divisor": 1
+  },
+  {
+    "code": 2090720,
+    "name": "Terminator Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2100003,
+    "name": "Neikel of the East",
+    "divisor": 1
+  },
+  {
+    "code": 2100027,
+    "name": "Collapsed Kouros",
+    "divisor": 4
+  },
+  {
+    "code": 2100040,
+    "name": "Rotten Kutar",
+    "divisor": 1
+  },
+  {
+    "code": 2100050,
+    "name": "Kernon of the West",
+    "divisor": 1
+  },
+  {
+    "code": 2100076,
+    "name": "Kusan the Mad Gladiator",
+    "divisor": 1
+  },
+  {
+    "code": 2100077,
+    "name": "Ritualist Garshim",
+    "divisor": 1
+  },
+  {
+    "code": 2100079,
+    "name": "Bodyguard Teegant",
+    "divisor": 1
+  },
+  {
+    "code": 2100141,
+    "name": "Blooming Korin",
+    "divisor": 1
+  },
+  {
+    "code": 2100177,
+    "name": "Furious Saursus",
+    "divisor": 1
+  },
+  {
+    "code": 2100178,
+    "name": "Bloodfang Pnyn",
+    "divisor": 1
+  },
+  {
+    "code": 2100582,
+    "name": "Heretic Layla",
+    "divisor": 1
+  },
+  {
+    "code": 2100604,
+    "name": "Nauton of the West Wind",
+    "divisor": 4
+  },
+  {
+    "code": 2100617,
+    "name": "Black Tentacle Lawa",
+    "divisor": 1
+  },
+  {
+    "code": 2100661,
+    "name": "Phantasm Kasia",
+    "divisor": 1
+  },
+  {
+    "code": 2100708,
+    "name": "Centurion Demiros",
+    "divisor": 1
+  },
+  {
+    "code": 2100718,
+    "name": "Divine Ansas",
+    "divisor": 1
+  },
+  {
+    "code": 2100875,
+    "name": "Overseer Gaztan",
+    "divisor": 1
+  },
+  {
+    "code": 2100876,
+    "name": "Harvest Manager Moshav",
+    "divisor": 1
+  },
+  {
+    "code": 2100877,
+    "name": "Sentinel K'nash",
+    "divisor": 1
+  },
+  {
+    "code": 2100988,
+    "name": "Scholar Aulla",
+    "divisor": 1
+  },
+  {
+    "code": 2100989,
+    "name": "Forest Warrior Aullamu",
+    "divisor": 1
+  },
+  {
+    "code": 2100990,
+    "name": "Dragon Shaman Maullard",
+    "divisor": 1
+  },
+  {
+    "code": 2100991,
+    "name": "Chaser Taulo",
+    "divisor": 1
+  },
+  {
+    "code": 2101016,
+    "name": "Researcher Setram",
+    "divisor": 1
+  },
+  {
+    "code": 2101074,
+    "name": "Eternal Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2101104,
+    "name": "Worshiper Dekish",
+    "divisor": 4
+  },
+  {
+    "code": 2101105,
+    "name": "Scouter Sahar",
+    "divisor": 4
+  },
+  {
+    "code": 2101106,
+    "name": "Destroyer Tarka",
+    "divisor": 4
+  },
+  {
+    "code": 2101107,
+    "name": "Watcher Sandha",
+    "divisor": 4
+  },
+  {
+    "code": 2101108,
+    "name": "Personal Guard Irima",
+    "divisor": 4
+  },
+  {
+    "code": 2101109,
+    "name": "Cold-Hearted Kandak",
+    "divisor": 4
+  },
+  {
+    "code": 2101110,
+    "name": "Hunter Danahan",
+    "divisor": 4
+  },
+  {
+    "code": 2101111,
+    "name": "Heartless Mozant",
+    "divisor": 4
+  },
+  {
+    "code": 2101112,
+    "name": "Enraged Karsha",
+    "divisor": 4
+  },
+  {
+    "code": 2101113,
+    "name": "Watcher Krache",
+    "divisor": 4
+  },
+  {
+    "code": 2101114,
+    "name": "Executioner Nemok",
+    "divisor": 4
+  },
+  {
+    "code": 2101115,
+    "name": "Officer Barha",
+    "divisor": 4
+  },
+  {
+    "code": 2101116,
+    "name": "Cunning Dmark",
+    "divisor": 4
+  },
+  {
+    "code": 2101117,
+    "name": "Scout Bagsh",
+    "divisor": 4
+  },
+  {
+    "code": 2101118,
+    "name": "Tracker Dazran",
+    "divisor": 4
+  },
+  {
+    "code": 2101120,
+    "name": "Silent Dartan",
+    "divisor": 1
+  },
+  {
+    "code": 2101122,
+    "name": "Soul Ruler Kashapa",
+    "divisor": 1
+  },
+  {
+    "code": 2101128,
+    "name": "Catecoa",
+    "divisor": 4
+  },
+  {
+    "code": 2101131,
+    "name": "High Commander Lagta",
+    "divisor": 1
+  },
+  {
+    "code": 2101217,
+    "name": "Agglomerated Verenom",
+    "divisor": 1
+  },
+  {
+    "code": 2101218,
+    "name": "Old Boss Vigor",
+    "divisor": 1
+  },
+  {
+    "code": 2101257,
+    "name": "Severed Wings Zvein",
+    "divisor": 1
+  },
+  {
+    "code": 2101278,
+    "name": "Gluttonous Egetis",
+    "divisor": 1
+  },
+  {
+    "code": 2101279,
+    "name": "Superbia, Sacred Beast of Life",
+    "divisor": 1
+  },
+  {
+    "code": 2101306,
+    "name": "Rotten Root Meltlim",
+    "divisor": 1
+  },
+  {
+    "code": 2101349,
+    "name": "Rabid Nihogg",
+    "divisor": 1
+  },
+  {
+    "code": 2101350,
+    "name": "First Test Subject K'tima",
+    "divisor": 1
+  },
+  {
+    "code": 2101415,
+    "name": "Three-Horned Mino",
+    "divisor": 1
+  },
+  {
+    "code": 2101416,
+    "name": "Lamphus of Agony",
+    "divisor": 1
+  },
+  {
+    "code": 2101600,
+    "name": "Third Unit Captain Karkoti",
+    "divisor": 1
+  },
+  {
+    "code": 2101601,
+    "name": "Deputy Commander Vivajra",
+    "divisor": 1
+  },
+  {
+    "code": 2101602,
+    "name": "High Commander Taruna",
+    "divisor": 1
+  },
+  {
+    "code": 2110000,
+    "name": "Old Commander Mardel",
+    "divisor": 4
+  },
+  {
+    "code": 2110016,
+    "name": "Deputy Romlon",
+    "divisor": 4
+  },
+  {
+    "code": 2110300,
+    "name": "Executor Selmar",
+    "divisor": 4
+  },
+  {
+    "code": 2110311,
+    "name": "Carlotte the Renegade",
+    "divisor": 4
+  },
+  {
+    "code": 2110350,
+    "name": "Leader Tyrkes",
+    "divisor": 4
+  },
+  {
+    "code": 2110360,
+    "name": "Captain Ugaros",
+    "divisor": 4
+  },
+  {
+    "code": 2110370,
+    "name": "Leader Miros",
+    "divisor": 4
+  },
+  {
+    "code": 2110377,
+    "name": "Leader Miros",
+    "divisor": 4
+  },
+  {
+    "code": 2110380,
+    "name": "Wanted Criminal Lofman",
+    "divisor": 4
+  },
+  {
+    "code": 2110390,
+    "name": "Wanted Criminal Gargos",
+    "divisor": 4
+  },
+  {
+    "code": 2110399,
+    "name": "Rogue Rogherr",
+    "divisor": 4
+  },
+  {
+    "code": 2110410,
+    "name": "Patrol Captain Mantasch",
+    "divisor": 4
+  },
+  {
+    "code": 2110418,
+    "name": "Poison Fluid Sabga",
+    "divisor": 4
+  },
+  {
+    "code": 2110437,
+    "name": "Expedition Leader Cohta",
+    "divisor": 4
+  },
+  {
+    "code": 2110443,
+    "name": "Outpost Captain Sehna",
+    "divisor": 4
+  },
+  {
+    "code": 2110453,
+    "name": "Commanding Captain Maktasha",
+    "divisor": 4
+  },
+  {
+    "code": 2110465,
+    "name": "Raider Paitron",
+    "divisor": 4
+  },
+  {
+    "code": 2110470,
+    "name": "Leader Hernon",
+    "divisor": 4
+  },
+  {
+    "code": 2110515,
+    "name": "Fanatic Dvahn",
+    "divisor": 4
+  },
+  {
+    "code": 2110516,
+    "name": "Ascetic Narat",
+    "divisor": 4
+  },
+  {
+    "code": 2110517,
+    "name": "Truthseeker Taneetch",
+    "divisor": 4
+  },
+  {
+    "code": 2110518,
+    "name": "Executioner Varkash",
+    "divisor": 4
+  },
+  {
+    "code": 2110519,
+    "name": "Gruesome Moratya",
+    "divisor": 4
+  },
+  {
+    "code": 2110520,
+    "name": "Unyielding Batagon",
+    "divisor": 4
+  },
+  {
+    "code": 2110521,
+    "name": "Swift Xanag",
+    "divisor": 4
+  },
+  {
+    "code": 2110600,
+    "name": "Lunatic Researcher Sellutey",
+    "divisor": 4
+  },
+  {
+    "code": 2110619,
+    "name": "Digunaka",
+    "divisor": 4
+  },
+  {
+    "code": 2110620,
+    "name": "Digunaka",
+    "divisor": 4
+  },
+  {
+    "code": 2110640,
+    "name": "Outpost Captain Tarakha",
+    "divisor": 4
+  },
+  {
+    "code": 2200031,
+    "name": "Bandit Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2200060,
+    "name": "Aullaeu Vagrant Boss",
+    "divisor": 4
+  },
+  {
+    "code": 2200101,
+    "name": "Rampaging High Guardite",
+    "divisor": 4
+  },
+  {
+    "code": 2200103,
+    "name": "Zumion's Projection",
+    "divisor": 4
+  },
+  {
+    "code": 2200104,
+    "name": "Zumion's Projection",
+    "divisor": 4
+  },
+  {
+    "code": 2200108,
+    "name": "Furious High Priestess's Apparition",
+    "divisor": 4
+  },
+  {
+    "code": 2200146,
+    "name": "Giant Venomous Insect",
+    "divisor": 4
+  },
+  {
+    "code": 2290156,
+    "name": "Tyrant Ursus",
+    "divisor": 1
+  },
+  {
+    "code": 2290158,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2300000,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300001,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300002,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300015,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300016,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300017,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300030,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300031,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300032,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300045,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300046,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300047,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300060,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300061,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300062,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300075,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300076,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300077,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300090,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300091,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300092,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300104,
+    "name": "Enhanced Harcon",
+    "divisor": 1
+  },
+  {
+    "code": 2300108,
+    "name": "Neglected Gadioton",
+    "divisor": 1
+  },
+  {
+    "code": 2300116,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300117,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300118,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300131,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2300132,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2300133,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2300153,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2300154,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2300155,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2300162,
+    "name": "Durvati's Poison Fluid",
+    "divisor": 1
+  },
+  {
+    "code": 2300171,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2300172,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2300173,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2300174,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2300178,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2300188,
+    "name": "Awakened Alturadon",
+    "divisor": 1
+  },
+  {
+    "code": 2300189,
+    "name": "Wise Baumnute",
+    "divisor": 1
+  },
+  {
+    "code": 2300190,
+    "name": "Expanding Xyrepe",
+    "divisor": 1
+  },
+  {
+    "code": 2300200,
+    "name": "Awakened Alturadon",
+    "divisor": 1
+  },
+  {
+    "code": 2300206,
+    "name": "Guardian Captain Raur",
+    "divisor": 1
+  },
+  {
+    "code": 2300207,
+    "name": "Judge Urahum",
+    "divisor": 1
+  },
+  {
+    "code": 2300218,
+    "name": "Divine Auldor",
+    "divisor": 1
+  },
+  {
+    "code": 2300219,
+    "name": "Wise Baumnute",
+    "divisor": 1
+  },
+  {
+    "code": 2300230,
+    "name": "Expanding Xyrepe",
+    "divisor": 1
+  },
+  {
+    "code": 2300243,
+    "name": "Awakened Alturadon",
+    "divisor": 1
+  },
+  {
+    "code": 2300244,
+    "name": "Wise Baumnute",
+    "divisor": 1
+  },
+  {
+    "code": 2300245,
+    "name": "Expanding Xyrepe",
+    "divisor": 1
+  },
+  {
+    "code": 2300258,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300259,
+    "name": "Rotar",
+    "divisor": 1
+  },
+  {
+    "code": 2300260,
+    "name": "Robstino",
+    "divisor": 1
+  },
+  {
+    "code": 2300261,
+    "name": "Kromede's Desolation",
+    "divisor": 1
+  },
+  {
+    "code": 2300276,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300299,
+    "name": "Rotar",
+    "divisor": 1
+  },
+  {
+    "code": 2300300,
+    "name": "Robstino",
+    "divisor": 1
+  },
+  {
+    "code": 2300310,
+    "name": "Silver Blade Rotan",
+    "divisor": 1
+  },
+  {
+    "code": 2300311,
+    "name": "Red Spark Ignus",
+    "divisor": 1
+  },
+  {
+    "code": 2300312,
+    "name": "Black Smoke Murute",
+    "divisor": 1
+  },
+  {
+    "code": 2300317,
+    "name": "Kromede's Desolation",
+    "divisor": 1
+  },
+  {
+    "code": 2300333,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300334,
+    "name": "Rotar",
+    "divisor": 1
+  },
+  {
+    "code": 2300335,
+    "name": "Robstino",
+    "divisor": 1
+  },
+  {
+    "code": 2300336,
+    "name": "Kromede's Desolation",
+    "divisor": 1
+  },
+  {
+    "code": 2300352,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300353,
+    "name": "Rotar",
+    "divisor": 1
+  },
+  {
+    "code": 2300354,
+    "name": "Robstino",
+    "divisor": 1
+  },
+  {
+    "code": 2300355,
+    "name": "Kromede's Desolation",
+    "divisor": 1
+  },
+  {
+    "code": 2300371,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2300397,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300398,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300399,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300400,
+    "name": "Ordeal of Love",
+    "divisor": 1
+  },
+  {
+    "code": 2300401,
+    "name": "Phantasmal Lakshmi",
+    "divisor": 1
+  },
+  {
+    "code": 2300403,
+    "name": "Predator Saraswati",
+    "divisor": 1
+  },
+  {
+    "code": 2300407,
+    "name": "Prideful Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2300409,
+    "name": "Lab Director Zylus",
+    "divisor": 1
+  },
+  {
+    "code": 2300410,
+    "name": "Overseer Gromkas",
+    "divisor": 1
+  },
+  {
+    "code": 2300436,
+    "name": "Askran",
+    "divisor": 1
+  },
+  {
+    "code": 2300437,
+    "name": "Incomplete Braunt",
+    "divisor": 1
+  },
+  {
+    "code": 2300438,
+    "name": "Mad Klominster",
+    "divisor": 1
+  },
+  {
+    "code": 2300439,
+    "name": "Askran",
+    "divisor": 1
+  },
+  {
+    "code": 2300440,
+    "name": "Incomplete Braunt",
+    "divisor": 1
+  },
+  {
+    "code": 2300441,
+    "name": "Mad Klominster",
+    "divisor": 1
+  },
+  {
+    "code": 2300442,
+    "name": "Askran",
+    "divisor": 1
+  },
+  {
+    "code": 2300443,
+    "name": "Incomplete Braunt",
+    "divisor": 1
+  },
+  {
+    "code": 2300444,
+    "name": "Mad Klominster",
+    "divisor": 1
+  },
+  {
+    "code": 2300445,
+    "name": "Askran",
+    "divisor": 1
+  },
+  {
+    "code": 2300446,
+    "name": "Incomplete Braunt",
+    "divisor": 1
+  },
+  {
+    "code": 2300447,
+    "name": "Mad Klominster",
+    "divisor": 1
+  },
+  {
+    "code": 2300470,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2300471,
+    "name": "Transcendent Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2300473,
+    "name": "Kapu",
+    "divisor": 1
+  },
+  {
+    "code": 2300474,
+    "name": "Dhakan",
+    "divisor": 1
+  },
+  {
+    "code": 2300475,
+    "name": "Gargaum",
+    "divisor": 1
+  },
+  {
+    "code": 2300481,
+    "name": "Prideful Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2300491,
+    "name": "Kapu",
+    "divisor": 1
+  },
+  {
+    "code": 2300492,
+    "name": "Dhakan",
+    "divisor": 1
+  },
+  {
+    "code": 2300493,
+    "name": "Gargaum",
+    "divisor": 1
+  },
+  {
+    "code": 2300502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2300507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2300508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2300509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2300515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2300517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2300519,
+    "name": "Durvati's Poison Fluid",
+    "divisor": 1
+  },
+  {
+    "code": 2300527,
+    "name": "Kapu",
+    "divisor": 1
+  },
+  {
+    "code": 2300528,
+    "name": "Dhakan",
+    "divisor": 1
+  },
+  {
+    "code": 2300529,
+    "name": "Gargaum",
+    "divisor": 1
+  },
+  {
+    "code": 2300544,
+    "name": "Kapu",
+    "divisor": 1
+  },
+  {
+    "code": 2300545,
+    "name": "Dhakan",
+    "divisor": 1
+  },
+  {
+    "code": 2300546,
+    "name": "Gargaum",
+    "divisor": 1
+  },
+  {
+    "code": 2300555,
+    "name": "Lab Director Zylus",
+    "divisor": 1
+  },
+  {
+    "code": 2300556,
+    "name": "Overseer Gromkas",
+    "divisor": 1
+  },
+  {
+    "code": 2300580,
+    "name": "Tiere",
+    "divisor": 1
+  },
+  {
+    "code": 2300581,
+    "name": "Thamon",
+    "divisor": 1
+  },
+  {
+    "code": 2300582,
+    "name": "Vakron",
+    "divisor": 1
+  },
+  {
+    "code": 2300601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2300615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2300616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2300707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2300708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2300709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2300810,
+    "name": "Tiere",
+    "divisor": 1
+  },
+  {
+    "code": 2300811,
+    "name": "Thamon",
+    "divisor": 1
+  },
+  {
+    "code": 2300812,
+    "name": "Vakron",
+    "divisor": 1
+  },
+  {
+    "code": 2300907,
+    "name": "Shining Mau Totem",
+    "divisor": 1
+  },
+  {
+    "code": 2300908,
+    "name": "Watchdog Kwapo",
+    "divisor": 1
+  },
+  {
+    "code": 2300909,
+    "name": "Necromancer Duanka",
+    "divisor": 1
+  },
+  {
+    "code": 2300910,
+    "name": "Ferocious Horn Nuakum",
+    "divisor": 1
+  },
+  {
+    "code": 2301006,
+    "name": "Isolation Specialist Rahu",
+    "divisor": 1
+  },
+  {
+    "code": 2301007,
+    "name": "Abyssal Wings Ketu",
+    "divisor": 1
+  },
+  {
+    "code": 2301014,
+    "name": "Eternal Ludra",
+    "divisor": 1
+  },
+  {
+    "code": 2301055,
+    "name": "Blazing Guardian Sword",
+    "divisor": 1
+  },
+  {
+    "code": 2301059,
+    "name": "Iscariel",
+    "divisor": 1
+  },
+  {
+    "code": 2301060,
+    "name": "Kaldrix",
+    "divisor": 1
+  },
+  {
+    "code": 2301061,
+    "name": "Kaldrix",
+    "divisor": 1
+  },
+  {
+    "code": 2301067,
+    "name": "Blazing Guardian Sword",
+    "divisor": 1
+  },
+  {
+    "code": 2301085,
+    "name": "Blazing Guardian Sword",
+    "divisor": 1
+  },
+  {
+    "code": 2301089,
+    "name": "Iscariel",
+    "divisor": 1
+  },
+  {
+    "code": 2301090,
+    "name": "Kaldrix",
+    "divisor": 1
+  },
+  {
+    "code": 2301091,
+    "name": "Kaldrix",
+    "divisor": 1
+  },
+  {
+    "code": 2301097,
+    "name": "Blazing Guardian Sword",
+    "divisor": 1
+  },
+  {
+    "code": 2301112,
+    "name": "Triton the Returned",
+    "divisor": 1
+  },
+  {
+    "code": 2301113,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301115,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301142,
+    "name": "Triton the Returned",
+    "divisor": 1
+  },
+  {
+    "code": 2301143,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301145,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301162,
+    "name": "Triton the Returned",
+    "divisor": 1
+  },
+  {
+    "code": 2301163,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301165,
+    "name": "Deltras",
+    "divisor": 1
+  },
+  {
+    "code": 2301207,
+    "name": "Black Blood Blatt",
+    "divisor": 1
+  },
+  {
+    "code": 2301208,
+    "name": "Terminator Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2301209,
+    "name": "Devouring Klawfly",
+    "divisor": 1
+  },
+  {
+    "code": 2301216,
+    "name": "Surveillance Device",
+    "divisor": 1
+  },
+  {
+    "code": 2301301,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2301302,
+    "name": "Multiverse Veltiras",
+    "divisor": 1
+  },
+  {
+    "code": 2301303,
+    "name": "Solemn Valkan",
+    "divisor": 1
+  },
+  {
+    "code": 2301401,
+    "name": "Glassvein",
+    "divisor": 1
+  },
+  {
+    "code": 2301402,
+    "name": "Nazarak",
+    "divisor": 1
+  },
+  {
+    "code": 2301403,
+    "name": "Nathara",
+    "divisor": 1
+  },
+  {
+    "code": 2301501,
+    "name": "Submerged Emon",
+    "divisor": 1
+  },
+  {
+    "code": 2301502,
+    "name": "Deep Sea Pydeon",
+    "divisor": 1
+  },
+  {
+    "code": 2301503,
+    "name": "Singing Ellyde",
+    "divisor": 1
+  },
+  {
+    "code": 2301601,
+    "name": "Willful Turgen",
+    "divisor": 1
+  },
+  {
+    "code": 2301602,
+    "name": "Forbidden Hexbeast Griosa",
+    "divisor": 1
+  },
+  {
+    "code": 2301603,
+    "name": "Basilus the False",
+    "divisor": 1
+  },
+  {
+    "code": 2301701,
+    "name": "Willful Turgen",
+    "divisor": 1
+  },
+  {
+    "code": 2301702,
+    "name": "Forbidden Hexbeast Griosa",
+    "divisor": 1
+  },
+  {
+    "code": 2301703,
+    "name": "Basilus the False",
+    "divisor": 1
+  },
+  {
+    "code": 2301721,
+    "name": "Willful Turgen",
+    "divisor": 1
+  },
+  {
+    "code": 2301722,
+    "name": "Forbidden Hexbeast Griosa",
+    "divisor": 1
+  },
+  {
+    "code": 2301723,
+    "name": "Basilus the False",
+    "divisor": 1
+  },
+  {
+    "code": 2301748,
+    "name": "Prideful Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2301749,
+    "name": "Lab Director Zylus",
+    "divisor": 1
+  },
+  {
+    "code": 2301750,
+    "name": "Overseer Gromkas",
+    "divisor": 1
+  },
+  {
+    "code": 2310104,
+    "name": "Enhanced Harcon",
+    "divisor": 1
+  },
+  {
+    "code": 2310108,
+    "name": "Neglected Gadioton",
+    "divisor": 1
+  },
+  {
+    "code": 2310171,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2310172,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2310173,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2310174,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2310178,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2310206,
+    "name": "Guardian Captain Raur",
+    "divisor": 1
+  },
+  {
+    "code": 2310207,
+    "name": "Judge Urahum",
+    "divisor": 1
+  },
+  {
+    "code": 2310218,
+    "name": "Divine Auldor",
+    "divisor": 1
+  },
+  {
+    "code": 2310310,
+    "name": "Silver Blade Rotan",
+    "divisor": 1
+  },
+  {
+    "code": 2310311,
+    "name": "Red Spark Ignus",
+    "divisor": 1
+  },
+  {
+    "code": 2310312,
+    "name": "Black Smoke Murute",
+    "divisor": 1
+  },
+  {
+    "code": 2310371,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2310401,
+    "name": "Phantasmal Lakshmi",
+    "divisor": 1
+  },
+  {
+    "code": 2310403,
+    "name": "Predator Saraswati",
+    "divisor": 1
+  },
+  {
+    "code": 2310470,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2310471,
+    "name": "Transcendent Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2310502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2310507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2310508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2310509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2310515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2310517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2310519,
+    "name": "Durvati's Poison Fluid",
+    "divisor": 1
+  },
+  {
+    "code": 2310601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2310615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2310616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2310810,
+    "name": "Tiere",
+    "divisor": 1
+  },
+  {
+    "code": 2310811,
+    "name": "Thamon",
+    "divisor": 1
+  },
+  {
+    "code": 2310812,
+    "name": "Vakron",
+    "divisor": 1
+  },
+  {
+    "code": 2310907,
+    "name": "Shining Mau Totem",
+    "divisor": 1
+  },
+  {
+    "code": 2310908,
+    "name": "Watchdog Kwapo",
+    "divisor": 1
+  },
+  {
+    "code": 2310909,
+    "name": "Necromancer Duanka",
+    "divisor": 1
+  },
+  {
+    "code": 2310910,
+    "name": "Ferocious Horn Nuakum",
+    "divisor": 1
+  },
+  {
+    "code": 2311301,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2311302,
+    "name": "Multiverse Veltiras",
+    "divisor": 1
+  },
+  {
+    "code": 2311303,
+    "name": "Solemn Valkan",
+    "divisor": 1
+  },
+  {
+    "code": 2311401,
+    "name": "Glassvein",
+    "divisor": 1
+  },
+  {
+    "code": 2311402,
+    "name": "Nazarak",
+    "divisor": 1
+  },
+  {
+    "code": 2311403,
+    "name": "Nathara",
+    "divisor": 1
+  },
+  {
+    "code": 2320104,
+    "name": "Enhanced Harcon",
+    "divisor": 1
+  },
+  {
+    "code": 2320108,
+    "name": "Neglected Gadioton",
+    "divisor": 1
+  },
+  {
+    "code": 2320171,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2320172,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2320173,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2320174,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2320178,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2320206,
+    "name": "Guardian Captain Raur",
+    "divisor": 1
+  },
+  {
+    "code": 2320207,
+    "name": "Judge Urahum",
+    "divisor": 1
+  },
+  {
+    "code": 2320218,
+    "name": "Divine Auldor",
+    "divisor": 1
+  },
+  {
+    "code": 2320310,
+    "name": "Silver Blade Rotan",
+    "divisor": 1
+  },
+  {
+    "code": 2320311,
+    "name": "Red Spark Ignus",
+    "divisor": 1
+  },
+  {
+    "code": 2320312,
+    "name": "Black Smoke Murute",
+    "divisor": 1
+  },
+  {
+    "code": 2320371,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2320401,
+    "name": "Phantasmal Lakshmi",
+    "divisor": 1
+  },
+  {
+    "code": 2320403,
+    "name": "Predator Saraswati",
+    "divisor": 1
+  },
+  {
+    "code": 2320470,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2320471,
+    "name": "Transcendent Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2320502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2320507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2320508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2320509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2320515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2320517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2320601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2320615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2320616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2320810,
+    "name": "Tiere",
+    "divisor": 1
+  },
+  {
+    "code": 2320811,
+    "name": "Thamon",
+    "divisor": 1
+  },
+  {
+    "code": 2320812,
+    "name": "Vakron",
+    "divisor": 1
+  },
+  {
+    "code": 2320907,
+    "name": "Shining Mau Totem",
+    "divisor": 1
+  },
+  {
+    "code": 2320908,
+    "name": "Watchdog Kwapo",
+    "divisor": 1
+  },
+  {
+    "code": 2320909,
+    "name": "Necromancer Duanka",
+    "divisor": 1
+  },
+  {
+    "code": 2320910,
+    "name": "Ferocious Horn Nuakum",
+    "divisor": 1
+  },
+  {
+    "code": 2321301,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2321302,
+    "name": "Multiverse Veltiras",
+    "divisor": 1
+  },
+  {
+    "code": 2321303,
+    "name": "Solemn Valkan",
+    "divisor": 1
+  },
+  {
+    "code": 2321401,
+    "name": "Glassvein",
+    "divisor": 1
+  },
+  {
+    "code": 2321402,
+    "name": "Nazarak",
+    "divisor": 1
+  },
+  {
+    "code": 2321403,
+    "name": "Nathara",
+    "divisor": 1
+  },
+  {
+    "code": 2321502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2321507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2321508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2321509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2321515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2321517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2322502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2322507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2322508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2322509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2322515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2322517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2323502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2323507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2323508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2323509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2323515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2323517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2324502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2324507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2324508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2324509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2324515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2324517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2325502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2325507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2325508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2325509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2325515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2325517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2326502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2326507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2326508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2326509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2326515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2326517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2327502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2327507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2327508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2327509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2327515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2327517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2328502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2328507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2328508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2328509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2328515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2328517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2329502,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2329507,
+    "name": "Manager Nasium",
+    "divisor": 1
+  },
+  {
+    "code": 2329508,
+    "name": "Broodkeeper Nayatman",
+    "divisor": 1
+  },
+  {
+    "code": 2329509,
+    "name": "Decaying Durvati",
+    "divisor": 1
+  },
+  {
+    "code": 2329515,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2329517,
+    "name": "Decaying Durvati (Specimen)",
+    "divisor": 1
+  },
+  {
+    "code": 2330104,
+    "name": "Enhanced Harcon",
+    "divisor": 1
+  },
+  {
+    "code": 2330108,
+    "name": "Neglected Gadioton",
+    "divisor": 1
+  },
+  {
+    "code": 2330171,
+    "name": "Ultimate Berk",
+    "divisor": 1
+  },
+  {
+    "code": 2330206,
+    "name": "Guardian Captain Raur",
+    "divisor": 1
+  },
+  {
+    "code": 2330207,
+    "name": "Judge Urahum",
+    "divisor": 1
+  },
+  {
+    "code": 2330218,
+    "name": "Divine Auldor",
+    "divisor": 1
+  },
+  {
+    "code": 2330310,
+    "name": "Silver Blade Rotan",
+    "divisor": 1
+  },
+  {
+    "code": 2330311,
+    "name": "Red Spark Ignus",
+    "divisor": 1
+  },
+  {
+    "code": 2330312,
+    "name": "Black Smoke Murute",
+    "divisor": 1
+  },
+  {
+    "code": 2330371,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2330401,
+    "name": "Phantasmal Lakshmi",
+    "divisor": 1
+  },
+  {
+    "code": 2330403,
+    "name": "Predator Saraswati",
+    "divisor": 1
+  },
+  {
+    "code": 2330423,
+    "name": "Afflicted Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2330424,
+    "name": "Transcendent Bakarma",
+    "divisor": 1
+  },
+  {
+    "code": 2330601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2330615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2330616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2330707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2330708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2330709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2340057,
+    "name": "Grandios",
+    "divisor": 4
+  },
+  {
+    "code": 2340158,
+    "name": "Air Raiders Captain Tetrata",
+    "divisor": 4
+  },
+  {
+    "code": 2340255,
+    "name": "Executor of the Magical Sword",
+    "divisor": 4
+  },
+  {
+    "code": 2340601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2340615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2340616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2340707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2340708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2340709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2341601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2341615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2341616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2342601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2342615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2342616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2343601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2343615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2343616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2344601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2344615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2344616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2345107,
+    "name": "Grandios",
+    "divisor": 4
+  },
+  {
+    "code": 2345601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2345615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2345616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2346601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2346615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2346616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2347601,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2347615,
+    "name": "Nazmun",
+    "divisor": 1
+  },
+  {
+    "code": 2347616,
+    "name": "Gelcos",
+    "divisor": 1
+  },
+  {
+    "code": 2350310,
+    "name": "Silver Blade Rotan",
+    "divisor": 1
+  },
+  {
+    "code": 2350311,
+    "name": "Red Spark Ignus",
+    "divisor": 1
+  },
+  {
+    "code": 2350312,
+    "name": "Black Smoke Murute",
+    "divisor": 1
+  },
+  {
+    "code": 2350315,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2350707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2350708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2350709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2351707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2351708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2351709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2352707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2352708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2352709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2353707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2353708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2353709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2354707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2354708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2354709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2355707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2355708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2355709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2356707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2356708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2356709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2357707,
+    "name": "Siliator of Deceit",
+    "divisor": 1
+  },
+  {
+    "code": 2357708,
+    "name": "Ruthilis of Pain",
+    "divisor": 1
+  },
+  {
+    "code": 2357709,
+    "name": "Talisra of the Void",
+    "divisor": 1
+  },
+  {
+    "code": 2370001,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370002,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370003,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370004,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370038,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370039,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370040,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370041,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370072,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370073,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370074,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370075,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370201,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370202,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370203,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370204,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370221,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370222,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370223,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370224,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370241,
+    "name": "High Commander Nahid",
+    "divisor": 1
+  },
+  {
+    "code": 2370242,
+    "name": "Division Commander Radbima",
+    "divisor": 1
+  },
+  {
+    "code": 2370243,
+    "name": "Beritra Air Raiders Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370244,
+    "name": "Beritra Strike Force Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370401,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370402,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370403,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370404,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370430,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370431,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370432,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370433,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370460,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370461,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370462,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370463,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370502,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370503,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370504,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370505,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370533,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370534,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370535,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370536,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370564,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370565,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370566,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370567,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370700,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370701,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370702,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370703,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370735,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370736,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370737,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370738,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370770,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370771,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370772,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370773,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370800,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370801,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370802,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370803,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370831,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370832,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370833,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370834,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370862,
+    "name": "Quartermaster General Advir",
+    "divisor": 1
+  },
+  {
+    "code": 2370863,
+    "name": "Resource Warden Kabira",
+    "divisor": 1
+  },
+  {
+    "code": 2370864,
+    "name": "Resource Base Shock Troopers Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2370865,
+    "name": "Resource Base Scouts Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2400017,
+    "name": "Melted Danar",
+    "divisor": 1
+  },
+  {
+    "code": 2400074,
+    "name": "Black Warrior Aed",
+    "divisor": 1
+  },
+  {
+    "code": 2400140,
+    "name": "Faithful Rajit",
+    "divisor": 1
+  },
+  {
+    "code": 2400141,
+    "name": "Berserker Vargor",
+    "divisor": 1
+  },
+  {
+    "code": 2400212,
+    "name": "Predator Garsan",
+    "divisor": 1
+  },
+  {
+    "code": 2400223,
+    "name": "Blood Warrior Lannar",
+    "divisor": 1
+  },
+  {
+    "code": 2400274,
+    "name": "Deceiver Trid",
+    "divisor": 1
+  },
+  {
+    "code": 2400335,
+    "name": "Blue Wave Kelpina",
+    "divisor": 1
+  },
+  {
+    "code": 2400353,
+    "name": "High Overseer Nutah",
+    "divisor": 1
+  },
+  {
+    "code": 2400358,
+    "name": "Advisor Resana",
+    "divisor": 1
+  },
+  {
+    "code": 2400419,
+    "name": "Special Operations Leader Linx",
+    "divisor": 1
+  },
+  {
+    "code": 2400424,
+    "name": "Desecrator Newbold",
+    "divisor": 1
+  },
+  {
+    "code": 2400425,
+    "name": "Specter Archon Axios",
+    "divisor": 1
+  },
+  {
+    "code": 2400474,
+    "name": "Addicted Hardirun",
+    "divisor": 1
+  },
+  {
+    "code": 2400504,
+    "name": "Executioner Barthien",
+    "divisor": 1
+  },
+  {
+    "code": 2400593,
+    "name": "Drakan Battalion Weapon Guruta",
+    "divisor": 1
+  },
+  {
+    "code": 2400607,
+    "name": "Veteran Shujakan",
+    "divisor": 1
+  },
+  {
+    "code": 2400608,
+    "name": "Visionary Karuka",
+    "divisor": 1
+  },
+  {
+    "code": 2400659,
+    "name": "Dark Shadow Vishwada",
+    "divisor": 1
+  },
+  {
+    "code": 2400709,
+    "name": "Sharp Shylak",
+    "divisor": 1
+  },
+  {
+    "code": 2400800,
+    "name": "Immortal Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2400853,
+    "name": "High Commander Lagta",
+    "divisor": 1
+  },
+  {
+    "code": 2400854,
+    "name": "Soul Ruler Kashapa",
+    "divisor": 1
+  },
+  {
+    "code": 2400855,
+    "name": "Silent Dartan",
+    "divisor": 1
+  },
+  {
+    "code": 2404001,
+    "name": "Searcher Sudka",
+    "divisor": 4
+  },
+  {
+    "code": 2404002,
+    "name": "Brutal Zrash",
+    "divisor": 4
+  },
+  {
+    "code": 2404003,
+    "name": "Cruel Rodar",
+    "divisor": 4
+  },
+  {
+    "code": 2404004,
+    "name": "Disciplinant Corag",
+    "divisor": 4
+  },
+  {
+    "code": 2404005,
+    "name": "Officer Darc",
+    "divisor": 4
+  },
+  {
+    "code": 2404006,
+    "name": "Watcher Brons",
+    "divisor": 4
+  },
+  {
+    "code": 2404007,
+    "name": "Annihilator Kardon",
+    "divisor": 4
+  },
+  {
+    "code": 2404008,
+    "name": "Mad Lucant",
+    "divisor": 4
+  },
+  {
+    "code": 2404009,
+    "name": "Predator Zrak",
+    "divisor": 4
+  },
+  {
+    "code": 2404010,
+    "name": "Ravager Krovan",
+    "divisor": 4
+  },
+  {
+    "code": 2404011,
+    "name": "Bonechilling Rokand",
+    "divisor": 4
+  },
+  {
+    "code": 2404012,
+    "name": "Immortal Garmon",
+    "divisor": 4
+  },
+  {
+    "code": 2404013,
+    "name": "Destroyer Krosch",
+    "divisor": 4
+  },
+  {
+    "code": 2404014,
+    "name": "Torturer Tregon",
+    "divisor": 4
+  },
+  {
+    "code": 2404015,
+    "name": "Slayer Kroms",
+    "divisor": 4
+  },
+  {
+    "code": 2405006,
+    "name": "Captain Rubek",
+    "divisor": 4
+  },
+  {
+    "code": 2405023,
+    "name": "Graverobber Gottfred",
+    "divisor": 4
+  },
+  {
+    "code": 2405045,
+    "name": "Patrol Captain Dinasha",
+    "divisor": 4
+  },
+  {
+    "code": 2405062,
+    "name": "Forester Scafid",
+    "divisor": 4
+  },
+  {
+    "code": 2405072,
+    "name": "Forester Scafid",
+    "divisor": 4
+  },
+  {
+    "code": 2405085,
+    "name": "Leader Torben",
+    "divisor": 4
+  },
+  {
+    "code": 2405106,
+    "name": "Blades Enforcer Nadin",
+    "divisor": 4
+  },
+  {
+    "code": 2405120,
+    "name": "Rejectionist Durec",
+    "divisor": 4
+  },
+  {
+    "code": 2405144,
+    "name": "Bierts Wraith",
+    "divisor": 4
+  },
+  {
+    "code": 2405150,
+    "name": "Commander Flauke",
+    "divisor": 4
+  },
+  {
+    "code": 2405151,
+    "name": "Commander Flauke",
+    "divisor": 4
+  },
+  {
+    "code": 2405152,
+    "name": "Commander Flauke",
+    "divisor": 4
+  },
+  {
+    "code": 2405175,
+    "name": "Wanted Granach",
+    "divisor": 4
+  },
+  {
+    "code": 2405194,
+    "name": "Chief Officer Latrima",
+    "divisor": 4
+  },
+  {
+    "code": 2405215,
+    "name": "Leader Detlef",
+    "divisor": 4
+  },
+  {
+    "code": 2405236,
+    "name": "Extermination Unit Captain Barahta",
+    "divisor": 4
+  },
+  {
+    "code": 2405256,
+    "name": "Watch Captain Amurahta",
+    "divisor": 4
+  },
+  {
+    "code": 2405276,
+    "name": "Guard Troopers Captain Andsha",
+    "divisor": 4
+  },
+  {
+    "code": 2406034,
+    "name": "Edgewalker Pargon",
+    "divisor": 1
+  },
+  {
+    "code": 2406035,
+    "name": "Predator Colossus Balakh",
+    "divisor": 1
+  },
+  {
+    "code": 2406071,
+    "name": "Crimson Blizzard Renulf",
+    "divisor": 1
+  },
+  {
+    "code": 2406093,
+    "name": "Frostarmor Harkhan",
+    "divisor": 1
+  },
+  {
+    "code": 2406094,
+    "name": "Azure Tear Glacia",
+    "divisor": 1
+  },
+  {
+    "code": 2406129,
+    "name": "Wings of Hellfire Fios",
+    "divisor": 1
+  },
+  {
+    "code": 2406131,
+    "name": "Lava Heart Batu",
+    "divisor": 1
+  },
+  {
+    "code": 2406132,
+    "name": "Elite Inquisitor Verant",
+    "divisor": 1
+  },
+  {
+    "code": 2406181,
+    "name": "Mad Watcher Bulagan",
+    "divisor": 1
+  },
+  {
+    "code": 2406182,
+    "name": "Vulcanarch Grymnir",
+    "divisor": 1
+  },
+  {
+    "code": 2406990,
+    "name": "Third Unit Captain Minasara",
+    "divisor": 1
+  },
+  {
+    "code": 2406991,
+    "name": "Deputy Commander Sarvakha",
+    "divisor": 1
+  },
+  {
+    "code": 2406992,
+    "name": "High Commander Taytra",
+    "divisor": 1
+  },
+  {
+    "code": 2407000,
+    "name": "Revenant Alegos",
+    "divisor": 4
+  },
+  {
+    "code": 2407023,
+    "name": "Fully Mutated Steinun",
+    "divisor": 4
+  },
+  {
+    "code": 2407046,
+    "name": "Watch Captain Dharvata",
+    "divisor": 4
+  },
+  {
+    "code": 2407059,
+    "name": "Captor Kalahanta",
+    "divisor": 4
+  },
+  {
+    "code": 2407060,
+    "name": "Terminator Antakhara",
+    "divisor": 4
+  },
+  {
+    "code": 2407061,
+    "name": "Crusher Vajradant",
+    "divisor": 4
+  },
+  {
+    "code": 2407062,
+    "name": "Patalajya the Scourged",
+    "divisor": 4
+  },
+  {
+    "code": 2407063,
+    "name": "Archivist Varnaksha",
+    "divisor": 4
+  },
+  {
+    "code": 2407064,
+    "name": "Arbiter Meganodh",
+    "divisor": 4
+  },
+  {
+    "code": 2407065,
+    "name": "Sunderer Ugravahu",
+    "divisor": 4
+  },
+  {
+    "code": 2407075,
+    "name": "Pulke",
+    "divisor": 4
+  },
+  {
+    "code": 2407094,
+    "name": "Dinakra",
+    "divisor": 4
+  },
+  {
+    "code": 2500016,
+    "name": "Mutated Queen Klaw",
+    "divisor": 4
+  },
+  {
+    "code": 2500045,
+    "name": "Blades Assault Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2500072,
+    "name": "Role: Karas",
+    "divisor": 4
+  },
+  {
+    "code": 2500086,
+    "name": "Giant Drake Minusha",
+    "divisor": 4
+  },
+  {
+    "code": 2500107,
+    "name": "Blades Search Party Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2500119,
+    "name": "Marauder Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2500120,
+    "name": "Captain's Pet Karnif",
+    "divisor": 4
+  },
+  {
+    "code": 2500131,
+    "name": "Black Claw High Shaman",
+    "divisor": 4
+  },
+  {
+    "code": 2500138,
+    "name": "Mysterious Marauder Chief",
+    "divisor": 4
+  },
+  {
+    "code": 2500141,
+    "name": "Soulless Archon Warrior",
+    "divisor": 4
+  },
+  {
+    "code": 2590089,
+    "name": "Black Claw Chief Muqaka",
+    "divisor": 1
+  },
+  {
+    "code": 2590118,
+    "name": "Drakan Chaser Captain",
+    "divisor": 1
+  },
+  {
+    "code": 2590120,
+    "name": "Elvida",
+    "divisor": 1
+  },
+  {
+    "code": 2590134,
+    "name": "Mumu Overseer",
+    "divisor": 1
+  },
+  {
+    "code": 2700003,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2700009,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2700089,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2700091,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2700092,
+    "name": "Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2700099,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2700100,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2700242,
+    "name": "Dream Guardian Eonos",
+    "divisor": 4
+  },
+  {
+    "code": 2700265,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2700306,
+    "name": "Trafficker Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2700374,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2700415,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2700440,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2700461,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2700552,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2700553,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2700691,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2700692,
+    "name": "Rampaging Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2700694,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2700695,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2700696,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2700703,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2700715,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2700716,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2700731,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2700744,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2700835,
+    "name": "Corrupted Deios",
+    "divisor": 4
+  },
+  {
+    "code": 2700837,
+    "name": "Power-Possessed Kianah",
+    "divisor": 4
+  },
+  {
+    "code": 2700840,
+    "name": "Obsessive Lithla",
+    "divisor": 4
+  },
+  {
+    "code": 2700845,
+    "name": "Idris",
+    "divisor": 4
+  },
+  {
+    "code": 2700847,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2700856,
+    "name": "Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2700857,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2700876,
+    "name": "Mature Baratuna",
+    "divisor": 4
+  },
+  {
+    "code": 2700886,
+    "name": "Sentinel Nuraka",
+    "divisor": 4
+  },
+  {
+    "code": 2700908,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2700914,
+    "name": "Toblini",
+    "divisor": 4
+  },
+  {
+    "code": 2700916,
+    "name": "Poacher Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2700921,
+    "name": "Trickster Boss Korhe",
+    "divisor": 4
+  },
+  {
+    "code": 2700942,
+    "name": "Captain Nagto",
+    "divisor": 4
+  },
+  {
+    "code": 2700949,
+    "name": "Guardian Spirit Drant",
+    "divisor": 4
+  },
+  {
+    "code": 2700952,
+    "name": "Priestess Soirel",
+    "divisor": 4
+  },
+  {
+    "code": 2700963,
+    "name": "Pilgrim Santian",
+    "divisor": 4
+  },
+  {
+    "code": 2700975,
+    "name": "Lieutenant Sineora",
+    "divisor": 4
+  },
+  {
+    "code": 2700981,
+    "name": "Mutated Insectoid Valka",
+    "divisor": 4
+  },
+  {
+    "code": 2700988,
+    "name": "Seyron of the Lake",
+    "divisor": 4
+  },
+  {
+    "code": 2701013,
+    "name": "Cruel Sumakhi",
+    "divisor": 4
+  },
+  {
+    "code": 2701020,
+    "name": "Queen Karat",
+    "divisor": 4
+  },
+  {
+    "code": 2701034,
+    "name": "Lake Guardian",
+    "divisor": 1
+  },
+  {
+    "code": 2701035,
+    "name": "Scion Behit",
+    "divisor": 4
+  },
+  {
+    "code": 2701043,
+    "name": "Kraka Ritualist",
+    "divisor": 4
+  },
+  {
+    "code": 2701048,
+    "name": "Sanctuary Guardian",
+    "divisor": 4
+  },
+  {
+    "code": 2701051,
+    "name": "Guardian's Illusion",
+    "divisor": 4
+  },
+  {
+    "code": 2701055,
+    "name": "Vanguard Captain Vamana",
+    "divisor": 4
+  },
+  {
+    "code": 2701072,
+    "name": "Wanted Criminal Kius",
+    "divisor": 4
+  },
+  {
+    "code": 2701078,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2701090,
+    "name": "Mutated Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2701096,
+    "name": "Forgotten Lenara",
+    "divisor": 4
+  },
+  {
+    "code": 2701101,
+    "name": "Corpse-Eating Targoth",
+    "divisor": 4
+  },
+  {
+    "code": 2701118,
+    "name": "Quartermaster Tyius",
+    "divisor": 4
+  },
+  {
+    "code": 2701128,
+    "name": "Drakan Battle Officer",
+    "divisor": 1
+  },
+  {
+    "code": 2701130,
+    "name": "Mutated Dehinon",
+    "divisor": 4
+  },
+  {
+    "code": 2701138,
+    "name": "Enraged Kernon",
+    "divisor": 4
+  },
+  {
+    "code": 2701142,
+    "name": "Reaver Lisansa",
+    "divisor": 4
+  },
+  {
+    "code": 2701145,
+    "name": "Venomous Insect Sram",
+    "divisor": 4
+  },
+  {
+    "code": 2701148,
+    "name": "Rampaging Neparan's Soul",
+    "divisor": 4
+  },
+  {
+    "code": 2701151,
+    "name": "Hystan's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2701155,
+    "name": "Zikel's Nightmare",
+    "divisor": 4
+  },
+  {
+    "code": 2701156,
+    "name": "Kaisinel's Nightmare",
+    "divisor": 4
+  },
+  {
+    "code": 2701157,
+    "name": "Narun",
+    "divisor": 4
+  },
+  {
+    "code": 2701184,
+    "name": "Mutant Dratona",
+    "divisor": 4
+  },
+  {
+    "code": 2701202,
+    "name": "Fanatic Ullimus",
+    "divisor": 4
+  },
+  {
+    "code": 2701227,
+    "name": "Legion Outlaws Leader",
+    "divisor": 4
+  },
+  {
+    "code": 2701250,
+    "name": "Balhash",
+    "divisor": 4
+  },
+  {
+    "code": 2701275,
+    "name": "Scouts Captain Lamnah",
+    "divisor": 4
+  },
+  {
+    "code": 2701280,
+    "name": "Shaman Kumbahum",
+    "divisor": 4
+  },
+  {
+    "code": 2701287,
+    "name": "Rare Fungpus",
+    "divisor": 4
+  },
+  {
+    "code": 2701298,
+    "name": "Desperate Robere's Apparition",
+    "divisor": 4
+  },
+  {
+    "code": 2701310,
+    "name": "Daine of Tears",
+    "divisor": 4
+  },
+  {
+    "code": 2701344,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2701361,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2701373,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2701374,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2701378,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2701388,
+    "name": "Rakut",
+    "divisor": 1
+  },
+  {
+    "code": 2701399,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2701401,
+    "name": "Lake Guardian",
+    "divisor": 1
+  },
+  {
+    "code": 2701409,
+    "name": "Chaser Stof",
+    "divisor": 1
+  },
+  {
+    "code": 2701440,
+    "name": "Attendant Hugin",
+    "divisor": 1
+  },
+  {
+    "code": 2701449,
+    "name": "Frozen Executor Erne",
+    "divisor": 1
+  },
+  {
+    "code": 2701454,
+    "name": "Warrior Wasti",
+    "divisor": 4
+  },
+  {
+    "code": 2701463,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2701480,
+    "name": "Informant Zibro",
+    "divisor": 4
+  },
+  {
+    "code": 2701485,
+    "name": "Custodian Chakkerman",
+    "divisor": 4
+  },
+  {
+    "code": 2701492,
+    "name": "Mind-Controlled Pelleir",
+    "divisor": 1
+  },
+  {
+    "code": 2701501,
+    "name": "Scouts Captain Nahram",
+    "divisor": 4
+  },
+  {
+    "code": 2701521,
+    "name": "Caretaker Sinandash",
+    "divisor": 4
+  },
+  {
+    "code": 2701525,
+    "name": "Reckless Jonas",
+    "divisor": 4
+  },
+  {
+    "code": 2701544,
+    "name": "Plantation Storage Supply Captain",
+    "divisor": 4
+  },
+  {
+    "code": 2701551,
+    "name": "Depository Manager Arya",
+    "divisor": 4
+  },
+  {
+    "code": 2701568,
+    "name": "Prison Compound Warden Homish",
+    "divisor": 4
+  },
+  {
+    "code": 2701569,
+    "name": "Supervisor Sinah",
+    "divisor": 4
+  },
+  {
+    "code": 2701578,
+    "name": "Mad Lazekhi",
+    "divisor": 4
+  },
+  {
+    "code": 2701585,
+    "name": "Mirror Guardian",
+    "divisor": 4
+  },
+  {
+    "code": 2701697,
+    "name": "Jailor Iagosh",
+    "divisor": 1
+  },
+  {
+    "code": 2701702,
+    "name": "Lamuatan",
+    "divisor": 1
+  },
+  {
+    "code": 2701753,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2701774,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2701788,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2701789,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2701807,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2701829,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2701830,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2701841,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2701842,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2701853,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2701854,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2701866,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2701892,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2701913,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2701930,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2701947,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2701964,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2701990,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2702001,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2702012,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2702026,
+    "name": "Mau Boss Tshulaga",
+    "divisor": 4
+  },
+  {
+    "code": 2702076,
+    "name": "Steaming Arbellune",
+    "divisor": 4
+  },
+  {
+    "code": 2702110,
+    "name": "Abyssal Chloris",
+    "divisor": 4
+  },
+  {
+    "code": 2702111,
+    "name": "Scribe Vellum",
+    "divisor": 4
+  },
+  {
+    "code": 2702132,
+    "name": "Marchutan's Shell",
+    "divisor": 1
+  },
+  {
+    "code": 2702133,
+    "name": "Enraged Avelcatus",
+    "divisor": 4
+  },
+  {
+    "code": 2702137,
+    "name": "Forgotten Rekhorn",
+    "divisor": 1
+  },
+  {
+    "code": 2702161,
+    "name": "Idris",
+    "divisor": 1
+  },
+  {
+    "code": 2702177,
+    "name": "Leader Korin",
+    "divisor": 4
+  },
+  {
+    "code": 2702197,
+    "name": "Labyrinth Warden Hurukak",
+    "divisor": 4
+  },
+  {
+    "code": 2702232,
+    "name": "Eiron Outlaw Drok",
+    "divisor": 4
+  },
+  {
+    "code": 2702241,
+    "name": "Revenant Tifus",
+    "divisor": 4
+  },
+  {
+    "code": 2702274,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2702286,
+    "name": "Menoch",
+    "divisor": 1
+  },
+  {
+    "code": 2702298,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2702309,
+    "name": "Claudia",
+    "divisor": 1
+  },
+  {
+    "code": 2702326,
+    "name": "Filthy Grollack",
+    "divisor": 4
+  },
+  {
+    "code": 2702329,
+    "name": "Librarian Messa",
+    "divisor": 4
+  },
+  {
+    "code": 2702359,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702372,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2702373,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2702384,
+    "name": "Featherstorm Duduri",
+    "divisor": 1
+  },
+  {
+    "code": 2702385,
+    "name": "Watchful Raptor Dodori",
+    "divisor": 1
+  },
+  {
+    "code": 2702396,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2702409,
+    "name": "Divided Aponos",
+    "divisor": 1
+  },
+  {
+    "code": 2702461,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702462,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702475,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702488,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702501,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702514,
+    "name": "Forgotten Rekhorn",
+    "divisor": 1
+  },
+  {
+    "code": 2702524,
+    "name": "Forgotten Rekhorn",
+    "divisor": 1
+  },
+  {
+    "code": 2702534,
+    "name": "Forgotten Rekhorn",
+    "divisor": 1
+  },
+  {
+    "code": 2702544,
+    "name": "Forgotten Rekhorn",
+    "divisor": 1
+  },
+  {
+    "code": 2702564,
+    "name": "Mutated Malgerre",
+    "divisor": 4
+  },
+  {
+    "code": 2702572,
+    "name": "Giant Karnif Istan",
+    "divisor": 4
+  },
+  {
+    "code": 2702574,
+    "name": "Lamiphedon",
+    "divisor": 4
+  },
+  {
+    "code": 2702598,
+    "name": "Abyssal Sigebert",
+    "divisor": 4
+  },
+  {
+    "code": 2702611,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702623,
+    "name": "Eloen",
+    "divisor": 1
+  },
+  {
+    "code": 2702648,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702659,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702670,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702681,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702692,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2702703,
+    "name": "Karlix",
+    "divisor": 1
+  },
+  {
+    "code": 2920445,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2920446,
+    "name": "Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2921298,
+    "name": "Prideful Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2921299,
+    "name": "Prideful Atiel",
+    "divisor": 1
+  },
+  {
+    "code": 2980000,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980001,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980002,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980003,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980004,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980005,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980006,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980007,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980008,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980009,
+    "name": "High Priestess's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980010,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980011,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980012,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980013,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980014,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980015,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980016,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980017,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980018,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980019,
+    "name": "Sealed Sura",
+    "divisor": 1
+  },
+  {
+    "code": 2980020,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980021,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980022,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980023,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980024,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980025,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980026,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980027,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980028,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980029,
+    "name": "Oathbreaker Gartua",
+    "divisor": 1
+  },
+  {
+    "code": 2980040,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980041,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980042,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980043,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980044,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980045,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980046,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980047,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980048,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980049,
+    "name": "Gatekeeper Pinopi",
+    "divisor": 1
+  },
+  {
+    "code": 2980050,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980051,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980052,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980053,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980054,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980055,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980056,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980057,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980058,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980059,
+    "name": "Root Mythical Bird Aultross",
+    "divisor": 1
+  },
+  {
+    "code": 2980060,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980061,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980062,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980063,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980064,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980065,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980066,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980067,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980068,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980069,
+    "name": "Aulamus",
+    "divisor": 1
+  },
+  {
+    "code": 2980070,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980071,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980072,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980073,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980074,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980075,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980076,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980077,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980078,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980079,
+    "name": "Sharp Aulak",
+    "divisor": 1
+  },
+  {
+    "code": 2980080,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980081,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980082,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980083,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980084,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980085,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980086,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980087,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980088,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980089,
+    "name": "Ritualist Aulisa",
+    "divisor": 1
+  },
+  {
+    "code": 2980090,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980091,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980092,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980093,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980094,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980095,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980096,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980097,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980098,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980099,
+    "name": "Heladrir",
+    "divisor": 1
+  },
+  {
+    "code": 2980100,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980101,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980102,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980103,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980104,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980105,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980106,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980107,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980108,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980109,
+    "name": "Executioner Nua",
+    "divisor": 1
+  },
+  {
+    "code": 2980110,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980111,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980112,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980113,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980114,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980115,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980116,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980117,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980118,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980119,
+    "name": "Modified Bargott",
+    "divisor": 1
+  },
+  {
+    "code": 2980120,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980121,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980122,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980123,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980124,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980125,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980126,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980127,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980128,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980129,
+    "name": "Mutated Ulgorn",
+    "divisor": 1
+  },
+  {
+    "code": 2980130,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980131,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980132,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980133,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980134,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980135,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980136,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980137,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980138,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980139,
+    "name": "Kaisinel's Illusion",
+    "divisor": 1
+  },
+  {
+    "code": 2980140,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980141,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980142,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980143,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980144,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980145,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980146,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980147,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980148,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980149,
+    "name": "Enraged Reda",
+    "divisor": 1
+  },
+  {
+    "code": 2980150,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980151,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980152,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980153,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980154,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980155,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980156,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980157,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980158,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980159,
+    "name": "Furious Feruk",
+    "divisor": 1
+  },
+  {
+    "code": 2980160,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980161,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980162,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980163,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980164,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980165,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980166,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980167,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980168,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980169,
+    "name": "Soulreaper Rathman",
+    "divisor": 1
+  },
+  {
+    "code": 2980170,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980171,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980172,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980173,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980174,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980175,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980176,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980177,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980178,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980179,
+    "name": "Fortress Guardian Notun",
+    "divisor": 1
+  },
+  {
+    "code": 2980180,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980181,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980182,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980183,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980184,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980185,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980186,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980187,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980188,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980189,
+    "name": "Warden Santras",
+    "divisor": 1
+  },
+  {
+    "code": 2980190,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980191,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980192,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980193,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980194,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980195,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980196,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980197,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980198,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980199,
+    "name": "Incarnated Warding Feather",
+    "divisor": 1
+  },
+  {
+    "code": 2980200,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980201,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980202,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980203,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980204,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980205,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980206,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980207,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980208,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980209,
+    "name": "Tyrant Tassin",
+    "divisor": 1
+  },
+  {
+    "code": 2980210,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980211,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980212,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980213,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980214,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980215,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980216,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980217,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980218,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980219,
+    "name": "Mutated Gerod",
+    "divisor": 1
+  },
+  {
+    "code": 2980220,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980221,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980222,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980223,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980224,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980225,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980226,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980227,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980228,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980229,
+    "name": "Zikel's Apparition",
+    "divisor": 1
+  },
+  {
+    "code": 2980230,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980231,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980232,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980233,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980234,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980235,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980236,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980237,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980238,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980239,
+    "name": "Sanctum Guardian Gauss",
+    "divisor": 1
+  },
+  {
+    "code": 2980240,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980241,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980242,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980243,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980244,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980245,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980246,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980247,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980248,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980249,
+    "name": "Fafnir's Poison Blood",
+    "divisor": 1
+  },
+  {
+    "code": 2980250,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980251,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980252,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980253,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980254,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980255,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980256,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980257,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980258,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980259,
+    "name": "Wraith Giselle",
+    "divisor": 1
+  },
+  {
+    "code": 2980260,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980261,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980262,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980263,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980264,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980265,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980266,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980267,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980268,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980269,
+    "name": "Kromede's Desire",
+    "divisor": 1
+  },
+  {
+    "code": 2980270,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980271,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980272,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980273,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980274,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980275,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980276,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980277,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980278,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980279,
+    "name": "Culminant Paton",
+    "divisor": 1
+  },
+  {
+    "code": 2980280,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980281,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980282,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980283,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980284,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980285,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980286,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980287,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980288,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980289,
+    "name": "Ascended Atheron",
+    "divisor": 1
+  },
+  {
+    "code": 2980290,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980291,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980292,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980293,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980294,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980295,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980296,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980297,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980298,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980299,
+    "name": "Scout Captain Ked",
+    "divisor": 1
+  },
+  {
+    "code": 2980300,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980301,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980302,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980303,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980304,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980305,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980306,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980307,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980308,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  },
+  {
+    "code": 2980309,
+    "name": "Lieutenant Hebran",
+    "divisor": 1
+  }
+]

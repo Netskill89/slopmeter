@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SlopMeter
+Comment=AION 2 DPS meter for Linux Wayland
+Exec=slopmeter
+Icon=slopmeter
+Terminal=false
+Categories=Game;Utility;
+StartupWMClass=SlopMeter

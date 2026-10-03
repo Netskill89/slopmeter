@@ -1,0 +1,40 @@
+# Generated builds and release tools
+/aiondps
+/slopmeter-capture
+/build/
+/dist/
+/.tools/
+/.cache/
+*.AppImage
+*.AppImage.zsync
+*.test
+/coverage.out
+/coverage.html
+
+# Local configuration and private captures
+.env
+.env.*
+!.env.example
+*.pcap
+*.pcapng
+*.a2log
+*.pcap.gz
+*.pcapng.gz
+*.a2log.gz
+/history.json
+*.log
+
+# Editor / interpreter files
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+*~
+.DS_Store
+.agents/
+.codex/
+.aws/
+
+# Crash dumps
+core
+core.*

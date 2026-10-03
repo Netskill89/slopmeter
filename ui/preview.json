@@ -1,0 +1,282 @@
+[
+  {
+    "id": 900001,
+    "name": "Riven",
+    "class": "Gladiator",
+    "baseDps": 14000,
+    "skills": [
+      {
+        "id": 11010000,
+        "name": "Rending Blow",
+        "icon": "ICON_GL_SKILL_001.webp",
+        "weight": 0.28
+      },
+      {
+        "id": 11020000,
+        "name": "Keen Strike",
+        "icon": "ICON_GL_SKILL_002.webp",
+        "weight": 0.21
+      },
+      {
+        "id": 11030000,
+        "name": "Rupture Strike",
+        "icon": "ICON_GL_SKILL_003.webp",
+        "weight": 0.16
+      },
+      {
+        "id": 11040000,
+        "name": "Wrathful Strike",
+        "icon": "ICON_GL_SKILL_004.webp",
+        "weight": 0.12
+      },
+      {
+        "id": 11050000,
+        "name": "Crushing Wave",
+        "icon": "ICON_GL_SKILL_005.webp",
+        "weight": 0.09
+      },
+      {
+        "id": 11060000,
+        "name": "Frenzied Wave",
+        "icon": "ICON_GL_SKILL_006.webp",
+        "weight": 0.065
+      },
+      {
+        "id": 11080000,
+        "name": "Blade Toss",
+        "icon": "ICON_GL_SKILL_008.webp",
+        "weight": 0.045
+      },
+      {
+        "id": 11090000,
+        "name": "Blade Dance",
+        "icon": "ICON_GL_SKILL_009.webp",
+        "weight": 0.03
+      }
+    ]
+  },
+  {
+    "id": 900002,
+    "name": "Lyra",
+    "class": "Sorcerer",
+    "baseDps": 12000,
+    "skills": [
+      {
+        "id": 15010000,
+        "name": "Flame Scattershot",
+        "icon": "ICON_SO_SKILL_001.webp",
+        "weight": 0.28
+      },
+      {
+        "id": 15020000,
+        "name": "Firebomb",
+        "icon": "ICON_SO_SKILL_002.webp",
+        "weight": 0.21
+      },
+      {
+        "id": 15030000,
+        "name": "Burst",
+        "icon": "ICON_SO_SKILL_003.webp",
+        "weight": 0.16
+      },
+      {
+        "id": 15040000,
+        "name": "Firestorm",
+        "icon": "ICON_SO_SKILL_004.webp",
+        "weight": 0.12
+      },
+      {
+        "id": 15050000,
+        "name": "Blaze",
+        "icon": "ICON_SO_SKILL_005.webp",
+        "weight": 0.09
+      },
+      {
+        "id": 15060000,
+        "name": "Hellfire",
+        "icon": "ICON_SO_SKILL_006.webp",
+        "weight": 0.065
+      },
+      {
+        "id": 15080000,
+        "name": "Cold Snap",
+        "icon": "ICON_SO_SKILL_008.webp",
+        "weight": 0.045
+      },
+      {
+        "id": 15090000,
+        "name": "Ice Chain",
+        "icon": "ICON_SO_SKILL_009.webp",
+        "weight": 0.03
+      }
+    ]
+  },
+  {
+    "id": 900003,
+    "name": "Kael",
+    "class": "Ranger",
+    "baseDps": 9700,
+    "skills": [
+      {
+        "id": 14010000,
+        "name": "Deadshot",
+        "icon": "ICON_RA_SKILL_002.webp",
+        "weight": 0.28
+      },
+      {
+        "id": 14020000,
+        "name": "Snipe",
+        "icon": "ICON_RA_SKILL_001.webp",
+        "weight": 0.21
+      },
+      {
+        "id": 14030000,
+        "name": "Rapid Fire",
+        "icon": "ICON_RA_SKILL_003.webp",
+        "weight": 0.16
+      },
+      {
+        "id": 14040000,
+        "name": "Spiral Arrow",
+        "icon": "ICON_RA_SKILL_004.webp",
+        "weight": 0.12
+      },
+      {
+        "id": 14050000,
+        "name": "Drill Dart",
+        "icon": "ICON_RA_SKILL_005.webp",
+        "weight": 0.09
+      },
+      {
+        "id": 14060000,
+        "name": "Griffon Arrow",
+        "icon": "ICON_RA_SKILL_006.webp",
+        "weight": 0.065
+      },
+      {
+        "id": 14070000,
+        "name": "Suppressing Arrow",
+        "icon": "ICON_RA_SKILL_007.webp",
+        "weight": 0.045
+      },
+      {
+        "id": 14080000,
+        "name": "Burst Arrow",
+        "icon": "ICON_RA_SKILL_008.webp",
+        "weight": 0.03
+      }
+    ]
+  },
+  {
+    "id": 900004,
+    "name": "Mira",
+    "class": "Cleric",
+    "baseDps": 7800,
+    "skills": [
+      {
+        "id": 17010000,
+        "name": "Earth's Retribution",
+        "icon": "ICON_CL_SKILL_001.webp",
+        "weight": 0.28
+      },
+      {
+        "id": 17020000,
+        "name": "Thunder and Lightning",
+        "icon": "ICON_CL_SKILL_002.webp",
+        "weight": 0.21
+      },
+      {
+        "id": 17030000,
+        "name": "Discharge",
+        "icon": "ICON_CL_SKILL_003.webp",
+        "weight": 0.16
+      },
+      {
+        "id": 17040000,
+        "name": "Judgment Thunder",
+        "icon": "ICON_CL_SKILL_004.webp",
+        "weight": 0.12
+      },
+      {
+        "id": 17050000,
+        "name": "Divine Punishment",
+        "icon": "ICON_CL_SKILL_005.webp",
+        "weight": 0.09
+      },
+      {
+        "id": 17060000,
+        "name": "Bolt",
+        "icon": "ICON_CL_SKILL_006.webp",
+        "weight": 0.065
+      },
+      {
+        "id": 17070000,
+        "name": "Chain of Torment",
+        "icon": "ICON_CL_SKILL_007.webp",
+        "weight": 0.045
+      },
+      {
+        "id": 17080000,
+        "name": "Debilitating Mark",
+        "icon": "ICON_CL_SKILL_008.webp",
+        "weight": 0.03
+      }
+    ]
+  },
+  {
+    "id": 900005,
+    "name": "Seren",
+    "class": "Chanter",
+    "baseDps": 6200,
+    "skills": [
+      {
+        "id": 18010000,
+        "name": "Onslaught",
+        "icon": "ICON_CH_SKILL_001.webp",
+        "weight": 0.28
+      },
+      {
+        "id": 18020000,
+        "name": "Resonance Crush",
+        "icon": "ICON_CH_SKILL_002.webp",
+        "weight": 0.21
+      },
+      {
+        "id": 18030000,
+        "name": "Bolt Crush",
+        "icon": "ICON_CH_SKILL_003.webp",
+        "weight": 0.16
+      },
+      {
+        "id": 18040000,
+        "name": "Incandescent Blow",
+        "icon": "ICON_CH_SKILL_004.webp",
+        "weight": 0.12
+      },
+      {
+        "id": 18050000,
+        "name": "Bursting Blow",
+        "icon": "ICON_CH_SKILL_005.webp",
+        "weight": 0.09
+      },
+      {
+        "id": 18060000,
+        "name": "Impactful Crush",
+        "icon": "ICON_CH_SKILL_006.webp",
+        "weight": 0.065
+      },
+      {
+        "id": 18070000,
+        "name": "Crushing Blow",
+        "icon": "ICON_CH_SKILL_007.webp",
+        "weight": 0.045
+      },
+      {
+        "id": 18080000,
+        "name": "Wave Blow",
+        "icon": "ICON_CH_SKILL_008.webp",
+        "weight": 0.03
+      }
+    ]
+  }
+]

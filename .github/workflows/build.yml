@@ -1,0 +1,51 @@
+name: Build and release
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    container: golang:1.26-trixie
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: bash scripts/ci-deps.sh
+      - name: Build
+        run: bash scripts/build.sh
+        env:
+          CI_COMMIT_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
+      - name: Test
+        run: bash scripts/test.sh
+      - name: Package release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: bash scripts/package.sh
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: release
+          path: dist/
+          if-no-files-found: error
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: linux
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release
+          path: dist
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          prerelease=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then prerelease+=(--prerelease); fi
+          gh release create "$RELEASE_TAG" dist/* --title "SlopMeter ${RELEASE_TAG#v}" --generate-notes "${prerelease[@]}"

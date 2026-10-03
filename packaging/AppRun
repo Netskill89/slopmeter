@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+app_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+export LD_LIBRARY_PATH="$app_root/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="$app_root/usr/plugins"
+export QML2_IMPORT_PATH="$app_root/usr/qml"
+export QML_IMPORT_PATH="$app_root/usr/qml"
+export SLOPMETER_BACKEND="$app_root/usr/bin/slopmeter-capture"
+# Extract the small capture payload to a normal filesystem: root cannot reliably
+# access an unprivileged AppImage FUSE mount. All files stay owned by the user.
+payload="$app_root/usr/share/slopmeter-capture-helper.tar.gz"
+if [[ -f "$payload" ]]; then
+    digest=$(sha256sum "$payload"); digest=${digest%% *}
+    cache_root="${XDG_CACHE_HOME:-${TMPDIR:-/tmp}/slopmeter-$UID}/slopmeter/capture"
+    mkdir -p "$cache_root"
+    chmod 700 "$cache_root"
+    helper_root="$cache_root/$digest"
+    if [[ ! -x "$helper_root/bin/dumpcap" ]]; then
+        staging=$(mktemp -d "$cache_root/.extract-XXXXXX")
+        tar -xzf "$payload" -C "$staging"
+        if [[ ! -d "$helper_root" ]]; then mv "$staging" "$helper_root"; else rm -rf "$staging"; fi
+    fi
+    export SLOPMETER_DUMPCAP="$helper_root/bin/dumpcap"
+fi
+exec "$app_root/usr/bin/slopmeter" "$@"
