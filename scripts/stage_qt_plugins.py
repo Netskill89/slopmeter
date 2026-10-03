@@ -7,9 +7,9 @@ import sys
 real_qmake=os.environ.get('QMAKE','qmake6')
 plugins=Path(subprocess.check_output([real_qmake,'-query','QT_INSTALL_PLUGINS'],text=True).strip())
 # Debian separates SVG runtime plugins from qt6-svg-dev. Check before deploy.
-for relative in ['iconengines/libqsvgicon.so', 'imageformats/libqsvg.so', 'imageformats/libqwebp.so']:
+for relative in ['iconengines/libqsvgicon.so', 'imageformats/libqsvg.so', 'imageformats/libqwebp.so', 'wayland-shell-integration/liblayer-shell.so']:
     if not (plugins/relative).is_file():
-        sys.exit(f'Missing required Qt plugin: {plugins/relative}. On Debian install qt6-svg-plugins and qt6-image-formats-plugins; on Arch install qt6-svg and qt6-imageformats.')
+        sys.exit(f'Missing required Qt plugin: {plugins/relative}. On Debian install qt6-svg-plugins, qt6-image-formats-plugins and layer-shell-qt; on Arch install qt6-svg, qt6-imageformats and layer-shell-qt.')
 root=Path(__file__).resolve().parents[1]
 stage=root/'build/qt-plugins';stage.mkdir(exist_ok=True)
 for directory in plugins.iterdir():

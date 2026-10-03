@@ -5,6 +5,10 @@ Use semantic versions: `0.1.0-alpha.1`, `0.1.0-alpha.2`, then `0.1.0` when stabl
 Tags must match VERSION exactly; for `0.1.0-alpha.2`, use `v0.1.0-alpha.2`. Alpha builds accept prerelease updates;
 stable builds ignore them. Update checks are manual and use HTTPS only.
 
+CI validates full release packaging on branch pushes and pull/merge requests,
+so packaging problems can be caught before tagging. Only tags publish releases.
+GitHub also supports manual runs from the Actions page.
+
 ## Publish
 
 1. Update `VERSION` and `CHANGELOG.md`, then run the build and tests.

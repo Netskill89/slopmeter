@@ -31,9 +31,6 @@ test:
 
 package:
   stage: package
-  rules:
-    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$/'
-    - if: '$CI_PIPELINE_SOURCE == "web"'
   script:
     - bash scripts/build.sh
     - bash scripts/package.sh
