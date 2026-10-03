@@ -41,8 +41,8 @@ Both formats bundle the application libraries and capture helper.
 ### AppImage
 
 ```sh
-chmod +x SlopMeter-0.1.0-alpha.1-x86_64.AppImage
-./SlopMeter-0.1.0-alpha.1-x86_64.AppImage --appimage-extract-and-run
+chmod +x SlopMeter-0.1.0-alpha.2-x86_64.AppImage
+./SlopMeter-0.1.0-alpha.2-x86_64.AppImage --appimage-extract-and-run
 ```
 
 The extraction option works on systems without FUSE. With FUSE available,
@@ -51,8 +51,8 @@ you can also double-click the executable AppImage.
 ### tar.gz
 
 ```sh
-tar -xzf SlopMeter-0.1.0-alpha.1-x86_64.tar.gz
-cd SlopMeter-0.1.0-alpha.1-x86_64
+tar -xzf SlopMeter-0.1.0-alpha.2-x86_64.tar.gz
+cd SlopMeter-0.1.0-alpha.2-x86_64
 ./AppRun
 ```
 

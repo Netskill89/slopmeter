@@ -2,7 +2,7 @@
 
 `VERSION` is the shared version for the backend, GUI, filenames, and releases.
 Use semantic versions: `0.1.0-alpha.1`, `0.1.0-alpha.2`, then `0.1.0` when stable.
-Tags must match exactly: `v0.1.0-alpha.1`. Alpha builds accept prerelease updates;
+Tags must match VERSION exactly; for `0.1.0-alpha.2`, use `v0.1.0-alpha.2`. Alpha builds accept prerelease updates;
 stable builds ignore them. Update checks are manual and use HTTPS only.
 
 ## Publish
