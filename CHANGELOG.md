@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.3
+
+- Fixed overlay focus and display-switch loops with the Debian-packaged LayerShellQt.
+- Kept Settings and damage details independent of the non-focusable overlay surface.
 
 - Added a version label to the meter footer.
 - Removed in-app update checking and downloads; updates are planned for a future release.

@@ -231,15 +231,30 @@ public:
         }
     }
     void resizeCanvas() {if(window) {window->resize(window->screen()->geometry().size());updateInputMask();}}
+    void configureOverlay() {
+        if(headless||!window) return;
+        auto layer=LayerShellQt::Window::get(window);
+        layer->setLayer(LayerShellQt::Window::LayerOverlay);
+        layer->setAnchors(LayerShellQt::Window::Anchors(LayerShellQt::Window::AnchorTop)|LayerShellQt::Window::AnchorBottom|LayerShellQt::Window::AnchorLeft|LayerShellQt::Window::AnchorRight);
+#ifdef SLOPMETER_LAYER_DESIRED_SIZE
+        layer->setDesiredSize(QSize(0,0));
+#endif
+#ifdef SLOPMETER_LAYER_SCREEN
+        layer->setScreen(window->screen());
+#endif
+        layer->setMargins(QMargins());layer->setCloseOnDismissed(false);
+        layer->setExclusiveZone(-1);layer->setKeyboardInteractivity(LayerShellQt::Window::KeyboardInteractivityNone);
+    }
     void selectScreen(QScreen *screen) {
         if(!screen||!window||dragging) return;
         if(window->screen()!=screen) {
             const bool visible=window->isVisible();const auto pos=position();
-            window->hide();window->destroy();window->setScreen(screen);
-#ifdef SLOPMETER_LAYER_SCREEN
-            if(!headless) LayerShellQt::Window::get(window)->setScreen(screen);
-#endif
-            resizeCanvas();positionOverlay(pos);if(visible) window->show();
+            window->hide();
+            // LayerShellQt 6.3 attaches its integration to the platform handle only
+            // at construction. Recreate that attachment after destroying the handle.
+            if(!headless) delete LayerShellQt::Window::get(window);
+            window->destroy();window->setScreen(screen);window->setPosition(screen->geometry().topLeft());resizeCanvas();
+            configureOverlay();positionOverlay(pos);if(visible) window->show();
         }
         displayMessage=QString("%1 · %2").arg(autoDisplay?"Game display":"Manual display",screen->name());emit displayChanged();
     }
@@ -474,15 +489,7 @@ int main(int argc,char **argv) {
     if(bridge.detectionTest) {
         bridge.startGameDetection();QTimer::singleShot(4000,&app,[&app] {fprintf(stderr,"Game-detection callback timed out.\n");app.exit(7);});return app.exec();
     }
-    if(!headless) {
-        auto layer=LayerShellQt::Window::get(window);layer->setLayer(LayerShellQt::Window::LayerOverlay);
-        layer->setAnchors(LayerShellQt::Window::Anchors(LayerShellQt::Window::AnchorTop)|LayerShellQt::Window::AnchorBottom|LayerShellQt::Window::AnchorLeft|LayerShellQt::Window::AnchorRight);
-#ifdef SLOPMETER_LAYER_DESIRED_SIZE
-        layer->setDesiredSize(QSize(0,0));
-#endif
-        layer->setMargins(QMargins());
-        layer->setCloseOnDismissed(false);layer->setExclusiveZone(-1);layer->setKeyboardInteractivity(LayerShellQt::Window::KeyboardInteractivityNone);
-    }
+    bridge.configureOverlay();
     QObject::connect(window,&QQuickWindow::widthChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
     QObject::connect(window,&QQuickWindow::heightChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
     QObject::connect(window,&QWindow::screenChanged,&bridge,[&bridge](QScreen*) {emit bridge.displayChanged();});
@@ -552,6 +559,14 @@ int main(int argc,char **argv) {
         if(bridge.position()==pos) {app.exit(4);return;}bridge.dragging=false;bridge.positionOverlay(pos);
         if(window->position()!=nativePosition||window->size()!=nativeSize||window->mask()!=QRegion(QRectF(bridge.panel->x(),bridge.panel->y(),bridge.panel->width(),bridge.panel->height()).toAlignedRect())) {app.exit(8);return;}
         if(!headless&&!bridge.gameScreen.isEmpty()&&window->screen()->name()!=bridge.gameScreen) {app.exit(9);return;}
+        if(!headless) {
+            auto originalScreen=window->screen();auto follow=bridge.autoDisplay;bridge.autoDisplay=false;
+            for(auto target:QGuiApplication::screens()) {
+                bridge.selectScreen(target);QEventLoop frames;QTimer::singleShot(80,&frames,&QEventLoop::quit);frames.exec();
+                if(window->screen()!=target||window->isActive()) {app.exit(60);return;}
+            }
+            bridge.selectScreen(originalScreen);bridge.autoDisplay=follow;
+        }
         // Check content sizing, uniform settings, and bounds while keeping the native surface still.
         bridge.publish.stop();
         bridge.bossState.clear();emit bridge.bossChanged();
@@ -566,7 +581,7 @@ int main(int argc,char **argv) {
         settle();
         QQuickWindow *settingsWindow=nullptr;
         for(auto candidate:QGuiApplication::allWindows()) if(candidate->objectName()=="settingsWindow") settingsWindow=qobject_cast<QQuickWindow*>(candidate);
-        if(!settingsWindow||!settingsWindow->isVisible()||(settingsWindow->flags()&Qt::WindowDoesNotAcceptFocus)||qAbs(bridge.panel->height()-partyHeight)>1||window->size()!=nativeSize) {app.exit(12);return;}
+        if(!settingsWindow||settingsWindow->transientParent()||!settingsWindow->isVisible()||(settingsWindow->flags()&Qt::WindowDoesNotAcceptFocus)||qAbs(bridge.panel->height()-partyHeight)>1||window->size()!=nativeSize) {app.exit(12);return;}
         auto moveSlider=[&](const char *name,int value) {
             auto slider=settingsWindow->findChild<QObject*>(name);
             return slider&&slider->setProperty("value",value)&&QMetaObject::invokeMethod(slider,"moved");
@@ -577,6 +592,10 @@ int main(int argc,char **argv) {
         if(qAbs(bars->height()-(4*32+3*10))>1||qAbs(bridge.panel->width()-qMin(468,window->width()))>1) {app.exit(13);return;}
         auto styleSelector=settingsWindow->findChild<QObject*>("barStyleSelector");
         if(!styleSelector||bridge.barStyle()!=0) {app.exit(42);return;}
+        auto stylePopup=styleSelector->property("popup").value<QObject*>();
+        if(!stylePopup||!QMetaObject::invokeMethod(stylePopup,"open")) {app.exit(61);return;}
+        settle();if(!stylePopup->property("visible").toBool()||(!headless&&window->isActive())) {app.exit(62);return;}
+        QMetaObject::invokeMethod(stylePopup,"close");settle();
         for(int style=0;style<4;++style) {
             styleSelector->setProperty("currentIndex",style);
             if(!QMetaObject::invokeMethod(styleSelector,"activated",Q_ARG(int,style))||bridge.barStyle()!=style) {app.exit(43);return;}
@@ -712,7 +731,7 @@ int main(int argc,char **argv) {
             settle();
             QQuickWindow *detailWindow=nullptr;
             for(auto candidate:QGuiApplication::allWindows()) if(candidate->objectName()=="fightDetailsWindow") detailWindow=qobject_cast<QQuickWindow*>(candidate);
-            if(!detailWindow||!detailWindow->isVisible()||(detailWindow->flags()&Qt::WindowDoesNotAcceptFocus)||window->size()!=nativeSize) {app.exit(18);return;}
+            if(!detailWindow||detailWindow->transientParent()||!detailWindow->isVisible()||(detailWindow->flags()&Qt::WindowDoesNotAcceptFocus)||window->size()!=nativeSize) {app.exit(18);return;}
             if(!screenshot.isEmpty()) detailWindow->grabWindow().save(screenshot+"-details.png");
             detailWindow->close();
             if(detailWindow->isVisible()||!window->isVisible()) {app.exit(19);return;}

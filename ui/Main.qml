@@ -8,13 +8,13 @@ Window {
     flags: Qt.FramelessWindowHint | Qt.WindowDoesNotAcceptFocus
     function openSettings() {
         settingsLoader.active = true
-        if (settingsLoader.item) {settingsLoader.item.screen = meter.screen;settingsLoader.item.show();settingsLoader.item.raise();settingsLoader.item.requestActivate()}
+        if (settingsLoader.item) {settingsLoader.item.transientParent = null;settingsLoader.item.screen = meter.screen;settingsLoader.item.show();settingsLoader.item.raise();settingsLoader.item.requestActivate()}
     }
     Loader {id: settingsLoader; active: false; source: "Settings.qml"}
     function openDetails(actorId) {
         backend.selectPlayer(actorId)
         detailLoader.active = true
-        if (detailLoader.item) {detailLoader.item.screen = meter.screen;detailLoader.item.show();detailLoader.item.raise();detailLoader.item.requestActivate()}
+        if (detailLoader.item) {detailLoader.item.transientParent = null;detailLoader.item.screen = meter.screen;detailLoader.item.show();detailLoader.item.raise();detailLoader.item.requestActivate()}
     }
     Loader {id: detailLoader; active: false; source: "FightDetails.qml"}
     function clock(seconds) { const value = Math.max(0, Math.floor(Number(seconds || 0))); return Math.floor(value/60) + ":" + (value%60).toString().padStart(2,"0") }
