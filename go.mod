@@ -1,4 +1,4 @@
-module aiondps
+module github.com/Netskill89/slopmeter
 
 go 1.26
 
