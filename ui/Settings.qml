@@ -62,14 +62,6 @@ Window {
             Label {text: "Packets are captured continuously. This controls how often the meter refreshes. Default: 200 ms."; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {objectName: "cpuWarning"; visible: backend.pollInterval < 200; text: "Warning: intervals below 200 ms can cause high CPU usage."; color: "#f1c778"; Layout.fillWidth: true; font.pixelSize: 12; wrapMode: Text.WordWrap}
             Label {text: "SlopMeter " + backend.appVersion; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
-            Label {text: "Release repository"; color: "#c0cbdc"}
-            TextField {Layout.fillWidth: true; text: backend.updateRepository; enabled: !backend.updateBusy; onEditingFinished: backend.updateRepository = text; placeholderText: "https://github.com/owner/repo"}
-            Label {text: backend.updateStatus; color: "#9eadc3"; Layout.fillWidth: true; wrapMode: Text.WordWrap}
-            RowLayout {
-                Button {text: "Check updates"; enabled: !backend.updateBusy; onClicked: backend.checkUpdates(false)}
-                Button {text: "Download update"; enabled: backend.updateAvailable && !backend.updateBusy; onClicked: backend.checkUpdates(true)}
-            }
-            Button {text: "Open download folder"; visible: backend.updatePath.length > 0; onClicked: backend.openUpdateFolder()}
             RowLayout {
                 Layout.fillWidth: true; Layout.topMargin: 10
                 Button {text: "Restore defaults"; onClicked: backend.resetAppearance()}

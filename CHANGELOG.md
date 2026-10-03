@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added a version label to the meter footer.
+- Removed in-app update checking and downloads; updates are planned for a future release.
+
 ## 0.1.0-alpha.2
 
 - Added saved network-interface selection in Settings, including Automatic,

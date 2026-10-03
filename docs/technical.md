@@ -56,7 +56,7 @@ or stops real capture.
 ## Tests
 
 Go tests cover party filtering, HP/encounter transitions, history, skill stats,
-publication, runtime refresh, helper lifecycle, and verified release downloads.
+publication, runtime refresh, and helper lifecycle.
 The Node test covers game-window matching. The Python integration test streams
 400 synthetic hits through the actual capture path while changing refresh rates.
 The QML self-test checks drag geometry, input masks, settings persistence, bar

@@ -14,8 +14,7 @@ target_link_libraries(slopmeter PRIVATE Qt6::Quick Qt6::QuickControls2 Qt6::Widg
 
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/../VERSION" SLOPMETER_DEFAULT_VERSION LIMIT_COUNT 1)
 set(SLOPMETER_VERSION "${SLOPMETER_DEFAULT_VERSION}" CACHE STRING "SlopMeter version")
-set(SLOPMETER_RELEASE_REPOSITORY "https://github.com/Netskill89/slopmeter" CACHE STRING "Public release repository URL")
-target_compile_definitions(slopmeter PRIVATE SLOPMETER_VERSION="${SLOPMETER_VERSION}" SLOPMETER_RELEASE_REPOSITORY="${SLOPMETER_RELEASE_REPOSITORY}")
+target_compile_definitions(slopmeter PRIVATE SLOPMETER_VERSION="${SLOPMETER_VERSION}")
 install(TARGETS slopmeter RUNTIME DESTINATION bin)
 # Debian 13 ships LayerShellQt 6.3; newer versions expose explicit size/screen setters.
 include(CheckCXXSourceCompiles)

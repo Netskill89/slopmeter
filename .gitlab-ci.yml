@@ -19,7 +19,6 @@ default:
 variables:
   GOMODCACHE: "$CI_PROJECT_DIR/.cache/go-mod"
   GOCACHE: "$CI_PROJECT_DIR/.cache/go-build"
-  SLOPMETER_RELEASE_REPOSITORY: "https://github.com/Netskill89/slopmeter"
 
 test:
   stage: test

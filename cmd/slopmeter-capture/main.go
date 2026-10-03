@@ -16,6 +16,9 @@ import (
 	"github.com/nuriland/a2kit/game"
 )
 
+// Set by scripts/build.sh from VERSION.
+var version = "development"
+
 type total struct {
 	damage    uint64
 	hits      uint64
@@ -109,11 +112,6 @@ func (m *meter) print(w io.Writer, details bool) {
 
 func run() error {
 	showVersion := flag.Bool("version", false, "Print SlopMeter version")
-	check := flag.Bool("check-update", false, "Check the latest stable release (JSON)")
-	download := flag.Bool("download-update", false, "Download a checksum-verified release (JSON)")
-	repository := flag.String("repository", "", "Public GitHub/GitLab repository URL")
-	format := flag.String("format", "AppImage", "Update format: AppImage or tar.gz")
-	directory := flag.String("download-dir", ".", "Directory for downloaded releases")
 	file := flag.String("read", "", "Replay a pcap, pcapng or a2log JSONL file")
 	adapter := flag.String("interface", "", "Live interface (default: dumpcap-selected interface)")
 	devices := flag.Bool("interfaces", false, "List capture interfaces")
@@ -127,9 +125,6 @@ func run() error {
 	if *showVersion {
 		fmt.Println("SlopMeter", version)
 		return nil
-	}
-	if *check || *download {
-		return runUpdate(*repository, *format, *directory, *download)
 	}
 	if *target > 0xffffffff {
 		return fmt.Errorf("target must fit a 32-bit entity ID")

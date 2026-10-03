@@ -6,7 +6,8 @@
 
 SlopMeter brings a native Linux overlay to AION 2 running through Steam/Proton.
 Built to fill the gap in Linux support among major DPS meters, it tracks your
-character and confirmed group members.
+character and confirmed group members. It may serve as a temporary option until
+the major DPS meter providers add Linux support.
 
 ## Screenshots
 
@@ -115,10 +116,11 @@ require decoder fixes. Test mode uses simulated data throughout.
 
 ## Updates
 
-Open **Settings → Check updates** to check for a newer release, then choose
-**Download update**. Close SlopMeter before replacing the AppImage or installing
-the new tarball. Settings and fight history are preserved. Alpha builds include
-prerelease updates.
+Download new versions from [Releases](https://github.com/Netskill89/slopmeter/releases)
+and replace your installed copy with SlopMeter closed. Settings and fight history
+are preserved. The current version is shown in the meter footer and Settings.
+
+**Planned:** in-app update checking and automatic updates.
 
 ## Development
 

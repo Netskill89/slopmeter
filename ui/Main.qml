@@ -172,6 +172,10 @@ Window {
                         ToolTip.visible: displayHover.hovered; ToolTip.text: backend.displayStatus
                         HoverHandler {id: displayHover}
                     }
+                    Label {
+                        objectName: "appVersionLabel"
+                        text: "v" + backend.appVersion; color: "#8e9eb5"; font.pixelSize: 10
+                    }
                     Rectangle {
                         objectName: "captureIndicator"
                         Layout.preferredWidth: 9; Layout.preferredHeight: 9; radius: 4.5

@@ -2,8 +2,7 @@
 
 `VERSION` is the shared version for the backend, GUI, filenames, and releases.
 Use semantic versions: `0.1.0-alpha.1`, `0.1.0-alpha.2`, then `0.1.0` when stable.
-Tags must match VERSION exactly; for `0.1.0-alpha.2`, use `v0.1.0-alpha.2`. Alpha builds accept prerelease updates;
-stable builds ignore them. Update checks are manual and use HTTPS only.
+Tags must match VERSION exactly; for `0.1.0-alpha.2`, use `v0.1.0-alpha.2`.
 
 CI validates full release packaging on branch pushes and pull/merge requests,
 so packaging problems can be caught before tagging. Only tags publish releases.
@@ -18,11 +17,8 @@ GitHub also supports manual runs from the Actions page.
 
 GitHub Actions publishes to GitHub Releases using the built-in token. GitLab CI
 publishes permanent Generic Package files and a GitLab Release using `CI_JOB_TOKEN`.
-The default update source is
-`https://github.com/Netskill89/slopmeter`; a GitLab-only build can set
-`SLOPMETER_RELEASE_REPOSITORY` to its public project URL before building.
-The repository must be public for unauthenticated update/download access.
-Private projects and private package registries are not supported by the updater.
+
+In-app updates are a future feature. Users install new releases manually.
 
 ## Build packages locally
 
@@ -49,6 +45,4 @@ requirements. No package-manager installation is performed on launch.
 CI's Debian 13 baseline requires glibc 2.41+; building on a newer host can raise
 that minimum. Current releases support x86_64 only.
 
-Downloads verify `SHA256SUMS` from the same release. This catches corrupted files;
-it is not a substitute for signed release provenance. Updates save a new file
-without replacing the running app or changing capture permissions.
+Release files include `SHA256SUMS` for manual download verification.

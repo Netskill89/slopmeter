@@ -38,7 +38,6 @@
 #include <QEventLoop>
 #include <QDateTime>
 #include <QStandardPaths>
-#include <QDesktopServices>
 #include <QUrl>
 
 class ActorModel : public QAbstractListModel {
@@ -95,11 +94,6 @@ class Bridge : public QObject {
     Q_PROPERTY(QVariantMap detailFight READ detailFight NOTIFY detailChanged)
     Q_PROPERTY(bool testMode READ testMode WRITE setTestMode NOTIFY testModeChanged)
     Q_PROPERTY(QString appVersion READ appVersion CONSTANT)
-    Q_PROPERTY(QString updateRepository READ updateRepository WRITE setUpdateRepository NOTIFY updateChanged)
-    Q_PROPERTY(QString updateStatus READ updateStatus NOTIFY updateChanged)
-    Q_PROPERTY(bool updateBusy READ updateBusy NOTIFY updateChanged)
-    Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateChanged)
-    Q_PROPERTY(QString updatePath READ updatePath NOTIFY updateChanged)
     Q_PROPERTY(int barStyle READ barStyle WRITE setBarStyle NOTIFY appearanceChanged)
     Q_PROPERTY(bool showBorder READ showBorder WRITE setShowBorder NOTIFY appearanceChanged)
     Q_PROPERTY(QString captureInterface READ captureInterface WRITE setCaptureInterface NOTIFY interfacesChanged)
@@ -331,25 +325,6 @@ public:
     }
     void updateDetail() {skills.update(QJsonArray::fromVariantList(detailPlayer().value("skills").toList()));emit detailChanged();}
     QString appVersion() const {return SLOPMETER_VERSION;}
-    QString repositorySetting=QSettings().value("updates/repository",SLOPMETER_RELEASE_REPOSITORY).toString();
-    QString updateMessage="Updates are checked only when requested.", downloadedPath;
-    bool availableUpdate=false;
-    QProcess updater;
-    QString updateRepository() const {return repositorySetting;}
-    QString updateStatus() const {return updateMessage;}
-    bool updateBusy() const {return updater.state()!=QProcess::NotRunning;}
-    bool updateAvailable() const {return availableUpdate;}
-    QString updatePath() const {return downloadedPath;}
-    void setUpdateRepository(const QString &value) {if(updateBusy()) return;repositorySetting=value.trimmed();QSettings().setValue("updates/repository",repositorySetting);availableUpdate=false;downloadedPath.clear();emit updateChanged();}
-    Q_INVOKABLE void checkUpdates(bool download=false) {
-        if(updateBusy()) return;
-        updateMessage=download?"Downloading and verifying update…":"Checking latest release…";
-        updater.setProgram(backendPath);
-        QStringList arguments{download?"-download-update":"-check-update","-repository",repositorySetting,"-format",qEnvironmentVariableIsSet("APPIMAGE")?"AppImage":"tar.gz"};
-        if(download) {auto directory=QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);if(directory.isEmpty()) directory=QDir::homePath()+"/Downloads";arguments<<"-download-dir"<<directory;}
-        updater.setArguments(arguments);updater.start();emit updateChanged();
-    }
-    Q_INVOKABLE void openUpdateFolder() {if(!downloadedPath.isEmpty()) QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(downloadedPath).absolutePath()));}
     QProcess interfaceLister;
     QString interfaceSetting=QSettings().value("capture/interface", "").toString();
     QVariantList interfaceRows{{QVariantMap{{"name",""},{"label","Automatic (capture default)"}}}};
@@ -403,12 +378,6 @@ public:
             } else interfaceMessage=QString::fromUtf8(interfaceLister.readAllStandardError()).trimmed();
             emit interfacesChanged();
         });
-        connect(&updater,&QProcess::errorOccurred,this,[this] {updateMessage=updater.errorString();emit updateChanged();});
-        connect(&updater,qOverload<int,QProcess::ExitStatus>(&QProcess::finished),this,[this](int code,QProcess::ExitStatus) {
-            if(code!=0) {updateMessage=QString::fromUtf8(updater.readAllStandardError()).trimmed();availableUpdate=false;}
-            else {auto info=QJsonDocument::fromJson(updater.readAllStandardOutput()).object();availableUpdate=info.value("available").toBool();downloadedPath=info.value("path").toString();updateMessage=!downloadedPath.isEmpty()?"Verified download saved. Close SlopMeter, then replace your installed copy.":availableUpdate?"Version "+info.value("latest").toString()+" is available.":"You have the latest compatible version.";}
-            emit updateChanged();
-        });
         QFile preview(":/preview.json");if(preview.open(QIODevice::ReadOnly)) previewParty=QJsonDocument::fromJson(preview.readAll()).array().toVariantList();
         publish.setInterval(pollInterval());
         connect(&publish,&QTimer::timeout,this,[this] {
@@ -436,7 +405,6 @@ public:
     ~Bridge() {
         restartingCapture=false;
         if(interfaceLister.state()!=QProcess::NotRunning) {interfaceLister.kill();interfaceLister.waitForFinished(1000);}
-        if(updater.state()!=QProcess::NotRunning) {updater.kill();updater.waitForFinished(1000);}
         if(!scriptName.isEmpty()) {QDBusInterface scripting("org.kde.KWin","/Scripting","org.kde.kwin.Scripting",QDBusConnection::sessionBus());scripting.asyncCall("unloadScript",scriptName);}
         if(process.state()!=QProcess::NotRunning) {process.terminate();if(!process.waitForFinished(1500)) {process.kill();process.waitForFinished();}}}
     QString character() const {return name;}
@@ -459,7 +427,7 @@ public:
     Q_INVOKABLE void quit() {QCoreApplication::quit();}
 signals:
     void interfacesChanged();
-    void updateChanged();void captureChanged();void testModeChanged();void pollingChanged();void historyChanged();void detailChanged();void appearanceChanged();void characterChanged();void statusChanged();void durationChanged();void displayChanged();void encounterChanged();void bossChanged();
+    void captureChanged();void testModeChanged();void pollingChanged();void historyChanged();void detailChanged();void appearanceChanged();void characterChanged();void statusChanged();void durationChanged();void displayChanged();void encounterChanged();void bossChanged();
 };
 static void global(void *data,wl_registry*,uint32_t,const char *interface,uint32_t) {if(!std::strcmp(interface,"zwlr_layer_shell_v1")) *static_cast<bool*>(data)=true;}
 static void removed(void*,wl_registry*,uint32_t) {}
@@ -656,6 +624,8 @@ int main(int argc,char **argv) {
             if(bridge.displayState!=idle) {app.exit(40);return;}
             bridge.currentState=realState;bridge.refreshDisplay();
         }
+        auto versionLabel=window->findChild<QObject*>("appVersionLabel");
+        if(!versionLabel||versionLabel->property("text").toString()!=QString("v")+SLOPMETER_VERSION) {app.exit(59);return;}
         auto captureDot=window->findChild<QQuickItem*>("captureIndicator");
         auto displayText=window->findChild<QObject*>("displayLabel");
         if(!captureDot||!displayText||!displayText->property("text").toString().startsWith("Display - ")||bridge.captureActive()) {app.exit(41);return;}
