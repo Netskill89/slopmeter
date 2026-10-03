@@ -11,6 +11,10 @@ Polkit authorizes only capture when necessary; the decoder and GUI run unprivile
 ## Capture and scope
 
 - a2kit decodes a2log/pcap streams and live TCP traffic.
+- Automatic uses dumpcap’s default adapter. Settings can select a Linux network
+  adapter or `any`, with an explicit capture restart. Enumeration is unprivileged;
+  selection is saved with QSettings and ignored during replay. Restarting ends
+  the current session and requires a relog for character/group discovery.
 - The Self event must identify the character before damage is accepted.
 - Only self and members confirmed by group packets are counted. Nearby players
   are excluded; membership leases avoid retaining stale group members.

@@ -11,13 +11,13 @@ Install Go 1.26+ separately if your distribution provides an older version.
 CachyOS / Arch:
 
 ```sh
-sudo pacman -S --needed go base-devel cmake pkgconf qt6-base qt6-declarative qt6-wayland qt6-svg qt6-imageformats layer-shell-qt wayland nodejs python
+sudo pacman -S --needed go libpcap base-devel cmake pkgconf qt6-base qt6-declarative qt6-wayland qt6-svg qt6-imageformats layer-shell-qt wayland nodejs python
 ```
 
 Debian 13:
 
 ```sh
-sudo apt install build-essential cmake pkg-config qt6-base-dev qt6-declarative-dev qt6-wayland qt6-svg-dev qt6-image-formats-plugins liblayershellqtinterface-dev libwayland-dev qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-window qml6-module-qtqml-workerscript qml6-module-qtquick-templates nodejs python3
+sudo apt install libpcap-dev build-essential cmake pkg-config qt6-base-dev qt6-declarative-dev qt6-wayland qt6-svg-dev qt6-image-formats-plugins liblayershellqtinterface-dev libwayland-dev qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-window qml6-module-qtqml-workerscript qml6-module-qtquick-templates nodejs python3
 ```
 
 ```sh
@@ -25,6 +25,10 @@ bash scripts/build.sh
 bash scripts/test.sh
 ./build/ui/slopmeter -read tests/fixtures/boss.jsonl
 ```
+
+Race-enabled Go tests compile the decoder’s CGO packet-capture dependency and
+require the libpcap development headers listed above. Release builds use
+`CGO_ENABLED=0`.
 
 Tests use synthetic traffic and replay fixtures; they do not need capture
 privileges or a running game. The QML self-test runs offscreen. For overlay/display

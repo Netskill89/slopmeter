@@ -35,6 +35,27 @@ Window {
             Label {text: "Overall meter opacity · " + backend.overallOpacity + "%"; color: "#c0cbdc"}
             Slider {objectName: "overallOpacitySlider"; Layout.fillWidth: true; from: 0; to: 100; stepSize: 1; value: backend.overallOpacity; onMoved: backend.overallOpacity = Math.round(value)}
             Label {text: "Fades the background, bars and text together. Settings stays visible; reopen it from the tray if the meter is invisible."; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
+            Label {text: "Network capture"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
+            ComboBox {
+                id: interfaceSelector; objectName: "captureInterfaceSelector"
+                Layout.fillWidth: true; enabled: !backend.captureReplay
+                model: backend.captureInterfaces; textRole: "label"; valueRole: "name"
+                currentIndex: {
+                    const rows = backend.captureInterfaces
+                    const selected = backend.captureInterface
+                    for (let i = 0; i < rows.length; ++i)
+                        if (rows[i].name === selected) return i
+                    return -1
+                }
+                onActivated: backend.captureInterface = currentValue
+            }
+            RowLayout {
+                Button {text: "Refresh interfaces"; onClicked: backend.refreshInterfaces()}
+                Button {text: "Apply and restart capture"; enabled: !backend.captureReplay; onClicked: backend.applyCaptureInterface()}
+            }
+            Label {text: backend.captureReplay ? "Interface selection is disabled during replay." : "Automatic uses the capture helper’s default interface. Choose your Ethernet, Wi-Fi, VPN, or all interfaces if needed. Applying ends the current fight and may request capture permission again."; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
+            Label {text: backend.status; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
+            Label {text: backend.interfaceStatus; visible: text.length > 0; color: "#c0cbdc"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {text: "Data refresh"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
             Label {text: "Data polling interval · " + backend.pollInterval + " ms"; color: "#c0cbdc"}
             Slider {objectName: "pollIntervalSlider"; Layout.fillWidth: true; from: 50; to: 1000; stepSize: 50; snapMode: Slider.SnapAlways; value: backend.pollInterval; onMoved: backend.pollInterval = Math.round(value)}

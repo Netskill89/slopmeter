@@ -102,6 +102,10 @@ class Bridge : public QObject {
     Q_PROPERTY(QString updatePath READ updatePath NOTIFY updateChanged)
     Q_PROPERTY(int barStyle READ barStyle WRITE setBarStyle NOTIFY appearanceChanged)
     Q_PROPERTY(bool showBorder READ showBorder WRITE setShowBorder NOTIFY appearanceChanged)
+    Q_PROPERTY(QString captureInterface READ captureInterface WRITE setCaptureInterface NOTIFY interfacesChanged)
+    Q_PROPERTY(QVariantList captureInterfaces READ captureInterfaces NOTIFY interfacesChanged)
+    Q_PROPERTY(bool captureReplay READ captureReplay NOTIFY interfacesChanged)
+    Q_PROPERTY(QString interfaceStatus READ interfaceStatus NOTIFY interfacesChanged)
     Q_PROPERTY(int pollInterval READ pollInterval WRITE setPollInterval NOTIFY pollingChanged)
     Q_PROPERTY(int barWidth READ barWidth WRITE setBarWidth NOTIFY appearanceChanged)
     Q_PROPERTY(int barHeight READ barHeight WRITE setBarHeight NOTIFY appearanceChanged)
@@ -220,7 +224,10 @@ public:
     QString encounter() const {return encounterLabel;}
     QVariantMap boss() const {return bossState;}
     bool captureActive() const {return captureReady;}
-    void setCaptureReady(bool ready) {if(captureReady!=ready) {captureReady=ready;emit captureChanged();}}
+    void setCaptureReady(bool ready) {if(captureReady!=ready) {
+        captureReady=ready;emit captureChanged();
+        if(ready) {interfaceMessage="Capturing on "+(activeInterface.isEmpty()?"Automatic":activeInterface)+". Relog if no character is detected.";emit interfacesChanged();}
+    }}
     QString displayLabel() const {auto name=window&&window->screen()?window->screen()->name():QString();return "Display - "+(name.isEmpty()?"Default":name);}
     void updateInputMask() {
         if(window&&panel) {
@@ -343,10 +350,59 @@ public:
         updater.setArguments(arguments);updater.start();emit updateChanged();
     }
     Q_INVOKABLE void openUpdateFolder() {if(!downloadedPath.isEmpty()) QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(downloadedPath).absolutePath()));}
+    QProcess interfaceLister;
+    QString interfaceSetting=QSettings().value("capture/interface", "").toString();
+    QVariantList interfaceRows{{QVariantMap{{"name",""},{"label","Automatic (capture default)"}}}};
+    QString interfaceMessage;
+    QStringList captureArguments;
+    bool restartingCapture=false;
+    QString activeInterface;
+    QString captureInterface() const {return interfaceSetting;}
+    QVariantList captureInterfaces() const {return interfaceRows;}
+    bool captureReplay() const {return replayMode;}
+    QString interfaceStatus() const {return interfaceMessage;}
+    void setCaptureInterface(const QString &value) {
+        if(replayMode||value==interfaceSetting) return;
+        interfaceSetting=value;QSettings().setValue("capture/interface",value);
+        interfaceMessage="Selection saved. Apply to restart capture.";emit interfacesChanged();
+    }
+    Q_INVOKABLE void refreshInterfaces() {
+        if(interfaceLister.state()!=QProcess::NotRunning||backendPath.isEmpty()) return;
+        interfaceLister.start(backendPath,{"-interfaces","-json"});
+    }
+    void startCapture() {
+        auto arguments=captureArguments;
+        activeInterface=interfaceSetting;
+        if(!replayMode&&!activeInterface.isEmpty()) arguments<<"-interface"<<activeInterface;
+        buffer.clear();pending={};setStatus(replayMode?"Starting replay…":"Starting capture…");process.start(backendPath,arguments);
+    }
+    Q_INVOKABLE void applyCaptureInterface() {
+        if(replayMode||restartingCapture) return;
+        if(process.state()!=QProcess::NotRunning&&interfaceSetting==activeInterface) {
+            interfaceMessage="This interface is already active. Relog if no character is detected.";emit interfacesChanged();return;
+        }
+        interfaceMessage="Restarting capture… Relog your character after capture starts.";emit interfacesChanged();
+        setCaptureReady(false);
+        if(process.state()==QProcess::NotRunning) {startCapture();return;}
+        restartingCapture=true;process.terminate();
+        QTimer::singleShot(2000,this,[this] {if(restartingCapture&&process.state()!=QProcess::NotRunning) process.kill();});
+    }
     QString backendPath;
     QString name, message="Starting capture…";
     double span=0;
     Bridge() {
+        connect(&interfaceLister,&QProcess::errorOccurred,this,[this] {interfaceMessage=interfaceLister.errorString();emit interfacesChanged();});
+        connect(&interfaceLister,qOverload<int,QProcess::ExitStatus>(&QProcess::finished),this,[this](int code,QProcess::ExitStatus) {
+            if(code==0) {
+                auto document=QJsonDocument::fromJson(interfaceLister.readAllStandardOutput());
+                if(document.isArray()) {
+                    interfaceRows=document.array().toVariantList();bool found=false;
+                    for(const auto &row:interfaceRows) if(row.toMap().value("name").toString()==interfaceSetting) found=true;
+                    if(!found) interfaceRows.append(QVariantMap{{"name",interfaceSetting},{"label",interfaceSetting+" (unavailable)"}});
+                }
+            } else interfaceMessage=QString::fromUtf8(interfaceLister.readAllStandardError()).trimmed();
+            emit interfacesChanged();
+        });
         connect(&updater,&QProcess::errorOccurred,this,[this] {updateMessage=updater.errorString();emit updateChanged();});
         connect(&updater,qOverload<int,QProcess::ExitStatus>(&QProcess::finished),this,[this](int code,QProcess::ExitStatus) {
             if(code!=0) {updateMessage=QString::fromUtf8(updater.readAllStandardError()).trimmed();availableUpdate=false;}
@@ -367,7 +423,7 @@ public:
                     auto state=doc.object();
                     // History arrives only when changed. Preserve it even if coalescing drops a snapshot.
                     if(state.contains("history")) {history=state.value("history").toArray().toVariantList();emit historyChanged();}
-                    pending=state;setCaptureReady(process.state()==QProcess::Running&&!replayMode);if(process.state()!=QProcess::NotRunning) setStatus(replayMode?"Replay running":"Capture running");}
+                    pending=state;setCaptureReady(process.state()==QProcess::Running&&!replayMode);if(process.state()!=QProcess::NotRunning) setStatus(replayMode?"Replay running":state.value("character").toString().isEmpty()?"Capture active · waiting for character. Log out and back in with capture running.":"Capture running");}
             }
             // The backend already limits snapshots to the selected interval.
             // Apply the newest complete frame once per read, avoiding a second timer's latency.
@@ -375,9 +431,11 @@ public:
         });
         connect(&process,&QProcess::readyReadStandardError,this,[this] {auto text=QString::fromUtf8(process.readAllStandardError()).trimmed();if(!text.isEmpty()) setStatus(text);});
         connect(&process,&QProcess::errorOccurred,this,[this] {setCaptureReady(false);setStatus(process.errorString());});
-        connect(&process,qOverload<int,QProcess::ExitStatus>(&QProcess::finished),this,[this](int code,QProcess::ExitStatus) {setCaptureReady(false);setStatus(code==0?"Capture finished":"Capture failed: "+message);});
+        connect(&process,qOverload<int,QProcess::ExitStatus>(&QProcess::finished),this,[this](int code,QProcess::ExitStatus) {setCaptureReady(false);if(restartingCapture) {restartingCapture=false;QTimer::singleShot(0,this,[this]{startCapture();});return;}setStatus(code==0?"Capture finished":"Capture failed: "+message);});
     }
     ~Bridge() {
+        restartingCapture=false;
+        if(interfaceLister.state()!=QProcess::NotRunning) {interfaceLister.kill();interfaceLister.waitForFinished(1000);}
         if(updater.state()!=QProcess::NotRunning) {updater.kill();updater.waitForFinished(1000);}
         if(!scriptName.isEmpty()) {QDBusInterface scripting("org.kde.KWin","/Scripting","org.kde.kwin.Scripting",QDBusConnection::sessionBus());scripting.asyncCall("unloadScript",scriptName);}
         if(process.state()!=QProcess::NotRunning) {process.terminate();if(!process.waitForFinished(1500)) {process.kill();process.waitForFinished();}}}
@@ -400,6 +458,7 @@ public:
     Q_INVOKABLE void hide() {window->hide();}
     Q_INVOKABLE void quit() {QCoreApplication::quit();}
 signals:
+    void interfacesChanged();
     void updateChanged();void captureChanged();void testModeChanged();void pollingChanged();void historyChanged();void detailChanged();void appearanceChanged();void characterChanged();void statusChanged();void durationChanged();void displayChanged();void encounterChanged();void bossChanged();
 };
 static void global(void *data,wl_registry*,uint32_t,const char *interface,uint32_t) {if(!std::strcmp(interface,"zwlr_layer_shell_v1")) *static_cast<bool*>(data)=true;}
@@ -503,7 +562,8 @@ int main(int argc,char **argv) {
         });
         return app.exec();
     }
-    args.prepend("-json");args.append("-interval");args.append(QString::number(bridge.pollInterval())+"ms");bridge.process.start(executable,args);
+    args.prepend("-json");args.append("-interval");args.append(QString::number(bridge.pollInterval())+"ms");for(int i=0;i<args.size();++i) if(args[i]=="-interface"&&i+1<args.size()) {bridge.setCaptureInterface(args[i+1]);args.removeAt(i+1);args.removeAt(i);break;}
+    bridge.captureArguments=args;bridge.startCapture();bridge.refreshInterfaces();
     if(test) QTimer::singleShot(500,&app,[&] {
         if(QGuiApplication::allWindows().size()!=1) {app.exit(2);return;}
         bridge.hide();window->show();if(!window->isVisible()) {app.exit(3);return;}
@@ -625,6 +685,34 @@ int main(int argc,char **argv) {
         {Bridge restored;if(restored.pollInterval()!=1000||restored.showBorder()||restored.testMode()) {app.exit(35);return;}}
         for(int rate=50;rate<=1000;rate+=50) {bridge.setPollInterval(rate);if(bridge.pollInterval()!=rate) {app.exit(36);return;}}
         bridge.setPollInterval(200);
+        {
+            auto selector=settingsWindow->findChild<QObject*>("captureInterfaceSelector");
+            if(!selector||selector->property("enabled").toBool()) {app.exit(50);return;}
+            bridge.interfaceRows={QVariantMap{{"name",""},{"label","Automatic"}},QVariantMap{{"name","any"},{"label","All interfaces"}}};emit bridge.interfacesChanged();settle();
+            if(selector->property("currentIndex").toInt()!=0) {app.exit(56);return;}
+            bridge.interfaceSetting="any";emit bridge.interfacesChanged();settle();
+            if(selector->property("currentIndex").toInt()!=1) {app.exit(57);return;}
+            bridge.interfaceSetting="";emit bridge.interfacesChanged();
+            Bridge capture;
+            capture.backendPath="/bin/sh";
+            capture.captureArguments={"-c","trap 'exit 0' TERM; while :; do sleep 0.05; done","capture-test"};
+            capture.setCaptureInterface("");capture.startCapture();
+            if(!capture.process.waitForStarted(1000)||capture.process.arguments().contains("-interface")) {app.exit(51);return;}
+            const auto initialPID=capture.process.processId();capture.applyCaptureInterface();
+            if(capture.restartingCapture||capture.process.processId()!=initialPID) {app.exit(58);return;}
+            capture.setCaptureInterface("any");
+            {Bridge restored;if(restored.captureInterface()!="any") {app.exit(52);return;}}
+            if(capture.process.arguments().contains("-interface")) {app.exit(53);return;}
+            QEventLoop restarted;
+            QObject::connect(&capture.process,&QProcess::started,&restarted,&QEventLoop::quit);
+            QTimer::singleShot(3500,&restarted,&QEventLoop::quit);
+            capture.applyCaptureInterface();restarted.exec();
+            if(capture.restartingCapture||capture.process.state()!=QProcess::Running||capture.process.arguments().last()!="any") {app.exit(54);return;}
+            capture.replayMode=true;capture.setCaptureInterface("lo");capture.applyCaptureInterface();
+            if(capture.captureInterface()!="any"||capture.restartingCapture) {app.exit(55);return;}
+            capture.replayMode=false;capture.setCaptureInterface("");
+            fprintf(stderr,"Network interface persistence, explicit apply, restart and replay isolation checks passed.\n");
+        }
         if(!screenshot.isEmpty()) {
             window->grabWindow().save(screenshot+"-preview.png");settingsWindow->grabWindow().save(screenshot+"-preview-settings.png");
             auto capture=bridge.panel->grabToImage();QEventLoop rendered;

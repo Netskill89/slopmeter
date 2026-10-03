@@ -1,7 +1,7 @@
 name: Build and release
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
     tags: ['v*']
   pull_request:
 permissions:

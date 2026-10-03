@@ -141,6 +141,9 @@ func run() error {
 		return fmt.Errorf("encounter timeouts must be positive")
 	}
 	if *devices {
+		if *jsonOutput {
+			return listNetworkInterfaces()
+		}
 		return listCaptureInterfaces()
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
@@ -336,7 +339,7 @@ loop:
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Fprintln(os.Stderr, "aiondps:", err)
+		fmt.Fprintln(os.Stderr, "slopmeter:", err)
 		os.Exit(1)
 	}
 }
