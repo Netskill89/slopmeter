@@ -17,7 +17,7 @@ sudo pacman -S --needed go libpcap base-devel cmake pkgconf qt6-base qt6-declara
 Debian 13:
 
 ```sh
-sudo apt install libpcap-dev build-essential cmake pkg-config qt6-base-dev qt6-declarative-dev qt6-wayland qt6-svg-dev qt6-image-formats-plugins liblayershellqtinterface-dev libwayland-dev qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-window qml6-module-qtqml-workerscript qml6-module-qtquick-templates nodejs python3
+sudo apt install libpcap-dev build-essential cmake pkg-config qt6-base-dev qt6-declarative-dev qt6-wayland qt6-svg-dev qt6-svg-plugins qt6-image-formats-plugins liblayershellqtinterface-dev libwayland-dev qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-window qml6-module-qtqml-workerscript qml6-module-qtquick-templates nodejs python3
 ```
 
 ```sh
