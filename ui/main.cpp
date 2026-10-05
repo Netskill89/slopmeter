@@ -114,6 +114,7 @@ class Bridge : public QObject {
     Q_PROPERTY(int backgroundOpacity READ backgroundOpacity WRITE setBackgroundOpacity NOTIFY appearanceChanged)
     Q_PROPERTY(int overallOpacity READ overallOpacity WRITE setOverallOpacity NOTIFY appearanceChanged)
     Q_PROPERTY(bool showDetails READ showDetails WRITE setShowDetails NOTIFY appearanceChanged)
+    Q_PROPERTY(bool growUp READ growUp WRITE setGrowUp NOTIFY appearanceChanged)
     Q_PROPERTY(bool captureActive READ captureActive NOTIFY captureChanged)
     Q_PROPERTY(QString displayLabel READ displayLabel NOTIFY displayChanged)
     Q_PROPERTY(QString character READ character NOTIFY characterChanged)
@@ -205,7 +206,10 @@ public:
     void setBarHeight(int value) {heightSetting=qBound(28,value,80);QSettings().setValue("appearance/barHeight",heightSetting);emit appearanceChanged();}
     void setBarSpacing(int value) {spacingSetting=qBound(0,value,20);QSettings().setValue("appearance/barSpacing",spacingSetting);emit appearanceChanged();}
     void setShowDetails(bool value) {detailsSetting=value;QSettings().setValue("appearance/showDetails",value);emit appearanceChanged();}
-    Q_INVOKABLE void resetAppearance() {setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);}
+    bool growUpSetting=QSettings().value("appearance/growUp",true).toBool();
+    bool growUp() const {return growUpSetting;}
+    void setGrowUp(bool value) {growUpSetting=value;QSettings().setValue("appearance/growUp",value);savePosition();emit appearanceChanged();}
+    Q_INVOKABLE void resetAppearance() {setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);setGrowUp(true);}
     ActorModel actors;
     SkillModel skills;
     QProcess process;
@@ -446,7 +450,19 @@ public:
     Q_INVOKABLE void beginDrag() {dragOrigin=position();dragging=true;}
     Q_INVOKABLE void dragOverlay(int dx,int dy) {positionOverlay(dragOrigin+QPoint(dx,dy));}
     Q_INVOKABLE void endDrag() {dragging=false;savePosition();if(autoDisplay&&!gameScreen.isEmpty()) gameOutput(gameScreen,{});}
-    void savePosition() {QSettings().setValue("position0",position());}
+    // Growing upward keeps the panel's bottom edge where the user last placed it.
+    int anchorBottom=-1;
+    void followHeight() {
+        if(!panel) return;
+        auto pos=position();
+        if(growUpSetting&&!dragging&&anchorBottom>=0) pos.setY(anchorBottom-qRound(panel->height()));
+        positionOverlay(pos);
+    }
+    void savePosition() {
+        if(!panel) return;
+        anchorBottom=position().y()+qRound(panel->height());
+        QSettings().setValue("position0",position());QSettings().setValue("position0Bottom",anchorBottom);
+    }
     Q_INVOKABLE void resetPosition() {positionOverlay({40,100});savePosition();window->show();}
     std::function<void()> hiddenRecovery;
     Q_INVOKABLE void hide() {window->hide();if(hiddenRecovery) hiddenRecovery();}
@@ -508,7 +524,7 @@ int main(int argc,char **argv) {
     QObject::connect(bridge.panel,&QQuickItem::yChanged,&bridge,&Bridge::updateInputMask);
     QObject::connect(bridge.panel,&QQuickItem::opacityChanged,&bridge,&Bridge::updateInputMask);
     QObject::connect(bridge.panel,&QQuickItem::widthChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
-    QObject::connect(bridge.panel,&QQuickItem::heightChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
+    QObject::connect(bridge.panel,&QQuickItem::heightChanged,&bridge,&Bridge::followHeight);
     QStringList args=app.arguments().mid(1);bool test=args.removeAll("--ui-self-test")>0;
     QString screenshotDirectory;
     auto screenshotOption=args.indexOf("--screenshots");
@@ -522,7 +538,8 @@ int main(int argc,char **argv) {
     QObject::connect(window,&QQuickWindow::heightChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
     QObject::connect(window,&QWindow::screenChanged,&bridge,[&bridge](QScreen*) {emit bridge.displayChanged();});
     bridge.resizeCanvas();emit bridge.displayChanged();
-    bridge.positionOverlay(QSettings().value("position0",QPoint(40,100)).toPoint());window->show();
+    bridge.positionOverlay(QSettings().value("position0",QPoint(40,100)).toPoint());
+    bridge.anchorBottom=QSettings().value("position0Bottom",bridge.position().y()+qRound(bridge.panel->height())).toInt();bridge.followHeight();window->show();
     QSystemTrayIcon tray{appIcon};tray.setToolTip("SlopMeter");QMenu menu;
     menu.addAction("Show meter",window,[window] {window->show();});menu.addAction("Hide meter",&bridge,&Bridge::hide);
     auto displays=menu.addMenu("Display");
@@ -618,6 +635,14 @@ int main(int argc,char **argv) {
         bridge.actors.update(partyRows);settle();const auto partyHeight=bridge.panel->height();
         auto bars=window->findChild<QQuickItem*>("playerBars");
         if(!bars||partyHeight<=emptyHeight||qAbs(bars->height()-(4*bridge.barHeight()+3*bridge.barSpacing()))>1) {fprintf(stderr,"Content sizing failed: empty=%f party=%f bars=%f\n",emptyHeight,partyHeight,bars?bars->height():-1);app.exit(10);return;}
+        // Growing downward keeps the top edge in place; growing upward keeps the bottom edge.
+        bridge.setGrowUp(false);bridge.actors.update({});settle();bridge.positionOverlay({40,0});bridge.savePosition();
+        bridge.actors.update(partyRows);settle();
+        if(qAbs(bridge.panel->y())>1) {fprintf(stderr,"Downward growth moved the top edge to %f\n",bridge.panel->y());app.exit(75);return;}
+        bridge.setGrowUp(true);bridge.actors.update({});settle();bridge.positionOverlay({40,window->height()-qRound(bridge.panel->height())-60});bridge.savePosition();
+        const auto anchoredBottom=bridge.panel->y()+bridge.panel->height();
+        bridge.actors.update(partyRows);settle();
+        if(qAbs(bridge.panel->y()+bridge.panel->height()-anchoredBottom)>1||qAbs(bridge.panel->height()-partyHeight)>1) {fprintf(stderr,"Upward growth moved the bottom edge from %f to %f\n",anchoredBottom,bridge.panel->y()+bridge.panel->height());app.exit(76);return;}
         if(!QMetaObject::invokeMethod(window,"openSettings")) {app.exit(11);return;}
         settle();
         QQuickWindow *settingsWindow=nullptr;

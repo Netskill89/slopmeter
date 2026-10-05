@@ -19,6 +19,7 @@ Window {
             Label {text: "Layout"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
             CheckBox {objectName: "testModeToggle"; palette.windowText: "#e6edf6"; text: "Test mode"; checked: backend.testMode; onToggled: backend.testMode = checked}
             CheckBox {objectName: "borderToggle"; palette.windowText: "#e6edf6"; text: "Show meter border"; checked: backend.showBorder; onToggled: backend.showBorder = checked}
+            CheckBox {objectName: "growUpToggle"; palette.windowText: "#e6edf6"; text: "Grow upward as players join"; checked: backend.growUp; onToggled: backend.growUp = checked}
             Label {text: "Player bar style"; color: "#c0cbdc"}
             ComboBox {objectName: "barStyleSelector"; Layout.fillWidth: true; model: ["Classic (default)", "Soft gradient", "Inset shadow", "Glossy"]; currentIndex: backend.barStyle; onActivated: backend.barStyle = currentIndex}
             Label {text: "Width · " + backend.barWidth + " px"; color: "#c0cbdc"}
