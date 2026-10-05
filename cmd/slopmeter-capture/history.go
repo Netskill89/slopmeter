@@ -72,6 +72,30 @@ func (h *combatHistory) lastID() uint64 {
 	return id
 }
 
+// Fill missing class metadata only for matching character and player identities.
+// Existing classes, combat totals and names remain part of the original fight.
+func (h *combatHistory) enrichClasses(i identities) error {
+	changed := false
+	for index := range h.entries {
+		s := &h.entries[index].Snapshot
+		if i.name == "" || s.Character != i.name {
+			continue
+		}
+		for rowIndex := range s.Actors {
+			r := &s.Actors[rowIndex]
+			if r.Class == "" && i.classes[r.ID] != "" && r.Name == i.names[r.ID] {
+				r.Class = i.classes[r.ID]
+				changed = true
+			}
+		}
+	}
+	if !changed {
+		return nil
+	}
+	h.dirty = true
+	return h.save()
+}
+
 func (h *combatHistory) archive(e *encounter, i identities, t time.Time) error {
 	state := e.snapshot(i, t)
 	if len(state.Actors) == 0 {

@@ -5,9 +5,10 @@ import subprocess
 import sys
 import tarfile
 root = Path(__file__).resolve().parents[1]
-# Prefer git's index when available. A fresh pre-init workspace uses explicit roots.
+# Include tracked and non-ignored new files so local packages have complete source.
+# A fresh pre-init workspace uses explicit roots.
 try:
-    paths = subprocess.check_output(['git', 'ls-files', '-z'], cwd=root, stderr=subprocess.DEVNULL).decode().split('\0')
+    paths = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'], cwd=root, stderr=subprocess.DEVNULL).decode().split('\0')
 except subprocess.CalledProcessError:
     allowed = ['cmd', 'ui', 'scripts', 'packaging', 'tests', 'docs', 'LICENSES', '.github', '.gitlab']
     paths = [str(p.relative_to(root)) for name in allowed for p in (root/name).rglob('*') if p.is_file()]

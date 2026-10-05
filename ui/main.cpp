@@ -39,6 +39,13 @@
 #include <QDateTime>
 #include <QStandardPaths>
 #include <QUrl>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <functional>
+#include "desktop.h"
+#include "releasecheck.h"
+#include "desktopregistration.h"
 
 class ActorModel : public QAbstractListModel {
 public:
@@ -114,6 +121,7 @@ class Bridge : public QObject {
     Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
     Q_PROPERTY(QString encounter READ encounter NOTIFY encounterChanged)
     Q_PROPERTY(QVariantMap boss READ boss NOTIFY bossChanged)
+    Q_PROPERTY(QString bossHealthStatus READ bossHealthStatus NOTIFY bossChanged)
     Q_PROPERTY(QString displayStatus READ displayStatus NOTIFY displayChanged)
     Q_CLASSINFO("D-Bus Interface", "org.aiondps.Screen")
 public:
@@ -217,6 +225,8 @@ public:
     Q_INVOKABLE QString displayStatus() const {return displayMessage;}
     QString encounter() const {return encounterLabel;}
     QVariantMap boss() const {return bossState;}
+    QString healthMessage;
+    QString bossHealthStatus() const {return previewEnabled?"Test mode: simulated boss HP.":healthMessage;}
     bool captureActive() const {return captureReady;}
     void setCaptureReady(bool ready) {if(captureReady!=ready) {
         captureReady=ready;emit captureChanged();
@@ -335,7 +345,7 @@ public:
         auto next=(!previewEnabled&&!selectedSession?currentState:displayState).value("character").toString();if(next!=name) {name=next;emit characterChanged();}
         double seconds=displayState.value("duration").toDouble();if(seconds!=span) {span=seconds;emit durationChanged();}
         auto label=displayState.value("encounter","Waiting for combat").toString();if(label!=encounterLabel) {encounterLabel=label;emit encounterChanged();}
-        auto boss=displayState.value("boss").toMap();if(boss!=bossState) {bossState=boss;emit bossChanged();}
+        auto boss=displayState.value("boss").toMap();auto health=displayState.value("healthStatus").toString();if(boss!=bossState||health!=healthMessage) {bossState=boss;healthMessage=health;emit bossChanged();}
         actors.update(QJsonArray::fromVariantList(displayPlayers()));updateDetail();
     }
     void updateDetail() {skills.update(QJsonArray::fromVariantList(detailPlayer().value("skills").toList()));emit detailChanged();}
@@ -438,7 +448,8 @@ public:
     Q_INVOKABLE void endDrag() {dragging=false;savePosition();if(autoDisplay&&!gameScreen.isEmpty()) gameOutput(gameScreen,{});}
     void savePosition() {QSettings().setValue("position0",position());}
     Q_INVOKABLE void resetPosition() {positionOverlay({40,100});savePosition();window->show();}
-    Q_INVOKABLE void hide() {window->hide();}
+    std::function<void()> hiddenRecovery;
+    Q_INVOKABLE void hide() {window->hide();if(hiddenRecovery) hiddenRecovery();}
     Q_INVOKABLE void quit() {QCoreApplication::quit();}
 signals:
     void interfacesChanged();
@@ -458,6 +469,21 @@ int main(int argc,char **argv) {
     }
     qunsetenv("QT_WAYLAND_SHELL_INTEGRATION");
     QApplication app(argc,argv);app.setQuitOnLastWindowClosed(false);app.setOrganizationName("AionDPS");app.setApplicationName("SlopMeter");
+    const QIcon appIcon(":/app/slopmeter.svg");app.setWindowIcon(appIcon);
+    const bool isolated=app.arguments().contains("--ui-self-test")||app.arguments().contains("--screenshots")||app.arguments().contains("--ui-detection-test")||headless;
+    if(!isolated) {
+        if(registerDesktopIdentity()) app.setDesktopFileName("slopmeter");
+        else fprintf(stderr,"Desktop registration failed: the user data directory is not writable.\n");
+    }
+    const QString desktopService="io.github.Netskill89.SlopMeter";
+    auto desktopBus=QDBusConnection::sessionBus();DesktopControl desktopControl;
+    if(!isolated&&desktopBus.isConnected()&&!desktopBus.registerService(desktopService)) {
+        QDBusInterface existing(desktopService,"/SlopMeter",desktopService,desktopBus);
+        auto reply=existing.call("Show");
+        if(reply.type()!=QDBusMessage::ErrorMessage) return 0;
+        fprintf(stderr,"Could not restore the existing SlopMeter instance: %s\n",qPrintable(reply.errorMessage()));return 1;
+    }
+    if(!isolated&&desktopBus.isConnected()) desktopBus.registerObject("/SlopMeter",&desktopControl,QDBusConnection::ExportAllSlots);
     std::unique_ptr<QTemporaryDir> selfTestSettings;
     if(app.arguments().contains("--ui-self-test")||app.arguments().contains("--screenshots")) {
         selfTestSettings=std::make_unique<QTemporaryDir>();if(!selfTestSettings->isValid()) return 1;
@@ -472,7 +498,9 @@ int main(int argc,char **argv) {
         }
     }
     Bridge bridge;bridge.headless=headless;
+    ReleaseCheck updates(SLOPMETER_VERSION);
     QQmlApplicationEngine engine;engine.rootContext()->setContextProperty("backend",&bridge);engine.rootContext()->setContextProperty("actorModel",&bridge.actors);engine.rootContext()->setContextProperty("skillModel",&bridge.skills);
+    engine.rootContext()->setContextProperty("updates",&updates);
     engine.load(QUrl("qrc:/Main.qml"));if(engine.rootObjects().size()!=1) return 1;
     auto window=qobject_cast<QQuickWindow*>(engine.rootObjects().first());if(!window) return 1;bridge.window=window;
     bridge.panel=window->findChild<QQuickItem*>("meterPanel");if(!bridge.panel) return 1;
@@ -495,15 +523,25 @@ int main(int argc,char **argv) {
     QObject::connect(window,&QWindow::screenChanged,&bridge,[&bridge](QScreen*) {emit bridge.displayChanged();});
     bridge.resizeCanvas();emit bridge.displayChanged();
     bridge.positionOverlay(QSettings().value("position0",QPoint(40,100)).toPoint());window->show();
-    QPixmap icon(32,32);icon.fill(QColor("#19202d"));QPainter painter(&icon);painter.setPen(QColor("#9ad9ec"));painter.drawText(icon.rect(),Qt::AlignCenter,"DPS");painter.end();
-    QSystemTrayIcon tray{QIcon(icon)};tray.setToolTip("SlopMeter");QMenu menu;
-    menu.addAction("Show meter",window,[window] {window->show();});menu.addAction("Hide meter",window,[window] {window->hide();});
+    QSystemTrayIcon tray{appIcon};tray.setToolTip("SlopMeter");QMenu menu;
+    menu.addAction("Show meter",window,[window] {window->show();});menu.addAction("Hide meter",&bridge,&Bridge::hide);
     auto displays=menu.addMenu("Display");
     displays->addAction("Follow AION 2",&bridge,[&bridge] {bridge.autoDisplay=true;bridge.gameOutput(bridge.gameScreen,{});});
     for(auto screen:app.screens()) {const auto name=screen->name();displays->addAction(name,&bridge,[&bridge,name] {bridge.autoDisplay=false;for(auto screen:QGuiApplication::screens()) if(screen->name()==name) {bridge.selectScreen(screen);break;}});}
     menu.addAction("Settings",window,[window] {QMetaObject::invokeMethod(window,"openSettings");});
     menu.addAction("Reset position",&bridge,&Bridge::resetPosition);menu.addSeparator();menu.addAction("Quit",&bridge,&Bridge::quit);
     tray.setContextMenu(&menu);QObject::connect(&tray,&QSystemTrayIcon::activated,&bridge,[window](QSystemTrayIcon::ActivationReason r) {if(r==QSystemTrayIcon::Trigger) window->setVisible(!window->isVisible());});tray.show();
+    // Desktops without a tray must still provide a visible way back to the meter.
+    QWidget recovery;recovery.setWindowTitle("SlopMeter");recovery.setWindowIcon(appIcon);
+    auto recoveryLayout=new QVBoxLayout(&recovery);
+    recoveryLayout->addWidget(new QLabel("SlopMeter is running. Your desktop tray is unavailable.",&recovery));
+    auto restoreButton=new QPushButton("Show meter",&recovery);recoveryLayout->addWidget(restoreButton);
+    auto restore=[&] {window->show();recovery.hide();};
+    desktopControl.meterVisible=[window] {return window->isVisible();};
+    QObject::connect(restoreButton,&QPushButton::clicked,&app,restore);
+    QObject::connect(&desktopControl,&DesktopControl::restoreRequested,&app,restore);
+    bridge.hiddenRecovery=[&] {if(!headless&&!QSystemTrayIcon::isSystemTrayAvailable()) recovery.show();};
+    fprintf(stderr,"Desktop tray: %s. Launch SlopMeter again to restore the meter.\n",QSystemTrayIcon::isSystemTrayAvailable()?"available":"unavailable");
     if(!test||!headless) bridge.startGameDetection();
     auto executable=qEnvironmentVariable("SLOPMETER_BACKEND");
     if(executable.isEmpty()) executable=qEnvironmentVariable("AIONDPS_BACKEND");
@@ -539,9 +577,12 @@ int main(int argc,char **argv) {
     }
     args.prepend("-json");args.append("-interval");args.append(QString::number(bridge.pollInterval())+"ms");for(int i=0;i<args.size();++i) if(args[i]=="-interface"&&i+1<args.size()) {bridge.setCaptureInterface(args[i+1]);args.removeAt(i+1);args.removeAt(i);break;}
     bridge.captureArguments=args;bridge.startCapture();bridge.refreshInterfaces();
+    if(!isolated) updates.start();
     if(test) QTimer::singleShot(500,&app,[&] {
         if(QGuiApplication::allWindows().size()!=1) {app.exit(2);return;}
         bridge.hide();window->show();if(!window->isVisible()) {app.exit(3);return;}
+        window->hide();desktopControl.Show();if(!window->isVisible()||recovery.isVisible()) {app.exit(63);return;}
+        if(appIcon.isNull()||appIcon.pixmap(32,32).isNull()||!tray.isVisible()) {app.exit(64);return;}
         ActorModel model;
         int resets=0,insertions=0;
         QObject::connect(&model,&QAbstractItemModel::modelReset,&app,[&] {++resets;});
@@ -645,6 +686,40 @@ int main(int argc,char **argv) {
         }
         auto versionLabel=window->findChild<QObject*>("appVersionLabel");
         if(!versionLabel||versionLabel->property("text").toString()!=QString("v")+SLOPMETER_VERSION) {app.exit(59);return;}
+        // Alpha ordering is numeric; published drafts and malformed tags cannot advertise updates.
+        const QList<QPair<QString,QString>> newerPairs{{"0.1.0-alpha.10","0.1.0-alpha.2"},{"0.1.0","0.1.0-rc.1"},{"1.0.0-alpha","0.9.9"},{"1.0.0-alpha.beta","1.0.0-alpha.1"}};
+        for(const auto &pair:newerPairs) {
+            ReleaseVersion newer(pair.first),older(pair.second);
+            if(!newer.valid||!older.valid||newer.compare(older)<=0||older.compare(newer)>=0) {app.exit(65);return;}
+        }
+        if(ReleaseVersion("v0.1.0-alpha.3+build.2").compare(ReleaseVersion("0.1.0-alpha.3"))!=0||ReleaseVersion("0.1.0-alpha.03").valid||ReleaseVersion("broken").valid) {app.exit(66);return;}
+        const QByteArray releases=R"([{"tag_name":"v0.1.0-alpha.10","published_at":"2026-10-04","prerelease":true},{"tag_name":"v99.0.0","published_at":"2026-10-04","draft":true},{"tag_name":"bad","published_at":"2026-10-04"},{"tag_name":"v98.0.0"}])";
+        ReleaseCheck alpha("0.1.0-alpha.3"),stable("0.1.0");alpha.applyReleases(releases);stable.applyReleases(releases);
+        if(!alpha.available()||alpha.version()!="0.1.0-alpha.10"||stable.available()) {app.exit(67);return;}
+        alpha.applyReleases("{error}");if(!alpha.available()) {app.exit(68);return;}
+        alpha.applyReleases(R"([{"tag_name":"v0.1.0-alpha.3","published_at":"2026-10-04"}])");
+        if(alpha.available()) {app.exit(69);return;}
+        auto updateLink=window->findChild<QQuickItem*>("updateAvailableLink");
+        if(!updateLink||updateLink->isVisible()) {app.exit(70);return;}
+        updates.applyReleases(R"([{"tag_name":"v999999999999.0.0","published_at":"2026-10-04"}])");settle();
+        if(!updateLink->isVisible()||updateLink->property("text").toString()!="Update available"||updates.url()!="https://github.com/Netskill89/slopmeter/releases"||updateLink->mapToItem(bridge.panel,{updateLink->width(),0}).x()>bridge.panel->width()) {app.exit(71);return;}
+        updates.applyReleases("[]");settle();if(updateLink->isVisible()) {app.exit(72);return;}
+        fprintf(stderr,"Release comparison, alpha updates, malformed/offline replies and footer link checks passed.\n");
+        // Portable desktop registration stays hidden and preserves installed launchers.
+        QTemporaryDir desktopData;if(!desktopData.isValid()) {app.exit(73);return;}
+        const auto oldDataHome=qgetenv("XDG_DATA_HOME"),oldDataDirs=qgetenv("XDG_DATA_DIRS");
+        qputenv("XDG_DATA_HOME",desktopData.path().toUtf8());qputenv("XDG_DATA_DIRS",desktopData.path().toUtf8());
+        const bool registered=registerDesktopIdentity();
+        QFile desktopEntry(desktopData.path()+"/applications/slopmeter.desktop");
+        bool desktopValid=registered&&desktopEntry.open(QIODevice::ReadOnly);
+        const auto entry=desktopEntry.readAll();desktopEntry.close();
+        desktopValid=desktopValid&&entry.contains("NoDisplay=true\n")&&entry.contains("Exec=")&&QFile::exists(desktopData.path()+"/icons/hicolor/scalable/apps/slopmeter.svg");
+        if(desktopEntry.open(QIODevice::WriteOnly)) {desktopEntry.write("existing launcher\n");desktopEntry.close();} else desktopValid=false;
+        desktopValid=desktopValid&&registerDesktopIdentity()&&desktopEntry.open(QIODevice::ReadOnly)&&desktopEntry.readAll()=="existing launcher\n";desktopEntry.close();
+        if(oldDataHome.isNull()) qunsetenv("XDG_DATA_HOME");else qputenv("XDG_DATA_HOME",oldDataHome);
+        if(oldDataDirs.isNull()) qunsetenv("XDG_DATA_DIRS");else qputenv("XDG_DATA_DIRS",oldDataDirs);
+        if(!desktopValid) {app.exit(74);return;}
+        fprintf(stderr,"Portable desktop identity and installed-launcher preservation checks passed.\n");
         auto captureDot=window->findChild<QQuickItem*>("captureIndicator");
         auto displayText=window->findChild<QObject*>("displayLabel");
         if(!captureDot||!displayText||!displayText->property("text").toString().startsWith("Display - ")||bridge.captureActive()) {app.exit(41);return;}

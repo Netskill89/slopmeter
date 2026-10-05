@@ -17,7 +17,8 @@ type membership struct {
 }
 type scope struct {
 	identities
-	members map[game.Entity]membership
+	members       map[game.Entity]membership
+	classRevision uint64
 }
 
 const memberLease = 10 * time.Second

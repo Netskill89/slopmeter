@@ -270,6 +270,7 @@ loop:
 				logicalTime = msg.Time
 			}
 			oldSelf, oldName := group.self, group.name
+			oldClassRevision := group.classRevision
 			oldSession, oldStatus, oldBoss := fight.number, fight.status, fight.boss
 			am := aMessage{msg.Opcode, msg.Flags, msg.Payload, msg.Event, msg.Time}
 			fight.tick(msg.Time)
@@ -278,6 +279,12 @@ loop:
 				fight.finish(msg.Time, "Character changed", true)
 			}
 			group.observeMessage(am)
+			if oldClassRevision != group.classRevision {
+				dirty = true
+				if err := history.enrichClasses(group.identities); err != nil {
+					fmt.Fprintln(os.Stderr, "Could not update combat history class metadata:", err)
+				}
+			}
 			if oldSelf != 0 && group.self != oldSelf {
 				number := fight.number
 				fight = newEncounter(game.Entity(*target), *idle, *bossIdle)
@@ -298,7 +305,7 @@ loop:
 			if p, ok := msg.Event.(game.Player); ok && fight.meter.actors[p.Entity] != nil {
 				dirty = true
 			}
-			if fight.boss != 0 && (msg.Opcode == 0x8d00 || msg.Opcode == 0x3640 || msg.Opcode == 0x3641) {
+			if (fight.boss != 0 || fight.lastTarget != 0) && (msg.Opcode == 0x8d00 || msg.Opcode == 0x3640 || msg.Opcode == 0x3641) {
 				dirty = true
 			}
 		}

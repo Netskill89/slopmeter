@@ -31,14 +31,20 @@ func className(code uint32) string {
 }
 
 func (s *scope) observeClass(m aMessage) {
-	// Only confirmed participants' direct damage provides fallback evidence.
-	if hit, ok := m.event.(game.Hit); ok && s.accepts(hit.Actor, m.t) && s.classes[hit.Actor] == "" {
-		if name := skillClasses[hit.Skill]; name != "" {
-			if s.classes == nil {
-				s.classes = make(map[game.Entity]string)
-			}
-			s.classes[hit.Actor] = name
-		}
+	// Class-specific casts also identify healers/buffers before their first hit.
+	// Shared/unmapped skills and nearby players cannot provide evidence.
+	var actor game.Entity
+	var skill game.Skill
+	switch event := m.event.(type) {
+	case game.Hit:
+		actor, skill = event.Actor, event.Skill
+	case game.Cast:
+		actor, skill = event.Actor, event.Skill
+	case game.CastEnd:
+		actor, skill = event.Actor, event.Skill
+	}
+	if actor != 0 && s.accepts(actor, m.t) && s.classes[actor] == "" {
+		s.setClass(actor, skillClasses[skill])
 	}
 	if m.opcode != 0x3645 {
 		return
@@ -56,10 +62,7 @@ func (s *scope) observeClass(m aMessage) {
 			if n > 0 && n <= 72 && end+4 <= len(rest) && s.names[game.Entity(id)] == string(rest[2:end]) {
 				name := className(binary.LittleEndian.Uint32(rest[end:]))
 				if name != "" {
-					if s.classes == nil {
-						s.classes = make(map[game.Entity]string)
-					}
-					s.classes[game.Entity(id)] = name
+					s.setClass(game.Entity(id), name)
 					return
 				}
 			}
@@ -69,4 +72,15 @@ func (s *scope) observeClass(m aMessage) {
 			return
 		}
 	}
+}
+
+func (s *scope) setClass(id game.Entity, name string) {
+	if name == "" || s.classes[id] == name {
+		return
+	}
+	if s.classes == nil {
+		s.classes = make(map[game.Entity]string)
+	}
+	s.classes[id] = name
+	s.classRevision++
 }

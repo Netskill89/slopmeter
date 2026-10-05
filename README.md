@@ -5,9 +5,9 @@
 ---
 
 SlopMeter brings a native Linux overlay to AION 2 running through Steam/Proton.
-Built to fill the gap in Linux support among major DPS meters, it tracks your
-character and confirmed group members. It may serve as a temporary option until
-the major DPS meter providers add Linux support.
+It tracks your character and confirmed group members. Originally built to fill
+a gap in Linux support, it may serve as a temporary alternative as support
+from other DPS meter providers develops.
 
 ## Screenshots
 
@@ -42,8 +42,8 @@ Both formats bundle the application libraries and capture helper.
 ### AppImage
 
 ```sh
-chmod +x SlopMeter-0.1.0-alpha.3-x86_64.AppImage
-./SlopMeter-0.1.0-alpha.3-x86_64.AppImage --appimage-extract-and-run
+chmod +x SlopMeter-0.1.0-alpha.4-x86_64.AppImage
+./SlopMeter-0.1.0-alpha.4-x86_64.AppImage --appimage-extract-and-run
 ```
 
 The extraction option works on systems without FUSE. With FUSE available,
@@ -52,8 +52,8 @@ you can also double-click the executable AppImage.
 ### tar.gz
 
 ```sh
-tar -xzf SlopMeter-0.1.0-alpha.3-x86_64.tar.gz
-cd SlopMeter-0.1.0-alpha.3-x86_64
+tar -xzf SlopMeter-0.1.0-alpha.4-x86_64.tar.gz
+cd SlopMeter-0.1.0-alpha.4-x86_64
 ./AppRun
 ```
 
@@ -67,7 +67,10 @@ folder in place after installing the launcher.
 3. Log into your AION 2 character. If the meter shows **Relog**, log out of the
    character and back in while SlopMeter is running.
 
-Use the tray icon to show or hide the overlay and select a display. Open Settings
+Use the SlopMeter tray icon to show or hide the overlay and select a display.
+If the icon is inside your desktop's hidden tray items, expand that menu. Launching
+SlopMeter again restores the running meter. On desktops without a tray, hiding the
+meter opens a small restore window in the taskbar. Open Settings
 with the gear button; **Test mode** previews the layout with a complete encounter.
 
 ### Network capture
@@ -110,17 +113,20 @@ GNOME's default compositor does not provide the required layer-shell protocol.
 | --- | --- |
 | Boss health | Current HP is read from network packets. Remaining HP percentage is shown when maximum HP is known. |
 
-Boss health needs captured health updates and an identified boss. If those packets
-have not been received, the meter cannot show its health yet. Game updates may
-require decoder fixes. Test mode uses simulated data throughout.
+Boss health needs captured health updates and a boss identified by the bundled NPC
+catalogue. Start capture before entering the area; re-enter or relog if spawn data
+was missed. Ordinary enemies remain hidden. Elites and minibosses are shown only
+when the catalogue classifies them as bosses; separate elite-rank detection is not
+available yet. Game updates may require decoder fixes. Test mode uses simulated
+data throughout.
 
 ## Updates
 
 Download new versions from [Releases](https://github.com/Netskill89/slopmeter/releases)
 and replace your installed copy with SlopMeter closed. Settings and fight history
-are preserved. The current version is shown in the meter footer and Settings.
+are preserved.
 
-**Planned:** in-app update checking and automatic updates.
+**Planned:** automatic updates.
 
 ## Development
 

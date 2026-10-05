@@ -61,3 +61,36 @@ func TestClassCodes(t *testing.T) {
 		t.Fatal("class code boundaries")
 	}
 }
+
+func TestClassCastBeforeDamage(t *testing.T) {
+	now := time.Now()
+	s := scope{identities: identities{self: 1, name: "Self", names: map[game.Entity]string{1: "Self"}}}
+	var skill game.Skill
+	for id, name := range skillClasses {
+		if name == "Cleric" {
+			skill = id
+			break
+		}
+	}
+	if skill == 0 {
+		t.Fatal("missing Cleric skill catalogue")
+	}
+	s.observeMessage(aMessage{flags: wire.FromServer, event: game.Cast{Actor: 3, Skill: skill}, t: now})
+	s.observeMessage(aMessage{flags: wire.FromClient, event: game.Cast{Actor: 1, Skill: skill}, t: now})
+	if s.classRevision != 0 || len(s.classes) != 0 {
+		t.Fatal("unconfirmed cast supplied class evidence")
+	}
+	s.observeMessage(aMessage{flags: wire.FromServer, event: game.Cast{Actor: 1, Skill: skill}, t: now})
+	if s.classes[1] != "Cleric" || s.classRevision != 1 {
+		t.Fatal("Cleric cast did not identify self before damage")
+	}
+	s.observeMessage(aMessage{flags: wire.FromServer, event: game.CastEnd{Actor: 1, Skill: skill}, t: now})
+	if s.classRevision != 1 {
+		t.Fatal("unchanged class marked metadata dirty again")
+	}
+	s.confirm(2, 1, "Party", now)
+	s.observeMessage(aMessage{flags: wire.FromServer, event: game.CastEnd{Actor: 2, Skill: skill}, t: now})
+	if s.classes[2] != "Cleric" || s.classRevision != 2 {
+		t.Fatal("short/self-cast completion did not identify party member")
+	}
+}

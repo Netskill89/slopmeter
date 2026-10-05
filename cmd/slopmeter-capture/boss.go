@@ -5,6 +5,25 @@ import (
 	"github.com/nuriland/a2kit/game"
 )
 
+func (e *encounter) healthStatus(boss *bossDisplay) string {
+	if boss != nil {
+		if !boss.Known {
+			return "Boss identified; waiting for captured HP updates."
+		}
+		if !boss.MaxKnown {
+			return "Current boss HP captured; maximum HP missing. Re-enter the area to refresh spawn data."
+		}
+		return "Current and maximum boss HP captured."
+	}
+	if e.lastTarget == 0 {
+		return "Waiting for your group to attack a boss."
+	}
+	if n := e.targets[e.lastTarget]; n != nil && n.definition.Code != 0 {
+		return fmt.Sprintf("Attacked NPC %d is not classified as a boss in the catalogue.", n.definition.Code)
+	}
+	return "Attacked target identity missing. Re-enter the area with capture running."
+}
+
 func (e *encounter) bossSnapshot(id game.Entity, i identities) *bossDisplay {
 	if id == 0 {
 		return nil

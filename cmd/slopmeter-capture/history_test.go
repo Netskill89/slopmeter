@@ -9,6 +9,44 @@ import (
 	"github.com/nuriland/a2kit/game"
 )
 
+func TestFinishedFightReceivesLateClass(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "history.json")
+	h, err := loadHistory(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	e, now := encounterFixture()
+	i := identities{self: 1, name: "Self", names: map[game.Entity]string{1: "Self"}}
+	e.hit(now, game.Hit{Actor: 1, Target: 20, Damage: 1803})
+	e.finish(now, "Finished", false)
+	if err := h.archive(e, i, now); err != nil {
+		t.Fatal(err)
+	}
+	h.dirty = false
+	i.classes = map[game.Entity]string{1: "Cleric"}
+	i.names[1] = "Different player"
+	if err := h.enrichClasses(i); err != nil || h.dirty {
+		t.Fatal("reused entity ID enriched another player's fight", err)
+	}
+	i.names[1] = "Self"
+	if err := h.enrichClasses(i); err != nil {
+		t.Fatal(err)
+	}
+	r := h.entries[0].Snapshot.Actors[0]
+	if !h.dirty || r.Class != "Cleric" || r.Name != "Self" || r.Damage != 1803 {
+		t.Fatalf("late metadata failed or altered combat totals: %+v", r)
+	}
+	loaded, err := loadHistory(path)
+	if err != nil || loaded.entries[0].Snapshot.Actors[0].Class != "Cleric" {
+		t.Fatal("enriched class was not persisted", err)
+	}
+	h.dirty = false
+	i.classes[1] = "Templar"
+	if err := h.enrichClasses(i); err != nil || h.dirty || h.entries[0].Snapshot.Actors[0].Class != "Cleric" {
+		t.Fatal("known historical class overwritten", err)
+	}
+}
+
 func TestHistoryRolloverPersistenceAndImmutability(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "state", "history.json")
 	h, err := loadHistory(path)

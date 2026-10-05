@@ -62,6 +62,7 @@ type encounter struct {
 	filter            game.Entity
 	npcs              map[game.Entity]*npcState
 	boss              game.Entity
+	lastTarget        game.Entity
 	active            bool
 	number            uint64
 	lastDamage, ended time.Time
@@ -90,6 +91,7 @@ func (e *encounter) start(t time.Time, boss game.Entity) {
 	}
 	e.meter = meter{target: target}
 	e.boss = boss
+	e.lastTarget = 0
 	e.active = true
 	e.ended = time.Time{}
 	e.number++
@@ -117,6 +119,7 @@ func (e *encounter) finish(t time.Time, status string, clear bool) {
 	if clear {
 		e.meter = meter{target: e.filter}
 		e.boss = 0
+		e.lastTarget = 0
 		e.lastDamage = time.Time{}
 		e.pendingCasts = nil
 	}
@@ -166,6 +169,9 @@ func (e *encounter) hit(t time.Time, h game.Hit) {
 		return
 	}
 	e.meter.add(t, h)
+	if !t.Before(e.lastDamage) {
+		e.lastTarget = h.Target
+	}
 	if t.After(e.lastDamage) {
 		e.lastDamage = t
 	}
@@ -201,7 +207,7 @@ func (e *encounter) npc(id game.Entity, code uint32) *npcState {
 	if n == nil {
 		n = e.targets[id]
 	}
-	if n != nil && n.definition.Code == 0 {
+	if n != nil && (n.definition.Code == 0 || n.definition.Code == code) {
 		n.definition = d
 	} else if n == nil || n.definition.Code != code {
 		n = &npcState{definition: d}
@@ -224,7 +230,7 @@ func hpPair(p []byte, offset int) (uint32, uint32, bool) {
 	}
 	return current, max, true
 }
-func (e *encounter) health(t time.Time, id game.Entity, current, max uint32) {
+func (e *encounter) targetState(id game.Entity) *npcState {
 	n := e.targets[id]
 	if n == nil {
 		n = e.npcs[id]
@@ -242,6 +248,10 @@ func (e *encounter) health(t time.Time, id game.Entity, current, max uint32) {
 		n = &npcState{}
 		e.targets[id] = n
 	}
+	return n
+}
+func (e *encounter) health(t time.Time, id game.Entity, current, max uint32) {
+	n := e.targetState(id)
 	if t.Before(n.observed) {
 		if n.max == 0 && max > 0 {
 			n.max = max
@@ -272,7 +282,11 @@ func (e *encounter) observe(m aMessage) {
 		return
 	}
 	if spawn, ok := m.event.(game.Spawn); ok {
-		e.npc(spawn.Entity, uint32(spawn.NPC))
+		if e.npc(spawn.Entity, uint32(spawn.NPC)) == nil && spawn.NPC != 0 {
+			// Retain identity for diagnostics without declaring an unknown NPC a boss.
+			n := e.targetState(spawn.Entity)
+			n.definition.Code = uint32(spawn.NPC)
+		}
 	}
 	if death, ok := m.event.(game.Death); ok && death.Flag == 3 && death.Entity != e.boss {
 		e.health(m.t, death.Entity, 0, 0)
@@ -319,8 +333,12 @@ func (e *encounter) observe(m aMessage) {
 		offsets := []int{5}
 		if m.opcode == 0x3640 {
 			tag := rest[:3]
-			if !((tag[1] == 0x10 || tag[1] == 0x20 || tag[1] == 0x21 || tag[1] == 0x22 || tag[1] == 0x30 || tag[1] == 0x32) && tag[2] == 0 || tag[0] == 0x1c && tag[1] == 0 && tag[2] == 0) {
-				return
+			knownTag := ((tag[1] == 0x10 || tag[1] == 0x20 || tag[1] == 0x21 || tag[1] == 0x22 || tag[1] == 0x30 || tag[1] == 0x32) && tag[2] == 0 || tag[0] == 0x1c && tag[1] == 0 && tag[2] == 0)
+			if !knownTag {
+				// New state flags may still carry the same verified NPC/HP layout.
+				if _, _, valid := hpPair(rest, 28); !valid {
+					return
+				}
 			}
 			offsets = []int{3}
 		} else if rest[0] == 0x5f && rest[2] == 0 {
@@ -340,6 +358,15 @@ func (e *encounter) observe(m aMessage) {
 				hpOffset += 12
 			}
 			current, max, ok := hpPair(rest, hpOffset)
+			if !ok && m.opcode == 0x3641 {
+				// Optional trailing fields change packet length. Validate both known
+				// layouts instead of requiring one exact total length.
+				alternative := offset + 37
+				if hpOffset == alternative {
+					alternative = offset + 25
+				}
+				current, max, ok = hpPair(rest, alternative)
+			}
 			if ok {
 				e.health(m.t, game.Entity(id), current, max)
 			}
@@ -365,6 +392,11 @@ func (e *encounter) snapshot(i identities, t time.Time) snapshot {
 	s.Active = e.active
 	if e.boss != 0 {
 		s.Boss = e.bossSnapshot(e.boss, i)
+	} else if e.lastTarget != 0 && e.npcs[e.lastTarget] != nil {
+		// Identity can arrive after the last hit. Show its captured HP immediately
+		// without waiting for another damage event or showing ordinary monsters.
+		s.Boss = e.bossSnapshot(e.lastTarget, i)
 	}
+	s.HealthStatus = e.healthStatus(s.Boss)
 	return s
 }

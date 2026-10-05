@@ -56,6 +56,7 @@ Window {
             Label {text: backend.captureReplay ? "Interface selection is disabled during replay." : "Automatic uses the capture helper’s default interface. Choose your Ethernet, Wi-Fi, VPN, or all interfaces if needed. Applying ends the current fight and may request capture permission again."; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {text: backend.status; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {text: backend.interfaceStatus; visible: text.length > 0; color: "#c0cbdc"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
+            Label {text: "Boss health: " + backend.bossHealthStatus; visible: backend.bossHealthStatus.length > 0; color: "#c0cbdc"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {text: "Data refresh"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
             Label {text: "Data polling interval · " + backend.pollInterval + " ms"; color: "#c0cbdc"}
             Slider {objectName: "pollIntervalSlider"; Layout.fillWidth: true; from: 50; to: 1000; stepSize: 50; snapMode: Slider.SnapAlways; value: backend.pollInterval; onMoved: backend.pollInterval = Math.round(value)}

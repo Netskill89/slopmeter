@@ -65,7 +65,7 @@ Window {
                         }
                     }
                     Button { text: "⚙"; implicitWidth: 32; implicitHeight: 32; onClicked: meter.openSettings(); ToolTip.visible: hovered; ToolTip.text: "Meter settings" }
-                    Button { text: "−"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.hide(); ToolTip.visible: hovered; ToolTip.text: "Hide; restore from the tray" }
+                    Button { text: "−"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.hide(); ToolTip.visible: hovered; ToolTip.text: "Hide; restore from the tray or launch SlopMeter again" }
                     Button { text: "×"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.quit() }
                 }
                 ComboBox {
@@ -175,6 +175,15 @@ Window {
                     Label {
                         objectName: "appVersionLabel"
                         text: "v" + backend.appVersion; color: "#8e9eb5"; font.pixelSize: 10
+                    }
+                    Label {
+                        objectName: "updateAvailableLink"
+                        visible: updates.available
+                        text: "Update available"; color: "#9ad9ec"; font.pixelSize: 10; font.underline: true
+                        Accessible.role: Accessible.Link; Accessible.name: "Update available: " + updates.version
+                        TapHandler {onTapped: Qt.openUrlExternally(updates.url)}
+                        HoverHandler {id: updateHover; cursorShape: Qt.PointingHandCursor}
+                        ToolTip.visible: updateHover.hovered; ToolTip.text: "v" + updates.version + " · Open GitHub releases"
                     }
                     Rectangle {
                         objectName: "captureIndicator"

@@ -39,14 +39,15 @@ type row struct {
 	Skills []skillRow  `json:"skills"`
 }
 type snapshot struct {
-	Character string          `json:"character"`
-	Actors    []row           `json:"actors"`
-	Duration  float64         `json:"duration"`
-	Session   uint64          `json:"session"`
-	Encounter string          `json:"encounter"`
-	Active    bool            `json:"active"`
-	Boss      *bossDisplay    `json:"boss"`
-	History   *[]historyEntry `json:"history,omitempty"`
+	Character    string          `json:"character"`
+	Actors       []row           `json:"actors"`
+	Duration     float64         `json:"duration"`
+	Session      uint64          `json:"session"`
+	Encounter    string          `json:"encounter"`
+	Active       bool            `json:"active"`
+	Boss         *bossDisplay    `json:"boss"`
+	HealthStatus string          `json:"healthStatus"`
+	History      *[]historyEntry `json:"history,omitempty"`
 }
 
 func (m *meter) snapshot(i identities) snapshot {
