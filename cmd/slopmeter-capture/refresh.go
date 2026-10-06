@@ -13,17 +13,34 @@ func validRefreshInterval(interval time.Duration) bool {
 	return interval >= 50*time.Millisecond && interval <= time.Second && interval%(50*time.Millisecond) == 0
 }
 
-// UI commands adjust publishing, never packet acquisition. A bounded mailbox
-// keeps only the most recent slider value while the decoder is busy.
-func readRefreshCommands(ctx context.Context, input io.Reader, changes chan time.Duration, report io.Writer) {
+// UI commands never restart packet acquisition. Separate bounded mailboxes
+// prevent slider coalescing from discarding a requested damage reset.
+func readRefreshCommands(ctx context.Context, input io.Reader, changes chan time.Duration, resets chan struct{}, report io.Writer) {
 	scanner := bufio.NewScanner(input)
 	scanner.Buffer(make([]byte, 1024), 4096)
 	for scanner.Scan() {
 		var command struct {
-			IntervalMS int `json:"intervalMs"`
+			IntervalMS int  `json:"intervalMs"`
+			Reset      bool `json:"reset"`
 		}
-		if err := json.Unmarshal(scanner.Bytes(), &command); err != nil || command.IntervalMS < 50 || command.IntervalMS > 1000 {
+		if err := json.Unmarshal(scanner.Bytes(), &command); err != nil {
 			fmt.Fprintln(report, "Ignoring invalid refresh command")
+			continue
+		}
+		select {
+		case <-ctx.Done():
+			return
+		default:
+		}
+		if command.Reset {
+			if command.IntervalMS != 0 {
+				fmt.Fprintln(report, "Ignoring combined reset/refresh command")
+				continue
+			}
+			select {
+			case resets <- struct{}{}:
+			default:
+			}
 			continue
 		}
 		interval := time.Duration(command.IntervalMS) * time.Millisecond

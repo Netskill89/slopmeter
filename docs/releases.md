@@ -2,11 +2,16 @@
 
 `VERSION` is the shared version for the backend, GUI, filenames, and releases.
 Use semantic versions: `0.1.0-alpha.1`, `0.1.0-alpha.2`, then `0.1.0` when stable.
-Tags must match VERSION exactly; for `0.1.0-alpha.4`, use `v0.1.0-alpha.4`.
+Tags must match VERSION exactly; for `0.1.0-alpha.5`, use `v0.1.0-alpha.5`.
 
-CI validates full release packaging on branch pushes and pull/merge requests,
-so packaging problems can be caught before tagging. Only tags publish releases.
-GitHub also supports manual runs from the Actions page.
+Branch pushes and pull/merge requests build and test the application.
+Release tags build, test, and package the AppImage and tarball before publishing.
+GitHub manual runs also validate packaging without publishing a release.
+GitLab manual web pipelines can validate packaging too.
+
+Tag runs test the exact tagged source independently, even when the same commit
+already passed on main. Packaging is no longer repeated on ordinary branch pushes.
+Only tags publish releases.
 
 ## Publish
 

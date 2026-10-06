@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 0.1.0-alpha.5
+
+- Decode captured area names and instance event IDs; display area names in the meter, fight history and damage details.
+- Handle modern NPC spawn layouts and validated current-HP records; attach late boss metadata to the existing fight.
+- Keep confirmed boss sessions active through damage pauses and temporary loss of visibility; finish on confirmed map transitions.
+- Add a manual damage reset button between Settings and Minimise, preserving fight history and capture.
+- Count validated periodic damage ticks while excluding heals, buffs, and damage to self or confirmed group members.
+- Verify DPS arithmetic and shared fight timing against A2Tools/Aion2Flow reference formulas.
+- Decode party roster gear score and combat power; show below player names, or on name hover for bars shorter than 38 pixels.
+- Add saved settings for score visibility, total damage, damage contribution, and abbreviated DPS.
+- Use muted class colors based on the A2Tools palette.
+- Update the missing-character tooltip to suggest relogging or changing zone.
+- Limit CI packaging to release tags and manual validation runs; keep build and test checks on branches and PRs.
+
 ## 0.1.0-alpha.4
 
 - Detect classes from class-specific casts as well as hits; refresh missing class metadata in retained finished fights when identity arrives late.

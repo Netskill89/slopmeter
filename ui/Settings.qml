@@ -27,7 +27,16 @@ Window {
             Slider {objectName: "barHeightSlider"; Layout.fillWidth: true; from: 28; to: 80; stepSize: 2; value: backend.barHeight; onMoved: backend.barHeight = Math.round(value)}
             Label {text: "Vertical spacing · " + backend.barSpacing + " px"; color: "#c0cbdc"}
             Slider {objectName: "barSpacingSlider"; Layout.fillWidth: true; from: 0; to: 20; stepSize: 1; value: backend.barSpacing; onMoved: backend.barSpacing = Math.round(value)}
-            CheckBox {palette.windowText: "#e6edf6"; text: "Show damage and share"; checked: backend.showDetails; onToggled: backend.showDetails = checked}
+            Label {text: "Player bar information"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
+            Label {text: "Gear score / combat power"; color: "#c0cbdc"}
+            ComboBox {
+                objectName: "scoreDisplaySelector"; Layout.fillWidth: true
+                model: ["Hidden", "Gear score and combat power", "Combat power only", "Gear score only"]
+                currentIndex: backend.scoreDisplay; onActivated: backend.scoreDisplay = currentIndex
+            }
+            CheckBox {objectName: "totalDamageToggle"; palette.windowText: "#e6edf6"; text: "Show total damage"; checked: backend.showTotalDamage; onToggled: backend.showTotalDamage = checked}
+            CheckBox {palette.windowText: "#e6edf6"; text: "Show damage contribution (%)"; checked: backend.showDetails; onToggled: backend.showDetails = checked}
+            CheckBox {objectName: "roundedDpsToggle"; palette.windowText: "#e6edf6"; text: "Rounded DPS (12.3K / 1.2M)"; checked: backend.roundedDps; onToggled: backend.roundedDps = checked}
             Label {text: "Opacity"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
             Label {text: "Background opacity · " + backend.backgroundOpacity + "%"; color: "#c0cbdc"}
             Slider {objectName: "backgroundOpacitySlider"; Layout.fillWidth: true; from: 0; to: 100; stepSize: 1; value: backend.backgroundOpacity; onMoved: backend.backgroundOpacity = Math.round(value)}

@@ -105,6 +105,7 @@ func (s *scope) observeMessage(m aMessage) {
 		s.members = nil
 		s.names = nil
 		s.classes = nil
+		s.stats = nil
 	}
 	s.identities.observe(m.event)
 	s.observeClass(m)
@@ -113,6 +114,7 @@ func (s *scope) observeMessage(m aMessage) {
 		s.members = nil
 		return
 	}
+	s.observeRosterStats(m)
 	p := m.payload
 	switch m.opcode {
 	case 0x921b: // Party resource status: entity/current/max varints + fixed 25-byte tail.

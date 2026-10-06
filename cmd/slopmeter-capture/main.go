@@ -118,7 +118,7 @@ func run() error {
 	target := flag.Uint64("target", 0, "Only count hits on this target entity ID")
 	interval := flag.Duration("interval", 200*time.Millisecond, "Live refresh interval: 50ms–1s in 50ms steps")
 	idle := flag.Duration("idle", 5*time.Second, "Open-world encounter timeout")
-	bossIdle := flag.Duration("boss-idle", 90*time.Second, "Boss encounter timeout without damage")
+	bossIdle := flag.Duration("boss-idle", 90*time.Second, "Legacy boss inactivity option (confirmed bosses now wait for defeat, reset, or area exit)")
 	jsonOutput := flag.Bool("json", false, "Stream UI snapshots as JSON lines")
 	historyFile := flag.String("history", "", "Combat history file (default: XDG state directory for live capture; memory for replay)")
 	flag.Parse()
@@ -238,7 +238,8 @@ func run() error {
 	timer := time.NewTicker(*interval)
 	defer timer.Stop()
 	refreshChanges := make(chan time.Duration, 1)
-	go readRefreshCommands(ctx, os.Stdin, refreshChanges, os.Stderr)
+	resetCommands := make(chan struct{}, 1)
+	go readRefreshCommands(ctx, os.Stdin, refreshChanges, resetCommands, os.Stderr)
 	dirty := false
 	var readError error
 loop:
@@ -246,6 +247,14 @@ loop:
 		select {
 		case <-ctx.Done():
 			break loop
+		case <-resetCommands:
+			resetTime := logicalTime
+			if *file == "" {
+				resetTime = time.Now()
+			}
+			fight.resetDamage(resetTime)
+			emit(resetTime)
+			dirty = false
 		case interval := <-refreshChanges:
 			timer.Reset(interval)
 		case now := <-timer.C:
@@ -272,11 +281,17 @@ loop:
 			oldSelf, oldName := group.self, group.name
 			oldClassRevision := group.classRevision
 			oldSession, oldStatus, oldBoss := fight.number, fight.status, fight.boss
+			oldScene := fight.scene.sceneDisplay
+			oldMetadata := fight.metadataRevision
 			am := aMessage{msg.Opcode, msg.Flags, msg.Payload, msg.Event, msg.Time}
-			fight.tick(msg.Time)
 			fight.observe(am)
+			fight.tick(msg.Time)
 			if p, ok := msg.Event.(game.Player); ok && p.Self && oldSelf != 0 && p.Entity != oldSelf {
 				fight.finish(msg.Time, "Character changed", true)
+			}
+			hit, hasHit := combatHit(am)
+			if hasHit && am.event == nil {
+				am.event = hit
 			}
 			group.observeMessage(am)
 			if oldClassRevision != group.classRevision {
@@ -295,17 +310,14 @@ loop:
 				fight.cast(msg.Time, c)
 				dirty = true
 			}
-			if h, ok := msg.Event.(game.Hit); ok && group.accepts(h.Actor, msg.Time) {
-				fight.hit(msg.Time, h)
+			if hasHit && group.accepts(hit.Actor, msg.Time) && !group.accepts(hit.Target, msg.Time) {
+				fight.hit(msg.Time, hit)
 				dirty = true
 			}
-			if oldSelf != group.self || oldName != group.name || oldSession != fight.number || oldStatus != fight.status || oldBoss != fight.boss {
+			if oldSelf != group.self || oldName != group.name || oldSession != fight.number || oldStatus != fight.status || oldBoss != fight.boss || oldScene != fight.scene.sceneDisplay || oldMetadata != fight.metadataRevision {
 				dirty = true
 			}
 			if p, ok := msg.Event.(game.Player); ok && fight.meter.actors[p.Entity] != nil {
-				dirty = true
-			}
-			if (fight.boss != 0 || fight.lastTarget != 0) && (msg.Opcode == 0x8d00 || msg.Opcode == 0x3640 || msg.Opcode == 0x3641) {
 				dirty = true
 			}
 		}

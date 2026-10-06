@@ -87,5 +87,57 @@ def main():
                 process.wait()
 
 
+def test_manual_reset():
+    # Pause after 100 hits; reset through stdin and resume the same helper.
+    prefix = HELPER[:HELPER.index("start=time.monotonic()")]
+    prefix = prefix.replace("import base64,datetime,json,struct,sys,time", "import base64,datetime,json,struct,sys,time,os")
+    prefix = prefix.replace('"t0":datetime.datetime.now(datetime.timezone.utc).isoformat()', '"t0":t0.isoformat()')
+    prefix = prefix.replace('print(json.dumps({"schema"', 't0=datetime.datetime.now(datetime.timezone.utc)\nprint(json.dumps({"schema"', 1)
+    helper_source = prefix + r'''
+for n in range(100):
+    message("04 38",p,int((datetime.datetime.now(datetime.timezone.utc)-t0).total_seconds()*1000))
+deadline=time.monotonic()+8
+while not os.path.exists(os.environ["SLOPMETER_TEST_RESUME"]):
+    if time.monotonic()>deadline:sys.exit(1)
+    time.sleep(.01)
+time.sleep(.03)
+for n in range(300):
+    message("04 38",p,int((datetime.datetime.now(datetime.timezone.utc)-t0).total_seconds()*1000))
+'''
+    with tempfile.TemporaryDirectory(prefix="slopmeter-reset-") as directory:
+        helper = Path(directory) / "dumpcap"
+        helper.write_text(helper_source); helper.chmod(0o755)
+        resume = Path(directory) / "resume"
+        env = dict(os.environ, PATH=directory+os.pathsep+os.environ.get("PATH", ""), SLOPMETER_TEST_RESUME=str(resume))
+        process = subprocess.Popen([str(BACKEND), "-json", "-interface", "test0", "-interval", "200ms", "-history", str(Path(directory)/"history.json")], env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
+        selector = selectors.DefaultSelector(); selector.register(process.stdout, selectors.EVENT_READ)
+        start = time.monotonic(); sent = False; cleared = False; final = None
+        try:
+            while time.monotonic()-start < 8:
+                if not selector.select(.05):
+                    if process.poll() is not None: break
+                    continue
+                line = process.stdout.readline()
+                if not line: break
+                final = json.loads(line)
+                if not sent and final.get("actors") and final["actors"][0]["damage"] == 1000:
+                    process.stdin.write('{"reset":true}\n'); process.stdin.flush(); sent=True
+                if final.get("cleared"):
+                    assert not final["actors"] and not final["active"] and final["duration"] == 0, final
+                    assert final["character"] == "Self" and final["history"][0]["snapshot"]["actors"][0]["damage"] == 1000, final
+                    cleared=True; resume.touch()
+            process.wait(timeout=2)
+            assert process.returncode == 0, process.stderr.read()
+            assert sent and cleared and final["session"] == 2, final
+            assert final["actors"][0]["damage"] == 3000 and final["actors"][0]["skills"][0]["hits"] == 300, final
+            assert len(final["history"]) == 2, final
+            print("Manual reset cleared totals, retained identity/history and resumed the same capture helper.")
+        finally:
+            selector.close()
+            if process.poll() is None:
+                process.kill(); process.wait()
+
+
 if __name__ == "__main__":
     main()
+    test_manual_reset()

@@ -11,7 +11,7 @@ import (
 func TestRefreshCommandsKeepLatestValidRate(t *testing.T) {
 	changes := make(chan time.Duration, 1)
 	var errors bytes.Buffer
-	readRefreshCommands(context.Background(), strings.NewReader("{\"intervalMs\":50}\n{\"intervalMs\":125}\n{\"intervalMs\":200}\n{\"intervalMs\":1000}\n{\"intervalMs\":1001}\ninvalid\n"), changes, &errors)
+	readRefreshCommands(context.Background(), strings.NewReader("{\"intervalMs\":50}\n{\"intervalMs\":125}\n{\"intervalMs\":200}\n{\"intervalMs\":1000}\n{\"intervalMs\":1001}\ninvalid\n"), changes, nil, &errors)
 	if len(changes) != 1 || <-changes != time.Second {
 		t.Fatal("control mailbox did not retain the latest valid interval")
 	}
@@ -34,7 +34,7 @@ func TestRefreshBoundsAndCancellation(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	changes := make(chan time.Duration, 1)
-	readRefreshCommands(ctx, strings.NewReader("{\"intervalMs\":50}\n"), changes, &bytes.Buffer{})
+	readRefreshCommands(ctx, strings.NewReader("{\"intervalMs\":50}\n"), changes, nil, &bytes.Buffer{})
 	if len(changes) != 0 {
 		t.Fatal("command applied after cancellation")
 	}

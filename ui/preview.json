@@ -53,7 +53,9 @@
         "icon": "ICON_GL_SKILL_009.webp",
         "weight": 0.03
       }
-    ]
+    ],
+    "gearScore": 2850,
+    "combatPower": 37500
   },
   {
     "id": 900002,
@@ -109,7 +111,9 @@
         "icon": "ICON_SO_SKILL_009.webp",
         "weight": 0.03
       }
-    ]
+    ],
+    "gearScore": 2975,
+    "combatPower": 39800
   },
   {
     "id": 900003,
@@ -165,7 +169,9 @@
         "icon": "ICON_RA_SKILL_008.webp",
         "weight": 0.03
       }
-    ]
+    ],
+    "gearScore": 3100,
+    "combatPower": 42100
   },
   {
     "id": 900004,
@@ -221,7 +227,9 @@
         "icon": "ICON_CL_SKILL_008.webp",
         "weight": 0.03
       }
-    ]
+    ],
+    "gearScore": 3225,
+    "combatPower": 44400
   },
   {
     "id": 900005,
@@ -277,6 +285,8 @@
         "icon": "ICON_CH_SKILL_008.webp",
         "weight": 0.03
       }
-    ]
+    ],
+    "gearScore": 3350,
+    "combatPower": 46700
   }
 ]

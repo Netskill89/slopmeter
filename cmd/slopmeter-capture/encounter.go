@@ -55,6 +55,12 @@ type timedCast struct {
 	cast game.Cast
 }
 type encounter struct {
+	manualReset       bool
+	resetBoundary     time.Time
+	metadataRevision  uint64
+	scene             sceneState
+	fightScene        sceneDisplay
+	targetMeters      map[game.Entity]*meter
 	targets           map[game.Entity]*npcState
 	onFinish          func(*encounter, time.Time)
 	pendingCasts      []timedCast
@@ -74,11 +80,12 @@ func newEncounter(target game.Entity, idle, bossIdle time.Duration) *encounter {
 	return &encounter{meter: meter{target: target}, filter: target, targets: make(map[game.Entity]*npcState), npcs: make(map[game.Entity]*npcState), status: "Waiting for combat", idle: idle, bossIdle: bossIdle}
 }
 func (e *encounter) start(t time.Time, boss game.Entity) {
+	e.manualReset = false
 	if e.active {
 		// Preserve only casts for the upcoming pull; completed pulls never leak uses.
 		pending := append([]timedCast(nil), e.pendingCasts...)
 		last := e.lastDamage
-		e.finish(last, "Open world ended · boss engaged", false)
+		e.finish(last, "Previous fight ended · boss engaged", false)
 		for _, c := range pending {
 			if c.t.After(last) {
 				e.pendingCasts = append(e.pendingCasts, c)
@@ -90,6 +97,7 @@ func (e *encounter) start(t time.Time, boss game.Entity) {
 		target = boss
 	}
 	e.meter = meter{target: target}
+	e.targetMeters = make(map[game.Entity]*meter)
 	e.boss = boss
 	e.lastTarget = 0
 	e.active = true
@@ -99,10 +107,17 @@ func (e *encounter) start(t time.Time, boss game.Entity) {
 	for _, c := range e.pendingCasts {
 		if !c.t.After(t) && t.Sub(c.t) <= 5*time.Second {
 			e.meter.cast(c.cast)
+			if boss == 0 && c.cast.Target != 0 {
+				if e.targetMeters[c.cast.Target] == nil {
+					e.targetMeters[c.cast.Target] = &meter{target: c.cast.Target}
+				}
+				e.targetMeters[c.cast.Target].cast(c.cast)
+			}
 		}
 	}
 	e.pendingCasts = nil
-	e.status = "Open world"
+	e.fightScene = e.scene.sceneDisplay
+	e.status = e.combatLabel()
 	if boss != 0 {
 		e.status = "Boss fight"
 	}
@@ -118,6 +133,7 @@ func (e *encounter) finish(t time.Time, status string, clear bool) {
 	e.pendingCasts = nil
 	if clear {
 		e.meter = meter{target: e.filter}
+		e.targetMeters = nil
 		e.boss = 0
 		e.lastTarget = 0
 		e.lastDamage = time.Time{}
@@ -133,14 +149,11 @@ func (e *encounter) tick(t time.Time) bool {
 		e.finish(e.lastDamage, "Waiting for combat · previous fight ended", true)
 		return true
 	}
-	if e.boss != 0 && elapsed >= e.bossIdle {
-		e.finish(e.lastDamage, "Boss fight ended · inactive", false)
-		return true
-	}
+	// Confirmed bosses survive mechanics of any duration. Silence is not defeat.
 	return false
 }
 func (e *encounter) hit(t time.Time, h game.Hit) {
-	if h.Damage == 0 || (e.filter != 0 && h.Target != e.filter) {
+	if (!e.resetBoundary.IsZero() && !t.After(e.resetBoundary)) || h.Damage == 0 || (e.filter != 0 && h.Target != e.filter) {
 		return
 	}
 	n := e.targets[h.Target]
@@ -169,6 +182,12 @@ func (e *encounter) hit(t time.Time, h game.Hit) {
 		return
 	}
 	e.meter.add(t, h)
+	if e.boss == 0 && e.targetMeters[h.Target] == nil && len(e.targetMeters) < 256 {
+		e.targetMeters[h.Target] = &meter{target: h.Target}
+	}
+	if target := e.targetMeters[h.Target]; e.boss == 0 && target != nil {
+		target.add(t, h)
+	}
 	if !t.Before(e.lastDamage) {
 		e.lastTarget = h.Target
 	}
@@ -177,6 +196,9 @@ func (e *encounter) hit(t time.Time, h game.Hit) {
 	}
 }
 func (e *encounter) cast(t time.Time, c game.Cast) {
+	if !e.resetBoundary.IsZero() && !t.After(e.resetBoundary) {
+		return
+	}
 	if !e.ended.IsZero() && !t.After(e.ended) {
 		return
 	}
@@ -186,6 +208,12 @@ func (e *encounter) cast(t time.Time, c game.Cast) {
 	e.tick(t)
 	if e.active {
 		e.meter.cast(c)
+		if e.boss == 0 && c.Target != 0 && e.targetMeters[c.Target] == nil && len(e.targetMeters) < 256 {
+			e.targetMeters[c.Target] = &meter{target: c.Target}
+		}
+		if target := e.targetMeters[c.Target]; e.boss == 0 && target != nil {
+			target.cast(c)
+		}
 	}
 	fresh := e.pendingCasts[:0]
 	for _, old := range e.pendingCasts {
@@ -200,6 +228,8 @@ func (e *encounter) cast(t time.Time, c game.Cast) {
 }
 func (e *encounter) npc(id game.Entity, code uint32) *npcState {
 	d, ok := bossCatalog[code]
+	previous := e.npcs[id]
+	changed := previous == nil || previous.definition != d
 	if !ok {
 		return nil
 	}
@@ -212,8 +242,12 @@ func (e *encounter) npc(id game.Entity, code uint32) *npcState {
 	} else if n == nil || n.definition.Code != code {
 		n = &npcState{definition: d}
 	}
+	if changed {
+		e.metadataRevision++
+	}
 	e.npcs[id] = n
 	e.targets[id] = n
+	e.promoteBoss(id)
 	return n
 }
 func hpPair(p []byte, offset int) (uint32, uint32, bool) {
@@ -255,8 +289,12 @@ func (e *encounter) health(t time.Time, id game.Entity, current, max uint32) {
 	if t.Before(n.observed) {
 		if n.max == 0 && max > 0 {
 			n.max = max
+			e.metadataRevision++
 		}
 		return
+	}
+	if !n.known || n.hp != current || max > 0 && n.max != max {
+		e.metadataRevision++
 	}
 	n.observed = t
 	old := n.hp
@@ -285,7 +323,10 @@ func (e *encounter) observe(m aMessage) {
 		if e.npc(spawn.Entity, uint32(spawn.NPC)) == nil && spawn.NPC != 0 {
 			// Retain identity for diagnostics without declaring an unknown NPC a boss.
 			n := e.targetState(spawn.Entity)
-			n.definition.Code = uint32(spawn.NPC)
+			if n.definition.Code != uint32(spawn.NPC) {
+				n.definition.Code = uint32(spawn.NPC)
+				e.metadataRevision++
+			}
 		}
 	}
 	if death, ok := m.event.(game.Death); ok && death.Flag == 3 && death.Entity != e.boss {
@@ -294,17 +335,20 @@ func (e *encounter) observe(m aMessage) {
 	if death, ok := m.event.(game.Death); ok && death.Entity == e.boss && e.active {
 		if death.Flag == 3 {
 			e.health(m.t, death.Entity, 0, 0)
-		} else {
-			e.finish(m.t, "Boss left view", false)
-		}
+		} // Leaving view can happen during mechanics; wait for defeat or scene exit.
 		return
 	}
-	if m.opcode == 0x3623 || m.opcode == 0x3611 || m.opcode == 0x3615 {
-		e.finish(m.t, "Waiting for combat", true)
+	if m.opcode == 0x3611 || m.opcode == 0x3615 {
+		// Login/character exit must archive while the old identity is still present.
+		e.finish(m.t, "Character left", true)
 		e.npcs = make(map[game.Entity]*npcState)
 		e.targets = make(map[game.Entity]*npcState)
+		e.scene = sceneState{}
 		return
 	}
+	e.sceneMessage(m)
+	e.observeModernNPC(m)
+	e.observeEmbeddedHealth(m)
 	p := m.payload
 	switch m.opcode {
 	case 0x8d00:
@@ -388,8 +432,13 @@ func (e *encounter) snapshot(i identities, t time.Time) snapshot {
 	}
 	s := m.snapshot(i)
 	s.Session = e.number
+	s.Cleared = e.manualReset
 	s.Encounter = e.status
 	s.Active = e.active
+	s.Scene = e.scene.sceneDisplay
+	if !e.meter.first.IsZero() {
+		s.Scene = e.fightScene
+	}
 	if e.boss != 0 {
 		s.Boss = e.bossSnapshot(e.boss, i)
 	} else if e.lastTarget != 0 && e.npcs[e.lastTarget] != nil {
@@ -399,4 +448,17 @@ func (e *encounter) snapshot(i identities, t time.Time) snapshot {
 	}
 	s.HealthStatus = e.healthStatus(s.Boss)
 	return s
+}
+
+// Archive the interrupted fight, preserve capture/identities/NPC and scene data,
+// and reject damage already queued before the user's reset request.
+func (e *encounter) resetDamage(t time.Time) {
+	if t.Before(e.lastDamage) {
+		t = e.lastDamage
+	}
+	boss := e.boss
+	e.finish(t, "Manually reset · Waiting for combat", true)
+	e.boss = boss
+	e.manualReset = true
+	e.resetBoundary = t
 }

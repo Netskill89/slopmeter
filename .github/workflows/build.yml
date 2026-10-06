@@ -22,8 +22,10 @@ jobs:
       - name: Test
         run: bash scripts/test.sh
       - name: Verify release packaging
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         run: bash scripts/package.sh
       - uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
           name: release
           retention-days: 7

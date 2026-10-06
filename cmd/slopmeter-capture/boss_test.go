@@ -36,8 +36,8 @@ func TestBossMetadataAfterLastHit(t *testing.T) {
 		t.Fatal("metadata discarded damage")
 	}
 	e.hit(now.Add(2*time.Second), game.Hit{Actor: 1, Target: 21, Damage: 50})
-	if e.snapshot(identities{}, now.Add(2*time.Second)).Boss != nil {
-		t.Fatal("ordinary target retained previous boss bar")
+	if e.boss != 20 || e.meter.actors[1].damage != 100 {
+		t.Fatal("late identity did not promote boss or trash entered boss totals")
 	}
 }
 

@@ -24,10 +24,12 @@ Click a screenshot to view it at full size.
 ## Features
 
 - **Party DPS:** class icons, coloured player bars, and damage contribution.
-- **Boss encounters:** captured boss health and separate combat sessions.
+- **Boss encounters:** captured boss health, area names and separate combat sessions.
 - **Fight history:** the last 10 sessions, with per-player skill breakdowns.
-- **Customisation:** bar styles, dimensions, spacing, opacity, and refresh rate.
+- **Customisation:** bar styles, dimensions, spacing, opacity, score visibility, damage display, and refresh rate.
 - **Test mode:** a five-player encounter with boss health and detailed skill data.
+
+See [DPS calculation](docs/dps-calculation.md) for timing and decoding details.
 
 ## Installation
 
@@ -42,8 +44,8 @@ Both formats bundle the application libraries and capture helper.
 ### AppImage
 
 ```sh
-chmod +x SlopMeter-0.1.0-alpha.4-x86_64.AppImage
-./SlopMeter-0.1.0-alpha.4-x86_64.AppImage --appimage-extract-and-run
+chmod +x SlopMeter-0.1.0-alpha.5-x86_64.AppImage
+./SlopMeter-0.1.0-alpha.5-x86_64.AppImage --appimage-extract-and-run
 ```
 
 The extraction option works on systems without FUSE. With FUSE available,
@@ -52,8 +54,8 @@ you can also double-click the executable AppImage.
 ### tar.gz
 
 ```sh
-tar -xzf SlopMeter-0.1.0-alpha.4-x86_64.tar.gz
-cd SlopMeter-0.1.0-alpha.4-x86_64
+tar -xzf SlopMeter-0.1.0-alpha.5-x86_64.tar.gz
+cd SlopMeter-0.1.0-alpha.5-x86_64
 ./AppRun
 ```
 
@@ -115,7 +117,13 @@ GNOME's default compositor does not provide the required layer-shell protocol.
 
 Boss health needs captured health updates and a boss identified by the bundled NPC
 catalogue. Start capture before entering the area; re-enter or relog if spawn data
-was missed. Ordinary enemies remain hidden. Elites and minibosses are shown only
+was missed. Area names appear when scene metadata is captured; unknown areas
+are left unnamed. Confirmed boss sessions survive damage downtime and temporary
+loss of visibility. Defeat, a full-health reset or a confirmed area transition
+ends the session. Use **↻** between Settings and Minimise to reset damage
+calculation manually; the interrupted fight is saved in history and capture
+continues.
+Ordinary enemies remain hidden. Elites and minibosses are shown only
 when the catalogue classifies them as bosses; separate elite-rank detection is not
 available yet. Game updates may require decoder fixes. Test mode uses simulated
 data throughout.

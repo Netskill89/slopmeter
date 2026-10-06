@@ -126,14 +126,17 @@ func TestBossIdleDeathAndZone(t *testing.T) {
 	if e.active {
 		t.Fatal("death packet did not stop boss fight")
 	}
-	e.observe(aMessage{opcode: 0x3623, flags: wire.FromServer, t: t0.Add(2 * time.Second)})
-	if e.boss != 0 || len(e.npcs) != 0 || len(e.meter.actors) != 0 {
+	e.scene.ID = 600021
+	e.scene.Name = mapCatalog[600021]
+	e.scene.candidate = 600031
+	e.observe(aMessage{opcode: 0x3623, payload: make([]byte, 20), flags: wire.FromServer, t: t0.Add(2 * time.Second)})
+	if e.active || e.boss != 0 || len(e.npcs) != 0 {
 		t.Fatal("zone retained old boss")
 	}
 	e.npc(21, bossCode())
 	e.hit(t0.Add(3*time.Second), game.Hit{Actor: 1, Target: 21, Damage: 20})
-	if !e.tick(t0.Add(94*time.Second)) || e.active {
-		t.Fatal("boss idle fallback did not stop encounter")
+	if e.tick(t0.Add(194*time.Second)) || !e.active {
+		t.Fatal("long boss downtime split encounter")
 	}
 }
 

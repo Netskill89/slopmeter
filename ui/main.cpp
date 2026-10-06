@@ -50,12 +50,13 @@
 class ActorModel : public QAbstractListModel {
 public:
     QList<QVariantMap> rows;
-    enum { Name=Qt::UserRole+1, Damage, DPS, Share, Fill, Class, ActorId };
+    enum { Name=Qt::UserRole+1, Damage, DPS, Share, Fill, Class, ActorId, GearScore, CombatPower };
     using QAbstractListModel::QAbstractListModel;
     int rowCount(const QModelIndex &parent={}) const override { return parent.isValid()?0:rows.size(); }
-    QHash<int,QByteArray> roleNames() const override {static const QHash<int,QByteArray> roles{{Name,"actorName"},{Damage,"damage"},{DPS,"dps"},{Share,"share"},{Fill,"fill"},{Class,"actorClass"},{ActorId,"actorId"}};return roles;}
+    QHash<int,QByteArray> roleNames() const override {static const QHash<int,QByteArray> roles{{Name,"actorName"},{Damage,"damage"},{DPS,"dps"},{Share,"share"},{Fill,"fill"},{Class,"actorClass"},{ActorId,"actorId"},{GearScore,"gearScore"},{CombatPower,"combatPower"}};return roles;}
     QVariant data(const QModelIndex &i,int role) const override {
         if (!i.isValid()||i.row()>=rows.size()) return {};
+        if(role==GearScore || role==CombatPower) return rows[i.row()].value(role==GearScore ? "gearScore" : "combatPower", 0);
         return rows[i.row()].value(QString::fromUtf8(roleNames().value(role)) == "actorName" ? "name" : role==Class ? "class" : role==ActorId ? "id" : QString::fromUtf8(roleNames().value(role)));
     }
     void update(const QJsonArray &array) {
@@ -114,12 +115,16 @@ class Bridge : public QObject {
     Q_PROPERTY(int backgroundOpacity READ backgroundOpacity WRITE setBackgroundOpacity NOTIFY appearanceChanged)
     Q_PROPERTY(int overallOpacity READ overallOpacity WRITE setOverallOpacity NOTIFY appearanceChanged)
     Q_PROPERTY(bool showDetails READ showDetails WRITE setShowDetails NOTIFY appearanceChanged)
+    Q_PROPERTY(int scoreDisplay READ scoreDisplay WRITE setScoreDisplay NOTIFY appearanceChanged)
+    Q_PROPERTY(bool showTotalDamage READ showTotalDamage WRITE setShowTotalDamage NOTIFY appearanceChanged)
+    Q_PROPERTY(bool roundedDps READ roundedDps WRITE setRoundedDps NOTIFY appearanceChanged)
     Q_PROPERTY(bool captureActive READ captureActive NOTIFY captureChanged)
     Q_PROPERTY(QString displayLabel READ displayLabel NOTIFY displayChanged)
     Q_PROPERTY(QString character READ character NOTIFY characterChanged)
     Q_PROPERTY(QString status READ status NOTIFY statusChanged)
     Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
     Q_PROPERTY(QString encounter READ encounter NOTIFY encounterChanged)
+ Q_PROPERTY(QString sceneName READ sceneName NOTIFY encounterChanged)
     Q_PROPERTY(QVariantMap boss READ boss NOTIFY bossChanged)
     Q_PROPERTY(QString bossHealthStatus READ bossHealthStatus NOTIFY bossChanged)
     Q_PROPERTY(QString displayStatus READ displayStatus NOTIFY displayChanged)
@@ -132,6 +137,7 @@ public:
     QVariantList previewParty;
     QList<double> previewDamage;
     double previewLast=0;
+ double previewBaseSeconds=60;
     quint32 actorBeforePreview=0;
     static int normalizePoll(int value) {return ((qBound(50,value,1000)+25)/50)*50;}
     bool testMode() const {return previewEnabled;}
@@ -141,6 +147,20 @@ public:
     bool showBorder() const {return borderSetting;}
     int pollInterval() const {return normalizePoll(pollSetting);}
     void setShowBorder(bool value) {borderSetting=value;QSettings().setValue("appearance/showBorder",value);emit appearanceChanged();}
+    Q_INVOKABLE void resetDamage() {
+        if(previewEnabled) {
+            for(auto &damage:previewDamage) damage=0;previewBaseSeconds=0;previewLast=0;previewClock.restart();refreshDisplay();return;
+        }
+        selectedSession=0;emit historyChanged();
+        if(process.state()!=QProcess::NotRunning)
+            process.write(QJsonDocument(QJsonObject{{"reset",true}}).toJson(QJsonDocument::Compact)+"\n");
+        else {
+            currentState["actors"]=QVariantList{};currentState["active"]=false;
+            currentState["duration"]=0;currentState["cleared"]=true;
+            currentState["encounter"]="Manually reset · Waiting for combat";
+            refreshDisplay();
+        }
+    }
     void sendRefreshInterval() {
         if(process.state()!=QProcess::NotRunning) process.write(QJsonDocument(QJsonObject{{"intervalMs",pollInterval()}}).toJson(QJsonDocument::Compact)+"\n");
     }
@@ -153,14 +173,14 @@ public:
         if(previewEnabled==enabled) return;
         previewEnabled=enabled;
         if(enabled) {
-            actorBeforePreview=selectedActor;selectedActor=0;previewClock.start();previewLast=0;previewDamage.clear();
+            actorBeforePreview=selectedActor;selectedActor=0;previewBaseSeconds=60;previewClock.start();previewLast=0;previewDamage.clear();
             for(const auto &value:previewParty) previewDamage.append(value.toMap().value("baseDps").toDouble()*60);
         } else selectedActor=actorBeforePreview;
         if(enabled) publish.start();else publish.stop();
         refreshDisplay();emit testModeChanged();emit historyChanged();emit statusChanged();
     }
     QVariantMap previewState() {
-        const double elapsed=previewClock.elapsed()/1000.0,seconds=60+elapsed,delta=qMax(0.0,elapsed-previewLast);
+        const double elapsed=previewClock.elapsed()/1000.0,seconds=qMax(1.0,previewBaseSeconds+elapsed),delta=qMax(0.0,elapsed-previewLast);
         double largest=0,totalDamage=0;
         for(int i=0;i<previewParty.size();++i) {
             previewDamage[i]+=delta*previewParty[i].toMap().value("baseDps").toDouble()*(1+0.08*std::sin(elapsed*0.5+i));
@@ -169,12 +189,12 @@ public:
         previewLast=elapsed;QVariantList rows;
         for(int i=0;i<previewParty.size();++i) {
             auto row=previewParty[i].toMap();const double damage=previewDamage[i];
-            row["damage"]=qRound64(damage);row["dps"]=damage/seconds;row["fill"]=damage/largest*100;row["share"]=damage/totalDamage*100;
+            row["damage"]=qRound64(damage);row["dps"]=damage/seconds;row["fill"]=largest>0?damage/largest*100:0;row["share"]=totalDamage>0?damage/totalDamage*100:0;
             QVariantList skills;
             for(const auto &value:row.value("skills").toList()) {
                 auto skill=value.toMap();const double skillDamage=damage*skill.value("weight").toDouble();
                 const auto uses=qMax(1,qRound(seconds/3*skill.value("weight").toDouble()));const int hits=uses*2;
-                skill["damage"]=qRound64(skillDamage);skill["share"]=skillDamage/damage*100;skill["fightShare"]=skillDamage/totalDamage*100;
+                skill["damage"]=qRound64(skillDamage);skill["share"]=damage>0?skillDamage/damage*100:0;skill["fightShare"]=totalDamage>0?skillDamage/totalDamage*100:0;
                 skill["hits"]=hits;skill["uses"]=uses;skill["usesKnown"]=true;skill["critical"]=qRound(hits*0.3);skill["criticalRate"]=30.0;skill["criticalKnown"]=true;
                 skill["min"]=qRound(skillDamage/hits*0.75);skill["max"]=qRound(skillDamage/hits*1.25);skill["average"]=skillDamage/hits;skill["hitsPerSecond"]=hits/seconds;
                 skills.append(skill);
@@ -185,7 +205,7 @@ public:
         const qlonglong currentHP=qRound64(maximumHP*qMax(0.05,0.68-elapsed*0.002));
         QVariantMap previewBoss{{"entity",900100},{"name","Fediv Wraith"},{"hp",currentHP},{"max",maximumHP},
             {"percent",100.0*currentHP/maximumHP},{"known",true},{"maxKnown",true}};
-        return {{"character","Test party"},{"encounter","Test mode"},{"duration",seconds},{"active",true},{"session",0},{"actors",rows},{"boss",previewBoss}};
+        return {{"character","Test party"},{"encounter","Test mode"},{"duration",previewBaseSeconds+elapsed},{"active",true},{"session",0},{"actors",rows},{"boss",previewBoss},{"scene",QVariantMap{{"id",600021},{"name","Fire Temple"},{"instance",1}}}};
     }
     int widthSetting=QSettings().value("appearance/barWidth",352).toInt();
     int heightSetting=QSettings().value("appearance/barHeight",44).toInt();
@@ -193,6 +213,9 @@ public:
     int backgroundSetting=QSettings().value("appearance/backgroundOpacity",75).toInt();
     int overallSetting=QSettings().value("appearance/overallOpacity",100).toInt();
     bool detailsSetting=QSettings().value("appearance/showDetails",true).toBool();
+    int scoreSetting=QSettings().value("appearance/scoreDisplay",1).toInt();
+    bool totalDamageSetting=QSettings().value("appearance/showTotalDamage",detailsSetting).toBool();
+    bool roundedDpsSetting=QSettings().value("appearance/roundedDps",false).toBool();
     int barWidth() const {return qBound(240,widthSetting,720);}
     int barHeight() const {return qBound(28,heightSetting,80);}
     int barSpacing() const {return qBound(0,spacingSetting,20);}
@@ -201,11 +224,17 @@ public:
     void setBackgroundOpacity(int value) {backgroundSetting=qBound(0,value,100);QSettings().setValue("appearance/backgroundOpacity",backgroundSetting);emit appearanceChanged();}
     void setOverallOpacity(int value) {overallSetting=qBound(0,value,100);QSettings().setValue("appearance/overallOpacity",overallSetting);emit appearanceChanged();}
     bool showDetails() const {return detailsSetting;}
+    int scoreDisplay() const {return qBound(0,scoreSetting,3);}
+    bool showTotalDamage() const {return totalDamageSetting;}
+    bool roundedDps() const {return roundedDpsSetting;}
+    void setScoreDisplay(int value) {scoreSetting=qBound(0,value,3);QSettings().setValue("appearance/scoreDisplay",scoreSetting);emit appearanceChanged();}
+    void setShowTotalDamage(bool value) {totalDamageSetting=value;QSettings().setValue("appearance/showTotalDamage",value);emit appearanceChanged();}
+    void setRoundedDps(bool value) {roundedDpsSetting=value;QSettings().setValue("appearance/roundedDps",value);emit appearanceChanged();}
     void setBarWidth(int value) {widthSetting=qBound(240,value,720);QSettings().setValue("appearance/barWidth",widthSetting);emit appearanceChanged();}
     void setBarHeight(int value) {heightSetting=qBound(28,value,80);QSettings().setValue("appearance/barHeight",heightSetting);emit appearanceChanged();}
     void setBarSpacing(int value) {spacingSetting=qBound(0,value,20);QSettings().setValue("appearance/barSpacing",spacingSetting);emit appearanceChanged();}
     void setShowDetails(bool value) {detailsSetting=value;QSettings().setValue("appearance/showDetails",value);emit appearanceChanged();}
-    Q_INVOKABLE void resetAppearance() {setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);}
+    Q_INVOKABLE void resetAppearance() {setScoreDisplay(1);setShowTotalDamage(true);setRoundedDps(false);setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);}
     ActorModel actors;
     SkillModel skills;
     QProcess process;
@@ -217,13 +246,15 @@ public:
     QPoint dragOrigin;
     bool dragging=false, autoDisplay=true, detectionTest=false;
     QQuickItem *panel=nullptr;
-    QString encounterLabel="Waiting for combat";
+    QString sceneLabel;
+ QString encounterLabel="Waiting for combat";
     QVariantMap bossState;
     bool captureReady=false,replayMode=false;
     QString displayMessage="Waiting for AION 2 window…", gameScreen, scriptName;
     QTemporaryFile script;
     Q_INVOKABLE QString displayStatus() const {return displayMessage;}
     QString encounter() const {return encounterLabel;}
+ QString sceneName() const {return sceneLabel;}
     QVariantMap boss() const {return bossState;}
     QString healthMessage;
     QString bossHealthStatus() const {return previewEnabled?"Test mode: simulated boss HP.":healthMessage;}
@@ -308,7 +339,8 @@ public:
         QVariantList choices{QVariantMap{{"id",qulonglong(0)},{"label","Current fight"}}};
         for(const auto &value:history) {
             auto entry=value.toMap();auto state=entry.value("snapshot").toMap();auto boss=state.value("boss").toMap();
-            auto label=boss.value("name").toString();if(label.isEmpty()) label="Open world";
+            auto label=boss.value("name").toString();if(label.isEmpty()) label=state.value("scene").toMap().value("name").toString();
+ if(label.isEmpty()) label="Combat";
             auto started=QDateTime::fromString(entry.value("started").toString(),Qt::ISODateWithMs).toLocalTime();
             choices.append(QVariantMap{{"id",state.value("session")},{"label",QString("#%1 · %2 · %3s · %4").arg(state.value("session").toULongLong()).arg(label).arg(state.value("duration").toDouble(),0,'f',1).arg(started.toString("MMM d HH:mm:ss"))}});
         }
@@ -339,12 +371,14 @@ public:
         }
         // Keep the last completed fight on Current fight until positive damage
         // starts a new session. History owns immutable names, skills and target HP.
-        if(!previewEnabled&&!selectedSession&&!currentState.value("active").toBool()&&currentState.value("actors").toList().isEmpty()) {
+        if(!previewEnabled&&!selectedSession&&!currentState.value("cleared").toBool()&&!currentState.value("active").toBool()&&currentState.value("actors").toList().isEmpty()) {
             for(const auto &value:history) {auto state=value.toMap().value("snapshot").toMap();if(state.value("session")==currentState.value("session")) {displayState=state;break;}}
         }
         auto next=(!previewEnabled&&!selectedSession?currentState:displayState).value("character").toString();if(next!=name) {name=next;emit characterChanged();}
         double seconds=displayState.value("duration").toDouble();if(seconds!=span) {span=seconds;emit durationChanged();}
-        auto label=displayState.value("encounter","Waiting for combat").toString();if(label!=encounterLabel) {encounterLabel=label;emit encounterChanged();}
+        auto label=displayState.value("encounter","Waiting for combat").toString();
+ auto scene=displayState.value("scene").toMap().value("name").toString();
+ if(label!=encounterLabel||scene!=sceneLabel) {encounterLabel=label;sceneLabel=scene;emit encounterChanged();}
         auto boss=displayState.value("boss").toMap();auto health=displayState.value("healthStatus").toString();if(boss!=bossState||health!=healthMessage) {bossState=boss;healthMessage=health;emit bossChanged();}
         actors.update(QJsonArray::fromVariantList(displayPlayers()));updateDetail();
     }
@@ -667,7 +701,12 @@ int main(int argc,char **argv) {
         if(!settingsWindow->isVisible()||QGuiApplication::allWindows().size()!=2) {app.exit(25);return;}
         // Values persisted by actual slider signals can be loaded by a fresh bridge.
         {Bridge restored;if(restored.barWidth()!=440||restored.barHeight()!=32||restored.barSpacing()!=10||restored.backgroundOpacity()!=20||restored.overallOpacity()!=0) {app.exit(26);return;}}
+        bridge.setScoreDisplay(2);bridge.setShowTotalDamage(false);bridge.setRoundedDps(true);settle();
+        {Bridge restored;if(restored.scoreDisplay()!=2||restored.showTotalDamage()||!restored.roundedDps()) {fprintf(stderr,"Bar information preferences were not persisted\n");app.exit(47);return;}}
+        QVariant formatted;QMetaObject::invokeMethod(window,"dpsText",Q_RETURN_ARG(QVariant,formatted),Q_ARG(QVariant,QVariant(12345.0)));
+        if(!formatted.toString().endsWith("K")) {fprintf(stderr,"Rounded DPS formatting failed\n");app.exit(48);return;}
         bridge.resetAppearance();settle();
+        if(bridge.scoreDisplay()!=1||!bridge.showTotalDamage()||bridge.roundedDps()) {app.exit(49);return;}
         if(bridge.backgroundOpacity()!=75||bridge.overallOpacity()!=100||qAbs(bridge.panel->height()-partyHeight)>1||window->mask()!=QRegion(QRectF(bridge.panel->x(),bridge.panel->y(),bridge.panel->width(),bridge.panel->height()).toAlignedRect())) {app.exit(27);return;}
         auto screenshot=qEnvironmentVariable("AIONDPS_TEST_SCREENSHOT");
         if(!screenshot.isEmpty()) {window->grabWindow().save(screenshot);settingsWindow->grabWindow().save(screenshot+"-settings.png");}
@@ -705,6 +744,25 @@ int main(int argc,char **argv) {
         if(!updateLink->isVisible()||updateLink->property("text").toString()!="Update available"||updates.url()!="https://github.com/Netskill89/slopmeter/releases"||updateLink->mapToItem(bridge.panel,{updateLink->width(),0}).x()>bridge.panel->width()) {app.exit(71);return;}
         updates.applyReleases("[]");settle();if(updateLink->isVisible()) {app.exit(72);return;}
         fprintf(stderr,"Release comparison, alpha updates, malformed/offline replies and footer link checks passed.\n");
+        const auto stateBeforeScene=bridge.currentState;
+        const auto selectionBeforeScene=bridge.selectedSession;bridge.selectedSession=0;
+        bridge.currentState["scene"]=QVariantMap{{"id",600021},{"name","Fire Temple"},{"instance",42}};bridge.refreshDisplay();settle();
+        auto combatLabel=window->findChild<QObject*>("combatStatus");
+        if(bridge.sceneName()!="Fire Temple"||!combatLabel||!combatLabel->property("text").toString().contains("Fire Temple")) {app.exit(75);return;}
+        bridge.currentState=stateBeforeScene;bridge.selectedSession=selectionBeforeScene;bridge.refreshDisplay();settle();
+        fprintf(stderr,"Scene metadata propagation and encounter label checks passed.\n");
+        auto resetButton=window->findChild<QQuickItem*>("resetDamageButton");
+        auto settingsButton=window->findChild<QQuickItem*>("settingsButton");
+ auto minimizeButton=window->findChild<QQuickItem*>("minimizeButton");
+ if(!resetButton||!settingsButton||!minimizeButton||resetButton->x()<=settingsButton->x()||resetButton->x()>=minimizeButton->x()) {app.exit(76);return;}
+        if(bridge.process.state()==QProcess::NotRunning) {
+            const auto stateBeforeReset=bridge.currentState;const auto historyBeforeReset=bridge.history;
+            if(!QMetaObject::invokeMethod(resetButton,"clicked")) {app.exit(77);return;}
+            settle();
+            if(!bridge.displayPlayers().isEmpty()||bridge.duration()!=0||bridge.history!=historyBeforeReset) {app.exit(78);return;}
+            bridge.currentState=stateBeforeReset;bridge.refreshDisplay();settle();
+        }
+
         // Portable desktop registration stays hidden and preserves installed launchers.
         QTemporaryDir desktopData;if(!desktopData.isValid()) {app.exit(73);return;}
         const auto oldDataHome=qgetenv("XDG_DATA_HOME"),oldDataDirs=qgetenv("XDG_DATA_DIRS");
@@ -732,6 +790,12 @@ int main(int argc,char **argv) {
         if(!toggle("testModeToggle",true)) {app.exit(29);return;}
         settle();
         if(!bridge.testMode()||bridge.actors.rowCount()!=5||peakPreviewRows>5||bridge.character()!="Test party"||bridge.skills.rowCount()!=8) {app.exit(29);return;}
+        double damageBeforeReset=0;for(auto value:bridge.previewDamage) damageBeforeReset+=value;
+        if(!QMetaObject::invokeMethod(resetButton,"clicked")) {app.exit(79);return;}
+        settle();double damageAfterReset=0;for(auto value:bridge.previewDamage) damageAfterReset+=value;
+        if(bridge.actors.rowCount()!=5||bridge.duration()>1||damageAfterReset>=damageBeforeReset/10) {app.exit(80);return;}
+        fprintf(stderr,"Manual reset button, history preservation and preview reset checks passed.\n");
+
         auto previewHealth=window->findChild<QQuickItem*>("targetHealthBar");
         if(!previewHealth||!previewHealth->isVisible()||!bridge.boss().value("maxKnown").toBool()||bridge.boss().value("percent").toDouble()<=0||bridge.boss().value("percent").toDouble()>=100) {app.exit(49);return;}
         if(!toggle("borderToggle",false)||QQmlProperty(bridge.panel,"border.width").read().toInt()!=0) {app.exit(30);return;}

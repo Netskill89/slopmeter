@@ -19,10 +19,21 @@ Window {
     Loader {id: detailLoader; active: false; source: "FightDetails.qml"}
     function clock(seconds) { const value = Math.max(0, Math.floor(Number(seconds || 0))); return Math.floor(value/60) + ":" + (value%60).toString().padStart(2,"0") }
     function number(value) { return Number(value || 0).toLocaleString(Qt.locale(), 'f', 0) }
+    function dpsText(value) {
+        const amount = Number(value || 0)
+        if (!backend.roundedDps) return number(amount)
+        const rounded = Math.round(amount)
+        if (rounded >= 999950) return (rounded / 1000000).toLocaleString(Qt.locale(), 'f', 1) + "M"
+        if (rounded >= 1000) return (rounded / 1000).toLocaleString(Qt.locale(), 'f', 1) + "K"
+        return number(rounded)
+    }
     function classColor(name) {
-        const colors = {Gladiator: "#ba7449", Templar: "#537ecd", Ranger: "#548d50", Assassin: "#9972c7",
-            Elementalist: "#42a08f", Sorcerer: "#b45469", Cleric: "#b89b44", Chanter: "#c479af", Brawler: "#c05d3c"}
-        return colors[name] || "#53677c"
+        // Match A2Tools' jobColorMap; Elementalist is named Spiritmaster there.
+        const colors = {Gladiator: "#4FD1C5", Templar: "#5F8CFF", Ranger: "#41D98A", Assassin: "#7BE35A",
+            Elementalist: "#E06BFF", Sorcerer: "#9A6BFF", Cleric: "#F2C15A", Chanter: "#FF9A3D", Brawler: "#E85D5D"}
+        if (!colors[name]) return "#53677c"
+        const tint = Qt.color(colors[name])
+        return Qt.hsla(tint.hslHue, tint.hslSaturation * 0.45, tint.hslLightness * 0.78, tint.a)
     }
     Rectangle {
         id: panel
@@ -52,7 +63,7 @@ Window {
                                 objectName: "headerCharacter"
                                 text: backend.character || "Relog"; color: backend.character ? "#f2f5fa" : "#f1c778"
                                 Layout.fillWidth: true; Layout.minimumWidth: 0; elide: Text.ElideRight; horizontalAlignment: Text.AlignRight; font.pixelSize: 11
-                                ToolTip.visible: characterHover.hovered; ToolTip.text: backend.character || "Character not detected. Relog with capture running."
+                                ToolTip.visible: characterHover.hovered; ToolTip.text: backend.character || "Character not detected. Please relog or change zone"
                                 HoverHandler {id: characterHover}
                             }
                         }
@@ -64,8 +75,9 @@ Window {
                             cursorShape: active ? Qt.ClosedHandCursor : Qt.OpenHandCursor
                         }
                     }
-                    Button { text: "⚙"; implicitWidth: 32; implicitHeight: 32; onClicked: meter.openSettings(); ToolTip.visible: hovered; ToolTip.text: "Meter settings" }
-                    Button { text: "−"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.hide(); ToolTip.visible: hovered; ToolTip.text: "Hide; restore from the tray or launch SlopMeter again" }
+                    Button { objectName: "settingsButton"; text: "⚙"; implicitWidth: 32; implicitHeight: 32; onClicked: meter.openSettings(); ToolTip.visible: hovered; ToolTip.text: "Meter settings" }
+                    Button { objectName: "resetDamageButton"; text: "↻"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.resetDamage(); ToolTip.visible: hovered; ToolTip.text: "Reset current fight damage"; Accessible.name: "Reset current fight damage" }
+                    Button { objectName: "minimizeButton"; text: "−"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.hide(); ToolTip.visible: hovered; ToolTip.text: "Hide; restore from the tray or launch SlopMeter again" }
                     Button { text: "×"; implicitWidth: 32; implicitHeight: 32; onClicked: backend.quit() }
                 }
                 ComboBox {
@@ -102,7 +114,7 @@ Window {
                 Label {
                     objectName: "combatStatus"
                     Layout.fillWidth: true; horizontalAlignment: Text.AlignRight; elide: Text.ElideRight; color: "#8e9eb5"; font.pixelSize: 11
-                    text: backend.testMode ? "Test mode · " + meter.clock(backend.duration) : backend.detailFight.active ? "Combat · " + meter.clock(backend.duration) : backend.displayPlayers.length ? "Finished · " + meter.clock(backend.duration) : "Waiting for combat"
+                    text: (backend.sceneName ? backend.sceneName + " · " : "") + (backend.testMode ? "Test mode · " + meter.clock(backend.duration) : backend.detailFight.active ? "Combat · " + meter.clock(backend.duration) : backend.displayPlayers.length ? "Finished · " + meter.clock(backend.duration) : "Waiting for combat")
                     ToolTip.visible: combatHover.hovered; ToolTip.text: backend.encounter
                     HoverHandler {id: combatHover}
                 }
@@ -119,6 +131,11 @@ Window {
                         required property int actorId
                         required property string actorName
                         required property string actorClass
+                        required property real gearScore
+                        required property real combatPower
+                        property bool showGear: backend.scoreDisplay === 1 || backend.scoreDisplay === 3
+                        property bool showPower: backend.scoreDisplay === 1 || backend.scoreDisplay === 2
+                        property string gearText: (showGear && gearScore > 0 ? "GS " + meter.number(gearScore) : "") + (showGear && gearScore > 0 && showPower && combatPower > 0 ? " · " : "") + (showPower && combatPower > 0 ? "CP " + meter.number(combatPower) : "")
                         required property real damage
                         required property real dps
                         required property real share
@@ -145,7 +162,21 @@ Window {
                                 ToolTip.visible: iconHover.hovered; ToolTip.text: bar.actorClass || "Class not detected"
                                 HoverHandler { id: iconHover }
                             }
-                            Label { text: bar.actorName; color: "#ffffff"; font.bold: true; elide: Text.ElideRight; Layout.fillWidth: true; Layout.minimumWidth: 0 }
+                            ColumnLayout {
+                                Layout.fillWidth: true; Layout.minimumWidth: 0; spacing: 0
+                                Label {
+                                    text: bar.actorName; color: "#ffffff"; font.bold: true; elide: Text.ElideRight
+                                    Layout.fillWidth: true; Layout.minimumWidth: 0
+                                    HoverHandler {id: nameHover}
+                                    ToolTip.visible: nameHover.hovered && backend.barHeight < 38 && bar.gearText.length > 0
+                                    ToolTip.text: bar.gearText
+                                }
+                                Label {
+                                    visible: backend.barHeight >= 38 && bar.gearText.length > 0
+                                    text: bar.gearText; color: "#e6edf6"; font.pixelSize: 11; elide: Text.ElideRight
+                                    Layout.fillWidth: true; Layout.minimumWidth: 0
+                                }
+                            }
                             Label {
                                 objectName: "compactShare"
                                 visible: backend.showDetails && backend.barHeight < 38
@@ -155,8 +186,13 @@ Window {
                             ColumnLayout {
                                 Layout.preferredWidth: backend.barHeight < 38 ? Math.max(80,bar.width / 2 - Math.max(40,bar.width * 0.15) / 2 - 8) : implicitWidth
                                 spacing: 0
-                                Label { text: meter.number(bar.dps) + " DPS"; color: "#ffffff"; font.bold: true; Layout.alignment: Qt.AlignRight }
-                                Label { visible: backend.showDetails && backend.barHeight >= 38; text: meter.number(bar.damage) + " dmg · " + bar.share.toFixed(1) + "%"; color: "#e6edf6"; font.pixelSize: 11; Layout.alignment: Qt.AlignRight }
+                                Label {
+                                    text: meter.dpsText(bar.dps) + " DPS"; color: "#ffffff"; font.bold: true; Layout.alignment: Qt.AlignRight
+                                    HoverHandler {id: damageHover}
+                                    ToolTip.visible: damageHover.hovered && backend.showTotalDamage && backend.barHeight < 38
+                                    ToolTip.text: meter.number(bar.damage) + " total damage"
+                                }
+                                Label { visible: (backend.showTotalDamage || backend.showDetails) && backend.barHeight >= 38; text: (backend.showTotalDamage ? meter.number(bar.damage) + " dmg" : "") + (backend.showTotalDamage && backend.showDetails ? " · " : "") + (backend.showDetails ? bar.share.toFixed(1) + "%" : ""); color: "#e6edf6"; font.pixelSize: 11; Layout.alignment: Qt.AlignRight }
                             }
                         }
                     }

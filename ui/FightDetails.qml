@@ -45,7 +45,7 @@ Window {
             ColumnLayout {
                 Layout.fillWidth: true; spacing: 3
                 Label {text: (details.player.name || "No player selected") + (details.player.class ? " · " + details.player.class : ""); color: "#ffffff"; font.pixelSize: 18; font.bold: true}
-                Label {text: ((details.fight.boss || {}).name || "Open world") + " · " + Number(details.fight.duration || 0).toFixed(1) + "s · " + (details.fight.active ? "Live" : details.fight.encounter || "Completed"); color: "#9eadc3"}
+                Label {text: ((details.fight.boss || {}).name || (details.fight.scene || {}).name || "Combat") + " · " + Number(details.fight.duration || 0).toFixed(1) + "s · " + (details.fight.active ? "Live" : details.fight.encounter || "Completed"); color: "#9eadc3"}
             }
             ColumnLayout {
                 spacing: 3

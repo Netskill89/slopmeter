@@ -36,7 +36,10 @@ also derive from Aion2Flow commit 8c7c3f3ce7770382afc646e74a5d97bca79b24aa:
 - src/Aion2Flow.Resources/Packs/shared.bin and en-US.bin, decoded according to
   ResourcePackReader.cs (format 14), with pack checksums verified before extraction.
 Boss definitions, English NPC names, HP display divisors, and PC skill/class
-mappings were retained.
+mappings were retained. Map names in cmd/slopmeter-capture/data/maps.json come
+from the same checked en-US.bin MapNames section. Scene handling in scene.go
+references Packet2136Parser.cs, Packet2336ArrivalParser.cs, Packet2E92Parser.cs,
+Packet2F92Parser.cs and MapRuntimeObservationContext.cs at that commit.
 
 Class metadata parsing and class codes in cmd/slopmeter-capture/classes.go derive from
 Packet4536PcMetadataParser.cs, NicknameParserUtil.cs and
@@ -81,3 +84,23 @@ util-linux setpriv (GPL-2.0-or-later), with their dependency libraries.
 Sources: https://www.wireshark.org/download/src/ and
 https://www.kernel.org/pub/linux/utils/util-linux/ . Distribution license notices
 are included with the bundled-library notices in the release.
+
+## A2Tools protocol references
+
+The masked NPC spawn and embedded current-HP readers in
+cmd/slopmeter-capture/npc_packets.go reference the mask-width/name-gate layouts
+and validated HP discriminator/trailer in taengu/A2Tools-DPS-Meter,
+commit 856dad339be27099f052205b0ff3e2ddfcb77363,
+src-tauri/src/capture/stream_processor.rs. Copyright the A2Tools contributors;
+GPL-3.0 (see LICENSE). The periodic damage parser in cmd/slopmeter-capture/combat_packets.go and
+its data/dot-skills.json allowlist reference the same commit’s
+parse_dot_packet and src/data/dot_skill_ids.json. Optional periodic payload
+tails reference Aion2Flow’s Packet0538PeriodicValueParser.cs.
+Party roster stats in cmd/slopmeter-capture/roster_stats.go reference
+parse_party_roster_at in the same stream_processor.rs, joining account records
+to combat players by name.
+The player bar color palette in ui/Main.qml matches jobColorMap in
+public/src/js/core.js at the same commit, mapping Spiritmaster to Elementalist.
+No A2Tools runtime or UI is bundled.
+
+Source: https://github.com/taengu/A2Tools-DPS-Meter/blob/856dad339be27099f052205b0ff3e2ddfcb77363/src-tauri/src/capture/stream_processor.rs
