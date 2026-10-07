@@ -16,6 +16,8 @@ type membership struct {
 	slot byte
 }
 type scope struct {
+	characterHint string
+	hintedSelf    bool
 	identities
 	members       map[game.Entity]membership
 	classRevision uint64
@@ -107,11 +109,22 @@ func (s *scope) observeMessage(m aMessage) {
 		s.classes = nil
 		s.stats = nil
 	}
+	if m.opcode == 0x3623 && s.hintedSelf {
+		s.self = 0
+		s.name = ""
+		s.names = nil
+		s.classes = nil
+		s.members = nil
+		s.stats = nil
+		s.hintedSelf = false
+	}
 	s.identities.observe(m.event)
+	s.observeCharacterHint(m.event)
 	s.observeClass(m)
 	if m.opcode == 0x3611 || m.opcode == 0x3615 {
 		s.identities = identities{}
 		s.members = nil
+		s.hintedSelf = false
 		return
 	}
 	s.observeRosterStats(m)

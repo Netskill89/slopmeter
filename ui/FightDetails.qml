@@ -54,7 +54,18 @@ Window {
             }
         }
         Rectangle {Layout.fillWidth: true; implicitHeight: 1; color: "#42516a"}
+        TabBar {
+            id: analysisTabs; objectName: "analysisTabs"; Layout.fillWidth: true
+            TabButton {text: "Damage breakdown"}
+            TabButton {text: "Skill timeline"}
+        }
+        SkillTimeline {
+            visible: analysisTabs.currentIndex === 1
+            Layout.fillWidth: true; Layout.fillHeight: true
+            player: details.player; duration: Number(details.fight.duration || 0)
+        }
         ScrollView {
+            visible: analysisTabs.currentIndex === 0
             id: table
             Layout.fillWidth: true; Layout.fillHeight: true; clip: true
             contentWidth: Math.max(availableWidth,1190)
@@ -132,6 +143,7 @@ Window {
             }
         }
         Label {
+            visible: analysisTabs.currentIndex === 0
             Layout.fillWidth: true; wrapMode: Text.WordWrap; color: "#9eadc3"; font.pixelSize: 12
             text: "Player % is this skill's share of the player's damage; Party % uses all participants. Uses counts observed casts, not individual hits. Missing cast data is shown as —."
         }

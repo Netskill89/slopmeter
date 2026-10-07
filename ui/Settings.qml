@@ -16,9 +16,18 @@ Window {
             width: parent.width; spacing: 6
             Label {text: "Meter settings"; color: "#f2f5fa"; font.pixelSize: 22; font.bold: true}
             Label {text: "Changes apply immediately and are saved automatically."; color: "#9eadc3"; Layout.fillWidth: true; wrapMode: Text.WordWrap}
+            Label {text: "Character"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
+            RowLayout {
+                Layout.fillWidth: true
+                TextField {id: characterNameField; objectName: "characterNameField"; Layout.fillWidth: true; placeholderText: "Character name"; text: backend.characterName; maximumLength: 72; onAccepted: backend.characterName = text}
+                Button {text: "Save"; onClicked: backend.characterName = characterNameField.text}
+            }
+            Label {text: "Remembers the last detected name. Captured character identity overrides it on relog; name-based matches are rechecked after a zone change."; color: "#9eadc3"; Layout.fillWidth: true; font.pixelSize: 11; wrapMode: Text.WordWrap}
             Label {text: "Layout"; color: "#9ad9ec"; font.bold: true; Layout.topMargin: 10}
             CheckBox {objectName: "testModeToggle"; palette.windowText: "#e6edf6"; text: "Test mode"; checked: backend.testMode; onToggled: backend.testMode = checked}
             CheckBox {objectName: "borderToggle"; palette.windowText: "#e6edf6"; text: "Show meter border"; checked: backend.showBorder; onToggled: backend.showBorder = checked}
+            Label {text: "Bar growth"; color: "#c0cbdc"}
+            ComboBox {objectName: "barGrowthSelector"; Layout.fillWidth: true; model: ["Down · keep top edge fixed", "Up · keep bottom edge fixed"]; currentIndex: backend.growUp ? 1 : 0; onActivated: backend.growUp = currentIndex === 1}
             Label {text: "Player bar style"; color: "#c0cbdc"}
             ComboBox {objectName: "barStyleSelector"; Layout.fillWidth: true; model: ["Classic (default)", "Soft gradient", "Inset shadow", "Glossy"]; currentIndex: backend.barStyle; onActivated: backend.barStyle = currentIndex}
             Label {text: "Width · " + backend.barWidth + " px"; color: "#c0cbdc"}

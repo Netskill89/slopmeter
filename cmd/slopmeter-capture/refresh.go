@@ -15,13 +15,14 @@ func validRefreshInterval(interval time.Duration) bool {
 
 // UI commands never restart packet acquisition. Separate bounded mailboxes
 // prevent slider coalescing from discarding a requested damage reset.
-func readRefreshCommands(ctx context.Context, input io.Reader, changes chan time.Duration, resets chan struct{}, report io.Writer) {
+func readRefreshCommands(ctx context.Context, input io.Reader, changes chan time.Duration, resets chan struct{}, report io.Writer, names ...chan string) {
 	scanner := bufio.NewScanner(input)
 	scanner.Buffer(make([]byte, 1024), 4096)
 	for scanner.Scan() {
 		var command struct {
-			IntervalMS int  `json:"intervalMs"`
-			Reset      bool `json:"reset"`
+			IntervalMS    int     `json:"intervalMs"`
+			Reset         bool    `json:"reset"`
+			CharacterName *string `json:"characterName"`
 		}
 		if err := json.Unmarshal(scanner.Bytes(), &command); err != nil {
 			fmt.Fprintln(report, "Ignoring invalid refresh command")
@@ -31,6 +32,22 @@ func readRefreshCommands(ctx context.Context, input io.Reader, changes chan time
 		case <-ctx.Done():
 			return
 		default:
+		}
+		if command.CharacterName != nil {
+			if command.Reset || command.IntervalMS != 0 || len(names) == 0 || !validCharacterHint(*command.CharacterName) {
+				fmt.Fprintln(report, "Ignoring invalid character name command")
+				continue
+			}
+			select {
+			case <-names[0]:
+			default:
+			}
+			select {
+			case names[0] <- *command.CharacterName:
+			case <-ctx.Done():
+				return
+			}
+			continue
 		}
 		if command.Reset {
 			if command.IntervalMS != 0 {

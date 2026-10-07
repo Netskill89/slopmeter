@@ -103,6 +103,7 @@ class Bridge : public QObject {
     Q_PROPERTY(bool testMode READ testMode WRITE setTestMode NOTIFY testModeChanged)
     Q_PROPERTY(QString appVersion READ appVersion CONSTANT)
     Q_PROPERTY(int barStyle READ barStyle WRITE setBarStyle NOTIFY appearanceChanged)
+    Q_PROPERTY(bool growUp READ growUp WRITE setGrowUp NOTIFY appearanceChanged)
     Q_PROPERTY(bool showBorder READ showBorder WRITE setShowBorder NOTIFY appearanceChanged)
     Q_PROPERTY(QString captureInterface READ captureInterface WRITE setCaptureInterface NOTIFY interfacesChanged)
     Q_PROPERTY(QVariantList captureInterfaces READ captureInterfaces NOTIFY interfacesChanged)
@@ -121,6 +122,7 @@ class Bridge : public QObject {
     Q_PROPERTY(bool captureActive READ captureActive NOTIFY captureChanged)
     Q_PROPERTY(QString displayLabel READ displayLabel NOTIFY displayChanged)
     Q_PROPERTY(QString character READ character NOTIFY characterChanged)
+    Q_PROPERTY(QString characterName READ characterName WRITE setCharacterName NOTIFY characterNameChanged)
     Q_PROPERTY(QString status READ status NOTIFY statusChanged)
     Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
     Q_PROPERTY(QString encounter READ encounter NOTIFY encounterChanged)
@@ -142,6 +144,9 @@ public:
     static int normalizePoll(int value) {return ((qBound(50,value,1000)+25)/50)*50;}
     bool testMode() const {return previewEnabled;}
     int styleSetting=QSettings().value("appearance/barStyle",0).toInt();
+    bool growthSetting=QSettings().value("appearance/growUp",false).toBool();
+    bool growUp() const {return growthSetting;}
+    void setGrowUp(bool value) {growthSetting=value;QSettings().setValue("appearance/growUp",value);savePosition();emit appearanceChanged();}
     int barStyle() const {return qBound(0,styleSetting,3);}
     void setBarStyle(int value) {styleSetting=qBound(0,value,3);QSettings().setValue("appearance/barStyle",styleSetting);emit appearanceChanged();}
     bool showBorder() const {return borderSetting;}
@@ -199,6 +204,14 @@ public:
                 skill["min"]=qRound(skillDamage/hits*0.75);skill["max"]=qRound(skillDamage/hits*1.25);skill["average"]=skillDamage/hits;skill["hitsPerSecond"]=hits/seconds;
                 skills.append(skill);
             }
+            QVariantList timeline;
+            // Synthetic casts for preview only, using the same timeline schema as capture.
+            for(int cast=0;cast<qMin(5000,int(seconds/1.5));++cast) {
+                if(skills.isEmpty()) break;
+                const auto skill=skills[cast % skills.size()].toMap();
+                timeline.append(QVariantMap{{"time",cast*1.5},{"skill",skill.value("id")},{"name",skill.value("name")},{"icon",skill.value("icon")}});
+            }
+            row["timeline"]=timeline;
             row["skills"]=skills;rows.append(row);
         }
         const qlonglong maximumHP=8000000;
@@ -234,7 +247,7 @@ public:
     void setBarHeight(int value) {heightSetting=qBound(28,value,80);QSettings().setValue("appearance/barHeight",heightSetting);emit appearanceChanged();}
     void setBarSpacing(int value) {spacingSetting=qBound(0,value,20);QSettings().setValue("appearance/barSpacing",spacingSetting);emit appearanceChanged();}
     void setShowDetails(bool value) {detailsSetting=value;QSettings().setValue("appearance/showDetails",value);emit appearanceChanged();}
-    Q_INVOKABLE void resetAppearance() {setScoreDisplay(1);setShowTotalDamage(true);setRoundedDps(false);setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);}
+    Q_INVOKABLE void resetAppearance() {setGrowUp(false);setScoreDisplay(1);setShowTotalDamage(true);setRoundedDps(false);setBarWidth(352);setBarHeight(44);setBarSpacing(4);setShowDetails(true);setBackgroundOpacity(75);setOverallOpacity(100);setShowBorder(true);setBarStyle(0);setPollInterval(200);}
     ActorModel actors;
     SkillModel skills;
     QProcess process;
@@ -374,7 +387,11 @@ public:
         if(!previewEnabled&&!selectedSession&&!currentState.value("cleared").toBool()&&!currentState.value("active").toBool()&&currentState.value("actors").toList().isEmpty()) {
             for(const auto &value:history) {auto state=value.toMap().value("snapshot").toMap();if(state.value("session")==currentState.value("session")) {displayState=state;break;}}
         }
-        auto next=(!previewEnabled&&!selectedSession?currentState:displayState).value("character").toString();if(next!=name) {name=next;emit characterChanged();}
+        auto next=(!previewEnabled&&!selectedSession?currentState:displayState).value("character").toString();
+        if(!previewEnabled&&!selectedSession&&!replayMode) {
+            if(next.isEmpty()) next=rememberedName;
+        }
+        if(next!=name) {name=next;emit characterChanged();}
         double seconds=displayState.value("duration").toDouble();if(seconds!=span) {span=seconds;emit durationChanged();}
         auto label=displayState.value("encounter","Waiting for combat").toString();
  auto scene=displayState.value("scene").toMap().value("name").toString();
@@ -422,7 +439,19 @@ public:
         QTimer::singleShot(2000,this,[this] {if(restartingCapture&&process.state()!=QProcess::NotRunning) process.kill();});
     }
     QString backendPath;
-    QString name, message="Starting capture…";
+    QString rememberedName=QSettings().value("capture/characterName", "").toString();
+    QString characterName() const {return rememberedName;}
+    void sendCharacterName() {
+        if(!replayMode && process.state()!=QProcess::NotRunning) process.write(QJsonDocument(QJsonObject{{"characterName",rememberedName}}).toJson(QJsonDocument::Compact)+"\n");
+    }
+    void setCharacterName(const QString &value) {
+        auto next=value.trimmed();if(next.toUtf8().size()>72) return;
+        for(auto c:next) if(c.isSpace() && c!=' ') return;
+        if(next==rememberedName) return;
+        rememberedName=next;QSettings().setValue("capture/characterName",next);emit characterNameChanged();
+        sendCharacterName();refreshDisplay();
+    }
+    QString name=rememberedName, message="Starting capture…";
     double span=0;
     Bridge() {
         connect(&interfaceLister,&QProcess::errorOccurred,this,[this] {interfaceMessage=interfaceLister.errorString();emit interfacesChanged();});
@@ -442,13 +471,15 @@ public:
         connect(&publish,&QTimer::timeout,this,[this] {
             if(previewEnabled) refreshDisplay();
         });
-        connect(&process,&QProcess::started,this,&Bridge::sendRefreshInterval);
+        connect(&process,&QProcess::started,this,[this] {sendRefreshInterval();sendCharacterName();});
         connect(&process,&QProcess::readyReadStandardOutput,this,[this] {
             buffer+=process.readAllStandardOutput();int end;
             while((end=buffer.indexOf('\n'))>=0) {
                 auto line=buffer.left(end);buffer.remove(0,end+1);
                 auto doc=QJsonDocument::fromJson(line);if(doc.isObject()) {
                     auto state=doc.object();
+                    const auto detected=state.value("character").toString();
+                    if(!replayMode&&!detected.isEmpty()&&detected!=rememberedName) {rememberedName=detected;QSettings().setValue("capture/characterName",detected);emit characterNameChanged();}
                     // History arrives only when changed. Preserve it even if coalescing drops a snapshot.
                     if(state.contains("history")) {history=state.value("history").toArray().toVariantList();emit historyChanged();}
                     pending=state;setCaptureReady(process.state()==QProcess::Running&&!replayMode);if(process.state()!=QProcess::NotRunning) setStatus(replayMode?"Replay running":state.value("character").toString().isEmpty()?"Capture active · waiting for character. Log out and back in with capture running.":"Capture running");}
@@ -480,14 +511,14 @@ public:
     Q_INVOKABLE void beginDrag() {dragOrigin=position();dragging=true;}
     Q_INVOKABLE void dragOverlay(int dx,int dy) {positionOverlay(dragOrigin+QPoint(dx,dy));}
     Q_INVOKABLE void endDrag() {dragging=false;savePosition();if(autoDisplay&&!gameScreen.isEmpty()) gameOutput(gameScreen,{});}
-    void savePosition() {QSettings().setValue("position0",position());}
+    void savePosition() {QSettings().setValue("position0",position());if(panel) QSettings().setValue("positionBottom",panel->y()+panel->height());}
     Q_INVOKABLE void resetPosition() {positionOverlay({40,100});savePosition();window->show();}
     std::function<void()> hiddenRecovery;
     Q_INVOKABLE void hide() {window->hide();if(hiddenRecovery) hiddenRecovery();}
     Q_INVOKABLE void quit() {QCoreApplication::quit();}
 signals:
     void interfacesChanged();
-    void captureChanged();void testModeChanged();void pollingChanged();void historyChanged();void detailChanged();void appearanceChanged();void characterChanged();void statusChanged();void durationChanged();void displayChanged();void encounterChanged();void bossChanged();
+    void characterNameChanged();void captureChanged();void testModeChanged();void pollingChanged();void historyChanged();void detailChanged();void appearanceChanged();void characterChanged();void statusChanged();void durationChanged();void displayChanged();void encounterChanged();void bossChanged();
 };
 static void global(void *data,wl_registry*,uint32_t,const char *interface,uint32_t) {if(!std::strcmp(interface,"zwlr_layer_shell_v1")) *static_cast<bool*>(data)=true;}
 static void removed(void*,wl_registry*,uint32_t) {}
@@ -542,7 +573,11 @@ int main(int argc,char **argv) {
     QObject::connect(bridge.panel,&QQuickItem::yChanged,&bridge,&Bridge::updateInputMask);
     QObject::connect(bridge.panel,&QQuickItem::opacityChanged,&bridge,&Bridge::updateInputMask);
     QObject::connect(bridge.panel,&QQuickItem::widthChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
-    QObject::connect(bridge.panel,&QQuickItem::heightChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
+    QObject::connect(bridge.panel,&QQuickItem::heightChanged,&bridge,[&bridge, previousHeight=bridge.panel->height()]() mutable {
+        const auto height=bridge.panel->height();auto pos=bridge.position();
+        if(bridge.growUp()) pos.ry()+=qRound(previousHeight-height);
+        previousHeight=height;bridge.positionOverlay(pos);
+    });
     QStringList args=app.arguments().mid(1);bool test=args.removeAll("--ui-self-test")>0;
     QString screenshotDirectory;
     auto screenshotOption=args.indexOf("--screenshots");
@@ -556,7 +591,9 @@ int main(int argc,char **argv) {
     QObject::connect(window,&QQuickWindow::heightChanged,&bridge,[&bridge] {bridge.positionOverlay(bridge.position());});
     QObject::connect(window,&QWindow::screenChanged,&bridge,[&bridge](QScreen*) {emit bridge.displayChanged();});
     bridge.resizeCanvas();emit bridge.displayChanged();
-    bridge.positionOverlay(QSettings().value("position0",QPoint(40,100)).toPoint());window->show();
+    auto savedPosition=QSettings().value("position0",QPoint(40,100)).toPoint();
+    if(bridge.growUp() && QSettings().contains("positionBottom")) savedPosition.setY(qRound(QSettings().value("positionBottom").toDouble()-bridge.panel->height()));
+    bridge.positionOverlay(savedPosition);window->show();
     QSystemTrayIcon tray{appIcon};tray.setToolTip("SlopMeter");QMenu menu;
     menu.addAction("Show meter",window,[window] {window->show();});menu.addAction("Hide meter",&bridge,&Bridge::hide);
     auto displays=menu.addMenu("Display");
@@ -708,6 +745,25 @@ int main(int argc,char **argv) {
         bridge.resetAppearance();settle();
         if(bridge.scoreDisplay()!=1||!bridge.showTotalDamage()||bridge.roundedDps()) {app.exit(49);return;}
         if(bridge.backgroundOpacity()!=75||bridge.overallOpacity()!=100||qAbs(bridge.panel->height()-partyHeight)>1||window->mask()!=QRegion(QRectF(bridge.panel->x(),bridge.panel->y(),bridge.panel->width(),bridge.panel->height()).toAlignedRect())) {app.exit(27);return;}
+        const auto previousCharacterName=bridge.characterName();
+        bridge.setCharacterName("RememberedPlayer");
+        {Bridge restored;if(restored.characterName()!="RememberedPlayer"||restored.character()!="RememberedPlayer") {app.exit(88);return;}}
+        bridge.setTestMode(true);settle();
+        if(bridge.characterName()!="RememberedPlayer") {app.exit(89);return;}
+        bridge.setTestMode(false);bridge.setCharacterName(previousCharacterName);settle();
+        fprintf(stderr,"Remembered character setting, startup fallback and preview isolation checks passed.\n");
+        const auto growthPosition=bridge.position();
+        bridge.setGrowUp(true);bridge.positionOverlay({growthPosition.x(),window->height()-qRound(bridge.panel->height())-20});settle();
+        const auto fixedBottom=bridge.panel->y()+bridge.panel->height();
+        bridge.actors.update({});settle();
+        if(qAbs(bridge.panel->y()+bridge.panel->height()-fixedBottom)>1) {fprintf(stderr,"Upward shrink moved bottom edge\n");app.exit(80);return;}
+        bridge.actors.update(partyRows);settle();
+        if(qAbs(bridge.panel->y()+bridge.panel->height()-fixedBottom)>1) {fprintf(stderr,"Upward growth moved bottom edge\n");app.exit(81);return;}
+        {Bridge restored;if(!restored.growUp()) {app.exit(82);return;}}
+        bridge.setGrowUp(false);bridge.positionOverlay(growthPosition);const auto fixedTop=bridge.panel->y();
+        bridge.actors.update({});settle();bridge.actors.update(partyRows);settle();
+        if(qAbs(bridge.panel->y()-fixedTop)>1) {fprintf(stderr,"Downward growth moved top edge\n");app.exit(83);return;}
+        fprintf(stderr,"Up/down bar growth, fixed edges and saved preference checks passed.\n");
         auto screenshot=qEnvironmentVariable("AIONDPS_TEST_SCREENSHOT");
         if(!screenshot.isEmpty()) {window->grabWindow().save(screenshot);settingsWindow->grabWindow().save(screenshot+"-settings.png");}
         // Preview uses the same live delegates and details models, never real history.
@@ -871,6 +927,17 @@ int main(int argc,char **argv) {
             QQuickWindow *detailWindow=nullptr;
             for(auto candidate:QGuiApplication::allWindows()) if(candidate->objectName()=="fightDetailsWindow") detailWindow=qobject_cast<QQuickWindow*>(candidate);
             if(!detailWindow||detailWindow->transientParent()||!detailWindow->isVisible()||(detailWindow->flags()&Qt::WindowDoesNotAcceptFocus)||window->size()!=nativeSize) {app.exit(18);return;}
+            auto tabs=detailWindow->findChild<QObject*>("analysisTabs");
+            auto timelineView=detailWindow->findChild<QQuickItem*>("skillUsageTimeline");
+            if(!tabs||!timelineView) {app.exit(84);return;}
+            tabs->setProperty("currentIndex",1);settle();
+            if(!timelineView->isVisible()) {app.exit(85);return;}
+            bridge.setTestMode(true);settle();
+            if(bridge.detailPlayer().value("timeline").toList().isEmpty()) {app.exit(86);return;}
+            // Force a rendered frame of the populated timeline, catching QML/Canvas errors.
+            if(detailWindow->grabWindow().isNull()) {app.exit(87);return;}
+            bridge.setTestMode(false);settle();tabs->setProperty("currentIndex",0);settle();
+            fprintf(stderr,"Skill timeline tab, preview events and rendering checks passed.\n");
             if(!screenshot.isEmpty()) detailWindow->grabWindow().save(screenshot+"-details.png");
             detailWindow->close();
             if(detailWindow->isVisible()||!window->isVisible()) {app.exit(19);return;}

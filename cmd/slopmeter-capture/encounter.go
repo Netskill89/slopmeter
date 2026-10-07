@@ -106,12 +106,12 @@ func (e *encounter) start(t time.Time, boss game.Entity) {
 	e.lastDamage = t
 	for _, c := range e.pendingCasts {
 		if !c.t.After(t) && t.Sub(c.t) <= 5*time.Second {
-			e.meter.cast(c.cast)
+			e.meter.cast(c.cast, c.t)
 			if boss == 0 && c.cast.Target != 0 {
 				if e.targetMeters[c.cast.Target] == nil {
 					e.targetMeters[c.cast.Target] = &meter{target: c.cast.Target}
 				}
-				e.targetMeters[c.cast.Target].cast(c.cast)
+				e.targetMeters[c.cast.Target].cast(c.cast, c.t)
 			}
 		}
 	}
@@ -207,12 +207,12 @@ func (e *encounter) cast(t time.Time, c game.Cast) {
 	}
 	e.tick(t)
 	if e.active {
-		e.meter.cast(c)
+		e.meter.cast(c, t)
 		if e.boss == 0 && c.Target != 0 && e.targetMeters[c.Target] == nil && len(e.targetMeters) < 256 {
 			e.targetMeters[c.Target] = &meter{target: c.Target}
 		}
 		if target := e.targetMeters[c.Target]; e.boss == 0 && target != nil {
-			target.cast(c)
+			target.cast(c, t)
 		}
 	}
 	fresh := e.pendingCasts[:0]

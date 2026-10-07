@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.1.0-alpha.6
+
+- Add saved Up/Down bar growth, keeping the bottom or top edge fixed as player bars are added or removed.
+- Add a zoomable per-player skill usage timeline with small skill icons and cast-time hover details.
+- Save observed cast timestamps with new combat history entries; include a sample timeline in Test mode.
+- Remember the last detected character name and allow editing it in Settings without restarting capture.
+- Match remembered names against fresh player metadata, recheck name-based identity after zone arrivals, and prefer confirmed self identity on relog.
+
 ## 0.1.0-alpha.5
 
 - Decode captured area names and instance event IDs; display area names in the meter, fight history and damage details.

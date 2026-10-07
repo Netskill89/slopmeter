@@ -20,10 +20,12 @@ import (
 var version = "development"
 
 type total struct {
-	damage    uint64
-	hits      uint64
-	skills    map[game.Skill]uint64
-	breakdown map[game.Skill]*skillTotal
+	timeline          []timedSkillUse
+	timelineTruncated bool
+	damage            uint64
+	hits              uint64
+	skills            map[game.Skill]uint64
+	breakdown         map[game.Skill]*skillTotal
 }
 type meter struct {
 	first, last time.Time
@@ -111,6 +113,7 @@ func (m *meter) print(w io.Writer, details bool) {
 }
 
 func run() error {
+	characterHint := flag.String("character-name", "", "Remembered character name; verified against captured player metadata")
 	showVersion := flag.Bool("version", false, "Print SlopMeter version")
 	file := flag.String("read", "", "Replay a pcap, pcapng or a2log JSONL file")
 	adapter := flag.String("interface", "", "Live interface (default: dumpcap-selected interface)")
@@ -175,6 +178,7 @@ func run() error {
 	fight := newEncounter(game.Entity(*target), *idle, *bossIdle)
 	fight.number = history.lastID()
 	group := scope{identities: identities{names: make(map[game.Entity]string)}}
+	group.setCharacterHint(*characterHint)
 	archive := func(e *encounter, t time.Time) {
 		if err := history.archive(e, group.identities, t); err != nil {
 			fmt.Fprintln(os.Stderr, "Could not save combat history:", err)
@@ -239,7 +243,8 @@ func run() error {
 	defer timer.Stop()
 	refreshChanges := make(chan time.Duration, 1)
 	resetCommands := make(chan struct{}, 1)
-	go readRefreshCommands(ctx, os.Stdin, refreshChanges, resetCommands, os.Stderr)
+	nameCommands := make(chan string, 1)
+	go readRefreshCommands(ctx, os.Stdin, refreshChanges, resetCommands, os.Stderr, nameCommands)
 	dirty := false
 	var readError error
 loop:
@@ -247,6 +252,12 @@ loop:
 		select {
 		case <-ctx.Done():
 			break loop
+		case name := <-nameCommands:
+			if group.hintedSelf && fight.active {
+				fight.finish(logicalTime, "Character hint changed", true)
+			}
+			group.setCharacterHint(name)
+			emit(logicalTime)
 		case <-resetCommands:
 			resetTime := logicalTime
 			if *file == "" {
@@ -300,7 +311,7 @@ loop:
 					fmt.Fprintln(os.Stderr, "Could not update combat history class metadata:", err)
 				}
 			}
-			if oldSelf != 0 && group.self != oldSelf {
+			if oldSelf != 0 && group.self != oldSelf && msg.Opcode != 0x3623 {
 				number := fight.number
 				fight = newEncounter(game.Entity(*target), *idle, *bossIdle)
 				fight.number = number

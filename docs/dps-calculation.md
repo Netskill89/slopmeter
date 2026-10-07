@@ -31,3 +31,14 @@ side-by-side benchmark. Decoding coverage can still differ: SlopMeter accepts
 supported direct-hit layouts and allowlisted periodic damage. Unverified packet
 forms and summon attribution can cause differences from other meters. Healing,
 buffs and damage to self or confirmed group members are excluded.
+
+## Skill usage timeline
+
+New fights retain observed cast timestamps per player, relative to the first
+damage event of the encounter. Pre-pull casts can therefore have negative times.
+Damage hits and periodic ticks do not create usage markers. The damage analysis
+window offers one timeline lane per skill, zoom, scrolling, and marker tooltips.
+Only casts accepted by the existing party and target filters are recorded; missing
+cast packets cannot be reconstructed from damage totals. Older saved fights have
+no timeline. Each player retains at most 5,000 cast timestamps per fight; a notice
+appears when the timeline is truncated, while skill usage totals continue counting.

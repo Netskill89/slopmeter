@@ -30,16 +30,18 @@ func (i *identities) observe(event game.Event) {
 }
 
 type row struct {
-	GearScore   uint32      `json:"gearScore"`
-	CombatPower uint64      `json:"combatPower"`
-	ID          game.Entity `json:"id"`
-	Name        string      `json:"name"`
-	Class       string      `json:"class"`
-	Damage      uint64      `json:"damage"`
-	DPS         float64     `json:"dps"`
-	Share       float64     `json:"share"`
-	Fill        float64     `json:"fill"`
-	Skills      []skillRow  `json:"skills"`
+	Timeline          []skillUse  `json:"timeline,omitempty"`
+	TimelineTruncated bool        `json:"timelineTruncated,omitempty"`
+	GearScore         uint32      `json:"gearScore"`
+	CombatPower       uint64      `json:"combatPower"`
+	ID                game.Entity `json:"id"`
+	Name              string      `json:"name"`
+	Class             string      `json:"class"`
+	Damage            uint64      `json:"damage"`
+	DPS               float64     `json:"dps"`
+	Share             float64     `json:"share"`
+	Fill              float64     `json:"fill"`
+	Skills            []skillRow  `json:"skills"`
 }
 type snapshot struct {
 	Cleared      bool            `json:"cleared,omitempty"`
@@ -82,7 +84,7 @@ func (m *meter) snapshot(i identities) snapshot {
 		if largest > 0 {
 			fill = float64(a.damage) / float64(largest) * 100
 		}
-		s.Actors = append(s.Actors, row{GearScore: i.stats[name].GearScore, CombatPower: i.stats[name].CombatPower, ID: id, Name: name, Class: i.classes[id], Damage: a.damage, DPS: float64(a.damage) / seconds, Share: share, Fill: fill, Skills: a.skillRows(seconds, sum)})
+		s.Actors = append(s.Actors, row{Timeline: a.timelineRows(m.first), TimelineTruncated: a.timelineTruncated, GearScore: i.stats[name].GearScore, CombatPower: i.stats[name].CombatPower, ID: id, Name: name, Class: i.classes[id], Damage: a.damage, DPS: float64(a.damage) / seconds, Share: share, Fill: fill, Skills: a.skillRows(seconds, sum)})
 	}
 	sort.Slice(s.Actors, func(a, b int) bool {
 		if s.Actors[a].Damage == s.Actors[b].Damage {

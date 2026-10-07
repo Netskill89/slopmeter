@@ -23,9 +23,11 @@ Click a screenshot to view it at full size.
 
 ## Features
 
+- **Remembered character:** save a name in Settings or reuse the last detected name; fresh capture metadata verifies the current player.
+
 - **Party DPS:** class icons, coloured player bars, and damage contribution.
 - **Boss encounters:** captured boss health, area names and separate combat sessions.
-- **Fight history:** the last 10 sessions, with per-player skill breakdowns.
+- **Fight history:** the last 10 sessions, with per-player skill breakdowns and cast timelines.
 - **Customisation:** bar styles, dimensions, spacing, opacity, score visibility, damage display, and refresh rate.
 - **Test mode:** a five-player encounter with boss health and detailed skill data.
 
@@ -44,8 +46,8 @@ Both formats bundle the application libraries and capture helper.
 ### AppImage
 
 ```sh
-chmod +x SlopMeter-0.1.0-alpha.5-x86_64.AppImage
-./SlopMeter-0.1.0-alpha.5-x86_64.AppImage --appimage-extract-and-run
+chmod +x SlopMeter-0.1.0-alpha.6-x86_64.AppImage
+./SlopMeter-0.1.0-alpha.6-x86_64.AppImage --appimage-extract-and-run
 ```
 
 The extraction option works on systems without FUSE. With FUSE available,
@@ -54,8 +56,8 @@ you can also double-click the executable AppImage.
 ### tar.gz
 
 ```sh
-tar -xzf SlopMeter-0.1.0-alpha.5-x86_64.tar.gz
-cd SlopMeter-0.1.0-alpha.5-x86_64
+tar -xzf SlopMeter-0.1.0-alpha.6-x86_64.tar.gz
+cd SlopMeter-0.1.0-alpha.6-x86_64
 ./AppRun
 ```
 

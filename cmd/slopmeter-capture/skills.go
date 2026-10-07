@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"sort"
+	"time"
 
 	"github.com/nuriland/a2kit/game"
 )
@@ -63,11 +64,19 @@ func (a *total) skill(id game.Skill) *skillTotal {
 	return s
 }
 
-func (m *meter) cast(c game.Cast) {
+func (m *meter) cast(c game.Cast, at ...time.Time) {
 	if m.target != 0 && c.Target != m.target {
 		return
 	}
-	m.actor(c.Actor).skill(c.Skill).casts++
+	a := m.actor(c.Actor)
+	a.skill(c.Skill).casts++
+	if len(at) > 0 && !at[0].IsZero() {
+		if len(a.timeline) < maxTimelineCasts {
+			a.timeline = append(a.timeline, timedSkillUse{at[0], canonicalSkill(c.Skill)})
+		} else {
+			a.timelineTruncated = true
+		}
+	}
 }
 
 type skillRow struct {

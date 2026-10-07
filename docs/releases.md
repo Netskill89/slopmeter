@@ -2,7 +2,7 @@
 
 `VERSION` is the shared version for the backend, GUI, filenames, and releases.
 Use semantic versions: `0.1.0-alpha.1`, `0.1.0-alpha.2`, then `0.1.0` when stable.
-Tags must match VERSION exactly; for `0.1.0-alpha.5`, use `v0.1.0-alpha.5`.
+Tags must match VERSION exactly; for `0.1.0-alpha.6`, use `v0.1.0-alpha.6`.
 
 Branch pushes and pull/merge requests build and test the application.
 Release tags build, test, and package the AppImage and tarball before publishing.
